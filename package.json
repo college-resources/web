@@ -1,8 +1,25 @@
 {
-  "name": "project-ile-web",
+  "name": "college-resources-web",
   "version": "0.1.0",
-  "description": "Project Ile website",
+  "description": "College Resources website",
   "main": "index.js",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "fix": "npx standard --fix",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/college-resources/web.git"
+  },
+  "author": "College Resources",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/project-ile/web/issues"
+  },
+  "homepage": "https://gitlab.com/college-resources/web#readme",
   "dependencies": {
     "@material-ui/core": "^4.3.0",
     "@material-ui/icons": "^4.2.1",
@@ -16,23 +33,7 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.6"
-  },
-  "scripts": {
-    "build": "next build",
-    "dev": "next",
-    "fix": "npx standard --fix",
-    "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/project-ile/web.git"
-  },
-  "author": "Project Ile",
-  "license": "GPL-3.0-only",
-  "bugs": {
-    "url": "https://github.com/project-ile/web/issues"
-  },
-  "homepage": "https://github.com/project-ile/web#readme"
+    "babel-plugin-styled-components": "^1.10.6",
+    "standard": "^13.1.0"
+  }
 }
