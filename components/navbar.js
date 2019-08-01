@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Container from '@material-ui/core/Container'
 
 function ElevationScroll (props) {
   const { children, window } = props
@@ -42,22 +43,24 @@ export default function ElevateAppBar (props) {
     <React.Fragment>
       <ElevationScroll {...props}>
         <AppBar>
-          <Toolbar>
-            <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' className={classes.title}>
-              {props.title}
-            </Typography>
-            <IconButton
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </Toolbar>
+          <Container>
+            <Toolbar style={{paddingRight: 0, paddingLeft: 0}}>
+              <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+                <MenuIcon />
+              </IconButton>
+              <Typography variant='h6' className={classes.title}>
+                {props.title}
+              </Typography>
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                color='inherit'
+              >
+                <AccountCircle />
+              </IconButton>
+            </Toolbar>
+          </Container>
         </AppBar>
       </ElevationScroll>
       <Toolbar />
