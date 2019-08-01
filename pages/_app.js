@@ -11,6 +11,10 @@ class MyApp extends App {
     this.state = { title: "" };
   }
 
+  updateTitle(newValue) {
+    this.setState({title: newValue})
+  }
+
   componentDidMount () {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -25,13 +29,12 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-          {/* TODO Different title for each page (through props?) */}
-          <title>PH Title</title>
+          <title>{this.state.title} | College Resources</title>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <NavBar />
-          <Component {...pageProps} />
+          <NavBar title={this.state.title} />
+          <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
         </ThemeProvider>
       </Container>
     )

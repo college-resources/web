@@ -47,7 +47,7 @@ export default function ElevateAppBar (props) {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' className={classes.title}>
-              College Resources
+              {props.title}
             </Typography>
             <IconButton
               aria-label='account of current user'

@@ -1,8 +1,13 @@
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import { useEffect } from 'react';
 
-export default function Index () {
+export default function Index (props) {
+  useEffect(() => {
+    props.updateTitle("Home")
+  }, [])
+
   return (
     <Container>
       <Box>
