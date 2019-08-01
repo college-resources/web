@@ -1,17 +1,18 @@
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from '@material-ui/core/Drawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -44,15 +45,15 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   list: {
-    width: 250,
+    width: 250
   },
   fullList: {
-    width: 'auto',
+    width: 'auto'
   }
 }))
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
+function ListItemLink (props) {
+  return <ListItem button component='a' {...props} />
 }
 
 export default function ElevateAppBar (props) {
@@ -61,21 +62,21 @@ export default function ElevateAppBar (props) {
     top: false,
     left: false,
     bottom: false,
-    right: false,
+    right: false
   })
 
   const toggleDrawer = (side, open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
+      return
     }
 
-    setState({ ...state, [side]: open });
-  };
+    setState({ ...state, [side]: open })
+  }
 
   const sideList = side => (
     <div
       className={classes.list}
-      role="presentation"
+      role='presentation'
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >

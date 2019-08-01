@@ -6,13 +6,13 @@ import theme from '../src/theme'
 import NavBar from '../components/navbar'
 
 class MyApp extends App {
-  constructor(props) {
-    super(props);
-    this.state = { title: "" };
+  constructor (props) {
+    super(props)
+    this.state = { title: '' }
   }
 
-  updateTitle(newValue) {
-    this.setState({title: newValue})
+  updateTitle (newValue) {
+    this.setState({ title: newValue })
   }
 
   componentDidMount () {
