@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
@@ -10,8 +11,6 @@ import Paper from '@material-ui/core/Paper'
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import React from 'react';
-import { useEffect } from 'react'
 
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
@@ -37,24 +36,21 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow)
 
-function createData (Τίτλος, Είδος, Ώρες) {
-  return { Τίτλος, Είδος, Ώρες}
+function createData (Title, Kind, Hours) {
+  return {Title, Kind, Hours}
 }
 
 const rows = [
   createData('Μαθηματικα 1', 'ΥΠ', 4),
-  createData('Δομημένος Προγραμματισμός', 'ΥΠ', '4'),
-  createData('Εισαγωγη στην Επιστήμη των Υπολογιστών', 'ΥΠ', '4'),
+  createData('Δομημένος Προγραμματισμός', 'ΥΠ', 4),
+  createData('Εισαγωγη στην Επιστήμη των Υπολογιστών', 'ΥΠ', 4)
 ]
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '239%',
+    width: '100%',
     marginTop: theme.spacing(1),
     overflowX: 'auto'
-
-  },
-  table: {
   }
 }))
 
@@ -111,38 +107,34 @@ export default function Index (props) {
             <Typography>1ο Εξαμηνο</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
-              <Paper className={classes.root}>
-                <Table className={classes.table} >
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell >Τίτλος</StyledTableCell>
-                      <StyledTableCell align="center">Έιδος&nbsp;</StyledTableCell>
-                      <StyledTableCell align="center">Ώρες&nbsp;</StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map(row => (
-                      <StyledTableRow key={row.name}>
-                        <StyledTableCell component="th" scope="row" allign="left">
-                          {row.Τίτλος}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">{row.Είδος}</StyledTableCell>
-                        <StyledTableCell align="center">{row.Ώρες}</StyledTableCell>
-                      </StyledTableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Paper>
-            </Typography>
+            <Paper className={classes.root}>
+              <Table className={classes.table} >
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell >Τίτλος</StyledTableCell>
+                    <StyledTableCell align="center">Έιδος</StyledTableCell>
+                    <StyledTableCell align="center">Ώρες</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map(row => (
+                    <StyledTableRow key={row.Title}>
+                      <StyledTableCell component="th" scope="row" allign="left">
+                        {row.Title}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">{row.Kind}</StyledTableCell>
+                      <StyledTableCell align="center">{row.Hours}</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
           <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
             <Typography>Collapsible Group Item #2</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          </ExpansionPanelDetails>
         </ExpansionPanel>
       </div>
     </Container>
