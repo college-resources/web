@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Container from '@material-ui/core/Container'
-import Lesson from '../components/lesson'
+import Lesson from '../components/Lesson'
 
 function createData (Title, Kind, Hours) {
   return { Title, Kind, Hours }
