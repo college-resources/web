@@ -4,7 +4,8 @@ import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
 import NavBar from '../components/NavBar'
-import { initializeAuth } from '../scripts/auth'
+import { initializeAuth, saveToken } from '../scripts/auth'
+import { withRouter } from 'next/router'
 
 class MyApp extends App {
   constructor (props) {
@@ -17,7 +18,8 @@ class MyApp extends App {
   }
 
   componentDidMount () {
-    initializeAuth(window)
+    initializeAuth(window, this.props.router)
+    saveToken()
 
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -44,4 +46,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp
+export default withRouter(MyApp)
