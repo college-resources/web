@@ -56,7 +56,7 @@ function ListItemLink (props) {
   return <ListItem button component='a' {...props} />
 }
 
-export default function ElevateAppBar (props) {
+export default function (props) {
   const classes = useStyles()
   const [state, setState] = React.useState({
     top: false,

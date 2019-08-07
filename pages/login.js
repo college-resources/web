@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import randomString from '../scripts/auth'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -37,8 +38,19 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function SignIn () {
+export default function () {
   const classes = useStyles()
+
+  const loginOnClickHandler = () => {
+    const nonce = randomString(16)
+    window.sessionStorage.setItem('nonce', nonce)
+    const redirect = new URL('http://localhost:4000/api/auth/login')
+    // redirect.searchParams.set('client_id', CLIENT_ID)
+    redirect.searchParams.set('nonce', nonce)
+    redirect.searchParams.set('state', 'authorized')
+    redirect.searchParams.set('callback', 'http://localhost:3000/lesson-list')
+    window.location.replace(redirect.href)
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -78,11 +90,12 @@ export default function SignIn () {
             label='Remember me'
           />
           <Button
-            type='submit'
+            type='button'
             fullWidth
             variant='contained'
             color='primary'
             className={classes.submit}
+            onClick={loginOnClickHandler}
           >
             Sign In
           </Button>

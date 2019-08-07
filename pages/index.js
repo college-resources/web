@@ -2,7 +2,7 @@ import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import { useEffect } from 'react'
 
-export default function Index (props) {
+export default function (props) {
   useEffect(() => {
     props.updateTitle('Home')
   }, [])

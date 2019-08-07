@@ -12,7 +12,7 @@ const rows = [
   createData('Εισαγωγή στην Επιστήμη των Υπολογιστών', 'ΥΠ', 4)
 ]
 
-export default function Index (props) {
+export default function (props) {
   useEffect(() => {
     props.updateTitle('Lesson List')
   }, [])
