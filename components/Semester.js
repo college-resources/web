@@ -77,7 +77,7 @@ const ExpansionPanelSummary = withStyles({
   expanded: {}
 })(MuiExpansionPanelSummary)
 
-export default function Lesson (props) {
+export default function Semester (props) {
   const classes = useStyles()
   const rows = props.rows
   const [expanded, setExpanded] = React.useState('panel1')

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Container from '@material-ui/core/Container'
-import Lesson from '../components/Lesson'
+import Semester from '../../components/Semester'
 
 function createData (Title, Kind, Hours) {
   return { Title, Kind, Hours }
@@ -20,7 +20,7 @@ export default function (props) {
   return (
     <Container>
       <div>
-        <Lesson rows={rows} />
+        <Semester rows={rows} />
       </div>
     </Container>
   )
