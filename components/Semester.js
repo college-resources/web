@@ -26,7 +26,7 @@ const StyledTableCell = withStyles(theme => ({
   }
 }))(TableCell)
 
-const StyledTableRow = withStyles(theme => ({
+const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 const ExpansionPanel = withStyles({
   root: {
-    border: '1px solid rgba(0, 0, 0, .125)',
+    border: 'none',
     boxShadow: 'none',
     '&:not(:last-child)': {
       borderBottom: 0
