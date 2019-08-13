@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import { grey } from '@material-ui/core/colors'
 
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
@@ -18,7 +19,7 @@ const ExpansionPanelDetails = withStyles(theme => ({
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white
   },
   body: {
@@ -28,8 +29,8 @@ const StyledTableCell = withStyles(theme => ({
 
 const StyledTableRow = withStyles(() => ({
   root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default
+    '&:nth-of-type(even)': {
+      backgroundColor: grey[400]
     }
   }
 }))(TableRow)
