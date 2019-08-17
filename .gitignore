@@ -62,3 +62,6 @@ typings/
 
 # WebStorm configuration files
 .idea
+
+# Visual Studio Code configuration files
+.vscode
