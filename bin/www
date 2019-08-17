@@ -1,0 +1,12 @@
+require('dotenv').config()
+
+if (!process.env.NODE_ENV) {
+  if (process.argv.includes('--development') || process.argv.includes('--dev')) {
+    process.env.NODE_ENV = 'development'
+  } else {
+    process.env.NODE_ENV = 'production'
+  }
+}
+
+const ssrServer = require('../server/ssr-server')
+ssrServer()

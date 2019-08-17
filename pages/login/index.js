@@ -1,4 +1,7 @@
+/* global fetch */
+
 import React from 'react'
+import Router from 'next/router'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,7 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import randomString from '../../scripts/auth'
+import UserContext from '../../components/UserContext'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -38,18 +41,34 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function () {
+export default function (props) {
   const classes = useStyles()
+  const [email, setEmail] = React.useState('')
+  const [passwd, setPasswd] = React.useState('')
+  const { setUser } = React.useContext(UserContext)
 
   const loginOnClickHandler = () => {
-    const nonce = randomString(16)
-    window.sessionStorage.setItem('nonce', nonce)
-    const redirect = new URL('http://localhost:4000/api/auth/login')
-    // redirect.searchParams.set('client_id', CLIENT_ID)
-    redirect.searchParams.set('nonce', nonce)
-    redirect.searchParams.set('state', 'authorized')
-    redirect.searchParams.set('callback', 'http://localhost:3000/lesson-list')
-    window.location.replace(redirect.href)
+    fetch('auth/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        passwd
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(json => {
+        setUser(json)
+        Router.push('/user')
+      })
+      .catch(err => console.log(err.message)) // TODO: Implement error handling
+  }
+
+  const loginWithGoogleOnClickHandler = () => {
+    window.location.replace('/auth/login/google-oauth2')
   }
 
   return (
@@ -73,6 +92,8 @@ export default function () {
             name='email'
             autoComplete='email'
             autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             variant='outlined'
@@ -84,6 +105,8 @@ export default function () {
             type='password'
             id='password'
             autoComplete='current-password'
+            value={passwd}
+            onChange={e => setPasswd(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
@@ -107,10 +130,20 @@ export default function () {
             </Grid>
             <Grid item>
               <Link href='#' variant='body2'>
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
+          <Button
+            type='button'
+            fullWidth
+            variant='contained'
+            color='primary' // TODO: Make this button red
+            className={classes.submit}
+            onClick={loginWithGoogleOnClickHandler}
+          >
+            Sign In with Google
+          </Button>
         </form>
       </div>
     </Container>

@@ -17,6 +17,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
+import UserContext from './UserContext'
 
 function ElevationScroll (props) {
   const { children, window } = props
@@ -64,6 +65,7 @@ export default function (props) {
     bottom: false,
     right: false
   })
+  const { user } = React.useContext(UserContext)
 
   const toggleDrawer = (side, open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -136,7 +138,7 @@ export default function (props) {
               aria-controls='menu-appbar'
               aria-haspopup='true'
               color='inherit'
-              href={'login'}
+              href={user ? 'user' : 'login'}
             >
               <AccountCircle />
             </IconButton>
