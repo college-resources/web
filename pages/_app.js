@@ -19,9 +19,13 @@ class MyApp extends App {
   }
 
   static async getInitialProps ({ ctx }) {
+    const initialProps = {}
+
     if (ctx.req) {
-      return { user: ctx.req.user && ctx.req.user.profile }
+      initialProps.user = ctx.req.user && ctx.req.user.profile
     }
+
+    return initialProps
   }
 
   updateTitle (newValue) {
@@ -39,7 +43,8 @@ class MyApp extends App {
     if (!this.state.user) {
       fetch('/session/profile')
         .then(res => res.json())
-        .then(profile => this.setState({ user: profile }))
+        .then(data => this.setState({ user: data.profile }))
+        .catch(err => console.error(err.message))
     }
   }
 

@@ -2,7 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/profile', (req, res) => {
-  res.json(req.user && req.user.profile)
+  const profile = (req.user && req.user.profile) || null
+  res.json({
+    data: profile
+  })
 })
 
 module.exports = router

@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Drawer from '@material-ui/core/Drawer'
@@ -53,8 +54,18 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const ButtonLink = React.forwardRef((props, ref) => (
+  <Link href={props.href} children={(
+    <a {...props} ref={ref} href='#'>
+      {props.children}
+    </a>
+  )} />
+))
+
 function ListItemLink (props) {
-  return <ListItem button component='a' {...props} />
+  return (
+    <ListItem button component={ButtonLink} {...props} />
+  )
 }
 
 export default function (props) {
@@ -87,7 +98,7 @@ export default function (props) {
           <ListItemIcon><HomeIcon /></ListItemIcon>
           <ListItemText primary={'Home'} />
         </ListItemLink>
-        <ListItemLink button href='lesson-list' key={'Lesson List'}>
+        <ListItemLink button href='/lesson-list' key={'Lesson List'}>
           <ListItemIcon><BookIcon /></ListItemIcon>
           <ListItemText primary={'Lesson List'} />
         </ListItemLink>
@@ -138,6 +149,7 @@ export default function (props) {
               aria-controls='menu-appbar'
               aria-haspopup='true'
               color='inherit'
+              component={ButtonLink}
               href={user ? 'user' : 'login'}
             >
               <AccountCircle />
