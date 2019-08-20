@@ -96,18 +96,18 @@ export default function Semester (props) {
           <TableHead style={{ border: 0 }}>
             <TableRow>
               <StyledTableCell>Τίτλος</StyledTableCell>
-              <StyledTableCell align='center'>Έιδος</StyledTableCell>
-              <StyledTableCell align='center'>Ώρες</StyledTableCell>
+              <StyledTableCell align='center'>department</StyledTableCell>
+              <StyledTableCell align='center'>semester</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map(row => (
-              <StyledTableRow key={row.Title}>
+              <StyledTableRow key={row.name}>
                 <StyledTableCell component='th' scope='row' allign='left'>
-                  {row.Title}
+                  {row.name}
                 </StyledTableCell>
-                <StyledTableCell align='center'>{row.Kind}</StyledTableCell>
-                <StyledTableCell align='center'>{row.Hours}</StyledTableCell>
+                <StyledTableCell align='center'>{row.department}</StyledTableCell>
+                <StyledTableCell align='center'>{row.semester}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

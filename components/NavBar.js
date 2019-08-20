@@ -19,6 +19,7 @@ import BookIcon from '@material-ui/icons/Book'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
 import UserContext from './UserContext'
+import Router from 'next/router'
 
 function ElevationScroll (props) {
   const { children, window } = props
@@ -76,7 +77,7 @@ export default function (props) {
     bottom: false,
     right: false
   })
-  const { user } = React.useContext(UserContext)
+  const { user, setUser } = React.useContext(UserContext)
 
   const toggleDrawer = (side, open) => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -115,7 +116,10 @@ export default function (props) {
       <Divider />
       <List>
         {['Log out'].map((text) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={() => {
+            setUser(null)
+            Router.push('/auth/logout')
+          }}>
             <ListItemIcon><SignoutIcon /></ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
