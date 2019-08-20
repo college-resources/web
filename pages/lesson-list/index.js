@@ -3,28 +3,29 @@ import Container from '@material-ui/core/Container'
 import Semester from '../../components/Semester'
 import gql from '../../scripts/graphql'
 
-export default function (props) {
-  useEffect(() => {
-    props.updateTitle('Lesson List')
-  }, [])
+const lessonHandler = () => Promise.resolve(
+  gql(`
+      query {
+        lessons {
+          name
+          semester
+          department
+        }
+      }
+    `).then(data => data.lessons)
+)
 
+function Index (props) {
   const [lessons, setLessons] = useState([])
 
-  const lessonHandler = () => {
-    gql(`
-        query {
-          lessons {
-            name
-            semester
-            department
-          }
-        }
-      `).then(data => setLessons(data.lessons))
-  }
-
   useEffect(() => {
-    lessonHandler()
-  })
+    props.updateTitle('Lesson List')
+    lessonHandler().then(gqlLessons => {
+      if (gqlLessons) {
+        setLessons(gqlLessons)
+      }
+    })
+  }, [])
 
   return (
     <Container>
@@ -34,3 +35,5 @@ export default function (props) {
     </Container>
   )
 }
+
+export default Index

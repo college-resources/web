@@ -1,11 +1,12 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const router = express.Router()
 const passport = require('passport')
-const dotenv = require('dotenv')
 const util = require('util')
 const querystring = require('querystring')
 
-dotenv.config()
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.json())
 
 router.get('/login', passport.authenticate('auth0', {
   audience: process.env.AUTH0_AUDIENCE,

@@ -1,5 +1,5 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const next = require('next')
 
 const auth0 = require('./middleware/auth0')
@@ -15,8 +15,8 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-server.use(bodyParser.urlencoded({ extended: false }))
-server.use(bodyParser.json())
+// server.use(bodyParser.urlencoded({ extended: false }))
+// server.use(bodyParser.json())
 
 server.use(auth0)
 server.use(session)
