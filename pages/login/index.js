@@ -12,9 +12,19 @@ import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import UserContext from '../../components/UserContext'
+import { red } from '@material-ui/core/colors'
+
+const GoogleButton = withStyles({
+  root: {
+    backgroundColor: red[600],
+    '&:hover': {
+      backgroundColor: red[900]
+    }
+  }
+})(Button)
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -134,7 +144,7 @@ export default function (props) {
               </Link>
             </Grid>
           </Grid>
-          <Button
+          <GoogleButton
             type='button'
             fullWidth
             variant='contained'
@@ -143,7 +153,7 @@ export default function (props) {
             onClick={loginWithGoogleOnClickHandler}
           >
             Sign In with Google
-          </Button>
+          </GoogleButton>
         </form>
       </div>
     </Container>
