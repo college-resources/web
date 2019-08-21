@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -148,16 +149,20 @@ export default function (props) {
             <Typography variant='h6' className={classes.title}>
               {props.title}
             </Typography>
-            <IconButton
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              color='inherit'
-              component={ButtonLink}
-              href={user ? 'user' : 'login'}
-            >
-              <AccountCircle />
-            </IconButton>
+            {user ? (
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                color='inherit'
+                component={ButtonLink}
+                href='user'
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : (
+              <Button color='inherit' href='login'>Login</Button>
+            )}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
