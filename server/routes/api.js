@@ -1,9 +1,11 @@
 const express = require('express')
 const requestProxy = require('express-request-proxy')
 
+const token = require('../middleware/token')
+
 const router = express.Router()
 
-router.all('/*', (req, res, next) => {
+router.all('/*', token, (req, res, next) => {
   const proxy = requestProxy({
     url: new URL('*', process.env.API_ADDRESS).href,
     query: {

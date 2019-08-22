@@ -22,7 +22,7 @@ export default function (query) {
             console.log(json.errors)
           }
 
-          resolve()
+          resolve({})
         } else {
           resolve(json.data)
         }
