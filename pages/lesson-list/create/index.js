@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function OutlinedTextFields (props) {
+export default function Index (props) {
   const classes = useStyles()
   const [values, setValues] = React.useState({
     name: '',
@@ -39,7 +39,7 @@ export default function OutlinedTextFields (props) {
   })
 
   useEffect(() => {
-    props.updateTitle('Add new lesson')
+    props.updateTitle('Create lesson')
   }, [])
 
   const handleChange = name => event => {
