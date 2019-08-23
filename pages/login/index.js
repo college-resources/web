@@ -17,15 +17,6 @@ import Container from '@material-ui/core/Container'
 import UserContext from '../../components/UserContext'
 import { red } from '@material-ui/core/colors'
 
-const GoogleButton = withStyles({
-  root: {
-    backgroundColor: red[600],
-    '&:hover': {
-      backgroundColor: red[900]
-    }
-  }
-})(Button)
-
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -40,18 +31,31 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.primary.main
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1)
   },
   submit: {
+    backgroundColor: theme.palette.primary.light,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    },
     margin: theme.spacing(3, 0, 2)
   }
 }))
 
-export default function (props) {
+const GoogleButton = withStyles({
+  root: {
+    backgroundColor: red[600],
+    '&:hover': {
+      backgroundColor: red[800]
+    }
+  }
+})(Button)
+
+export default function () {
   const classes = useStyles()
   const [email, setEmail] = React.useState('')
   const [passwd, setPasswd] = React.useState('')

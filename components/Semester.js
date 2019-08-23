@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow'
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import { grey } from '@material-ui/core/colors'
+import { lightBlue } from '@material-ui/core/colors'
 
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
@@ -30,7 +30,10 @@ const StyledTableCell = withStyles(theme => ({
 const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(even)': {
-      backgroundColor: grey[400]
+      backgroundColor: lightBlue[50]
+    },
+    '&:nth-of-type(odd)': {
+      backgroundColor: lightBlue[100]
     }
   }
 }))(TableRow)
@@ -60,23 +63,21 @@ const ExpansionPanel = withStyles({
   expanded: {}
 })(MuiExpansionPanel)
 
-const ExpansionPanelSummary = withStyles({
+const ExpansionPanelSummary = withStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(0, 0, 0, .03)',
-    borderBottom: '1px solid rgba(0, 0, 0, .125)',
+    backgroundColor: theme.palette.secondary.dark,
+    color: '#fff',
     marginBottom: -1,
     minHeight: 56,
     '&$expanded': {
       minHeight: 56
     }
   },
-  content: {
-    '&$expanded': {
-      margin: '12px 0'
-    }
+  head: {
+    backgroundColor: theme.palette.secondary.main
   },
   expanded: {}
-})(MuiExpansionPanelSummary)
+}))(MuiExpansionPanelSummary)
 
 export default function Semester (props) {
   const classes = useStyles()

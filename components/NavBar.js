@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
+  navbar: {
+    backgroundColor: theme.palette.primary.dark
+  },
   menuButton: {
     marginRight: theme.spacing(2)
   },
@@ -137,7 +140,7 @@ export default function (props) {
   return (
     <React.Fragment>
       <ElevationScroll {...props}>
-        <AppBar>
+        <AppBar className={classes.navbar}>
           <Toolbar>
             <IconButton
               edge='start'

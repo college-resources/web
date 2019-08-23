@@ -29,7 +29,7 @@ function Index (props) {
 
   return (
     <Container>
-      <div>
+      <div style={{ marginTop: '16px' }}>
         <Semester rows={lessons} />
       </div>
     </Container>
