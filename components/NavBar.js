@@ -113,27 +113,31 @@ export default function (props) {
           <ListItemText primary={'Lesson List'} />
         </ListItemLink>
       </List>
-      <Divider />
-      <List>
-        {['Settings'].map((text) => (
-          <ListItem button key={text}>
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['Log out'].map((text) => (
-          <ListItem button key={text} onClick={() => {
-            setUser(null)
-            Router.push('/auth/logout')
-          }}>
-            <ListItemIcon><SignoutIcon /></ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      {user && (
+        <React.Fragment>
+          <Divider />
+          <List>
+            {['Settings'].map((text) => (
+              <ListItem button key={text}>
+                <ListItemIcon><SettingsIcon /></ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['Log out'].map((text) => (
+              <ListItem button key={text} onClick={() => {
+                setUser(null)
+                Router.push('/auth/logout')
+              }}>
+                <ListItemIcon><SignoutIcon /></ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </React.Fragment>
+      )}
     </div>
   )
 
