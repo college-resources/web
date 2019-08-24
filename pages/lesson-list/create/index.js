@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import gql from '../../../scripts/graphql'
+import { dynamicSort } from '../../../scripts/sorting'
 
 const departmentHandler = () => Promise.resolve(
   gql(`
@@ -15,7 +16,7 @@ const departmentHandler = () => Promise.resolve(
           name
         }
       }
-    `).then(data => data.departments)
+    `).then(data => data.departments.sort(dynamicSort('name')))
 )
 
 const useStyles = makeStyles(theme => ({
@@ -48,6 +49,22 @@ export default function Index (props) {
       }
     })
   }, [])
+
+  const lessonHandler = () => {
+    gql(`
+      mutation {
+        addLesson(
+          lesson: {
+            name: "${values.name}",
+            department: "${values.department}",
+            semester: ${values.semester}
+          }
+        ) {
+          _id
+        }
+      }
+    `)
+  }
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
@@ -103,7 +120,7 @@ export default function Index (props) {
           fullWidth
         >
           {departments.map(dept => (
-            <MenuItem key={dept._id} value={dept.name}>
+            <MenuItem key={dept._id} value={dept._id}>
               {dept.name}
             </MenuItem>
           ))}
@@ -125,8 +142,9 @@ export default function Index (props) {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Button
-              type='submit'
+              type='button'
               className={classes.dense}
+              onClick={lessonHandler}
               variant='contained'
               color='primary'
               fullWidth

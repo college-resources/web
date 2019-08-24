@@ -1,3 +1,5 @@
+// Source: https://stackoverflow.com/a/4760279
+
 export function dynamicSort (property) {
   let sortOrder = 1
   if (property[0] === '-') {
