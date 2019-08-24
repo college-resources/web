@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
+import gql from '../../../scripts/graphql'
 
-const departments = [
-  {
-    value: 'IT',
-    label: 'Information Technology'
-  },
-  {
-    value: 'EL',
-    label: 'Electronics Engineering'
-  }
-]
+const departmentHandler = () => Promise.resolve(
+  gql(`
+      query {
+        departments {
+          _id
+          name
+        }
+      }
+    `).then(data => data.departments)
+)
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -32,7 +33,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Index (props) {
   const classes = useStyles()
-  const [values, setValues] = React.useState({
+  const [departments, setDepartments] = useState([])
+  const [values, setValues] = useState({
     name: '',
     department: '',
     semester: 1
@@ -40,6 +42,11 @@ export default function Index (props) {
 
   useEffect(() => {
     props.updateTitle('Create lesson')
+    departmentHandler().then(gqlDepartments => {
+      if (gqlDepartments) {
+        setDepartments(gqlDepartments)
+      }
+    })
   }, [])
 
   const handleChange = name => event => {
@@ -57,6 +64,15 @@ export default function Index (props) {
     }
   }
 
+  const clearHandler = () => {
+    setValues({
+      ...values,
+      name: '',
+      department: '',
+      semester: 1
+    })
+  }
+
   return (
     <Container>
       <form className={classes.container} noValidate autoComplete='off'>
@@ -64,6 +80,8 @@ export default function Index (props) {
           required
           id='lesson-name'
           label='Lesson Name'
+          value={values.name}
+          onChange={handleChange('name')}
           margin='normal'
           variant='outlined'
           fullWidth
@@ -84,9 +102,9 @@ export default function Index (props) {
           variant='outlined'
           fullWidth
         >
-          {departments.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {departments.map(dept => (
+            <MenuItem key={dept._id} value={dept.name}>
+              {dept.name}
             </MenuItem>
           ))}
         </TextField>
@@ -120,6 +138,7 @@ export default function Index (props) {
             <Button
               type='button'
               className={classes.dense}
+              onClick={clearHandler}
               variant='contained'
               color='secondary'
               fullWidth
