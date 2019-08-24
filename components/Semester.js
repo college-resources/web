@@ -104,7 +104,7 @@ export default function Semester (props) {
                 <StyledTableCell component='th' scope='row' allign='left'>
                   {row.name}
                 </StyledTableCell>
-                <StyledTableCell align='center'>{row.department}</StyledTableCell>
+                <StyledTableCell align='center'>{row.department.name}</StyledTableCell>
                 <StyledTableCell align='center'>{row.semester}</StyledTableCell>
               </StyledTableRow>
             ))}

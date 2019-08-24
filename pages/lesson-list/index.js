@@ -9,7 +9,9 @@ const lessonHandler = () => Promise.resolve(
         lessons {
           name
           semester
-          department
+          department {
+            name
+          }
         }
       }
     `).then(data => data.lessons)
