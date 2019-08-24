@@ -73,9 +73,6 @@ const ExpansionPanelSummary = withStyles(theme => ({
       minHeight: 56
     }
   },
-  head: {
-    backgroundColor: theme.palette.secondary.main
-  },
   expanded: {}
 }))(MuiExpansionPanelSummary)
 
