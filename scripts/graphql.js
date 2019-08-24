@@ -4,7 +4,7 @@ import Router from 'next/router'
 
 export default function (query) {
   return new Promise((resolve, reject) => {
-    fetch('api/graphql', {
+    fetch('/api/graphql', {
       method: 'POST',
       body: JSON.stringify({ query }),
       headers: {

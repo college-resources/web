@@ -168,7 +168,7 @@ export default function (props) {
                 aria-haspopup='true'
                 color='inherit'
                 component={ButtonLink}
-                href='user'
+                href='/user'
               >
                 {user.picture ? (
                   <Avatar alt='account picture' src={user.picture} className={classes.avatar} />
@@ -177,7 +177,7 @@ export default function (props) {
                 )}
               </IconButton>
             ) : (
-              <Button color='inherit' href='login'>Login</Button>
+              <Button color='inherit' href='/login'>Login</Button>
             )}
           </Toolbar>
         </AppBar>
