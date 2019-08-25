@@ -144,7 +144,7 @@ export default function Index (props) {
             <Button
               type='button'
               className={classes.dense}
-              onClick={lessonHandler}
+              onClick={() => { lessonHandler(); clearHandler() }}
               variant='contained'
               color='primary'
               fullWidth
