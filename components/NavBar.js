@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
-import Drawer from '@material-ui/core/Drawer'
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
@@ -81,15 +81,12 @@ function ListItemLink (props) {
 export default function (props) {
   const classes = useStyles()
   const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false
+    left: false
   })
   const { user, setUser } = React.useContext(UserContext)
 
   const toggleDrawer = (side, open) => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
 
@@ -155,9 +152,13 @@ export default function (props) {
             >
               <MenuIcon />
             </IconButton>
-            <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
+            <SwipeableDrawer
+              open={state.left}
+              onOpen={toggleDrawer('left', true)}
+              onClose={toggleDrawer('left', false)}
+            >
               {sideList('left')}
-            </Drawer>
+            </SwipeableDrawer >
             <Typography variant='h6' className={classes.title}>
               {props.title}
             </Typography>
