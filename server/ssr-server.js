@@ -18,6 +18,7 @@ const handle = app.getRequestHandler()
 // server.use(bodyParser.urlencoded({ extended: false }))
 // server.use(bodyParser.json())
 
+server.use(express.static('public'))
 server.use(auth0)
 server.use(session)
 server.use(passport)
