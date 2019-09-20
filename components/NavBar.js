@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
 import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
+import RestaurantIcon from '@material-ui/icons/Restaurant'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
 import UserContext from './UserContext'
@@ -108,6 +109,10 @@ export default function (props) {
         <ListItemLink button href='/lesson-list' key={'Lesson List'}>
           <ListItemIcon><BookIcon /></ListItemIcon>
           <ListItemText primary={'Lesson List'} />
+        </ListItemLink>
+        <ListItemLink button href='/feeding' key={'Feeding'}>
+          <ListItemIcon><RestaurantIcon /></ListItemIcon>
+          <ListItemText primary={'Feeding'} />
         </ListItemLink>
       </List>
       {user && (
