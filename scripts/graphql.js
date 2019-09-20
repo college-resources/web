@@ -15,9 +15,9 @@ export default function (query) {
       .then(json => {
         if (json.errors) {
           if (json.errors[0].message === 'Unauthenticated') {
-            Router.push('/auth/login')
+            Router.push('/login')
           } else if (json.errors[0].message === 'Unregistered') {
-            Router.push('/auth/register')
+            Router.push('/register')
           } else {
             console.log(json.errors)
           }
