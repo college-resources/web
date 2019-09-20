@@ -1,6 +1,7 @@
-import React from 'react'
+import { useState, useContext, forwardRef, cloneElement, Fragment } from 'react'
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import AppBar from '@material-ui/core/AppBar'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,20 +10,9 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Avatar from '@material-ui/core/Avatar'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
-import HomeIcon from '@material-ui/icons/Home'
-import BookIcon from '@material-ui/icons/Book'
-import RestaurantIcon from '@material-ui/icons/Restaurant'
-import SettingsIcon from '@material-ui/icons/Settings'
-import SignoutIcon from '@material-ui/icons/ExitToApp'
 import UserContext from './UserContext'
-import Router from 'next/router'
+import SideBar from './SideBar'
 
 function ElevationScroll (props) {
   const { children, window } = props
@@ -35,7 +25,7 @@ function ElevationScroll (props) {
     target: window ? window() : undefined
   })
 
-  return React.cloneElement(children, {
+  return cloneElement(children, {
     elevation: trigger ? 4 : 0
   })
 }
@@ -53,9 +43,6 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1
   },
-  list: {
-    width: 250
-  },
   fullList: {
     width: 'auto'
   },
@@ -65,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ButtonLink = React.forwardRef((props, ref) => (
+const ButtonLink = forwardRef((props, ref) => (
   <Link href={props.href} children={(
     <a {...props} ref={ref} href='#'>
       {props.children}
@@ -73,78 +60,21 @@ const ButtonLink = React.forwardRef((props, ref) => (
   )} />
 ))
 
-function ListItemLink (props) {
-  return (
-    <ListItem button component={ButtonLink} {...props} />
-  )
-}
-
 export default function (props) {
   const classes = useStyles()
-  const [state, setState] = React.useState({
-    left: false
-  })
-  const { user, setUser } = React.useContext(UserContext)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const { user } = useContext(UserContext)
 
-  const toggleDrawer = (side, open) => event => {
+  const toggleDrawer = (open) => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
 
-    setState({ ...state, [side]: open })
+    setDrawerOpen(open)
   }
 
-  const sideList = side => (
-    <div
-      className={classes.list}
-      role='presentation'
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
-      <List>
-        <ListItemLink button href='/' key={'Home'}>
-          <ListItemIcon><HomeIcon /></ListItemIcon>
-          <ListItemText primary={'Home'} />
-        </ListItemLink>
-        <ListItemLink button href='/lesson-list' key={'Lesson List'}>
-          <ListItemIcon><BookIcon /></ListItemIcon>
-          <ListItemText primary={'Lesson List'} />
-        </ListItemLink>
-        <ListItemLink button href='/feeding' key={'Feeding'}>
-          <ListItemIcon><RestaurantIcon /></ListItemIcon>
-          <ListItemText primary={'Feeding'} />
-        </ListItemLink>
-      </List>
-      {user && (
-        <React.Fragment>
-          <Divider />
-          <List>
-            {['Settings'].map((text) => (
-              <ListItem button key={text}>
-                <ListItemIcon><SettingsIcon /></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['Log out'].map((text) => (
-              <ListItem button key={text} onClick={() => {
-                setUser(null)
-                Router.push('/auth/logout')
-              }}>
-                <ListItemIcon><SignoutIcon /></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </React.Fragment>
-      )}
-    </div>
-  )
-
   return (
-    <React.Fragment>
+    <Fragment>
       <ElevationScroll {...props}>
         <AppBar className={classes.navbar}>
           <Toolbar>
@@ -153,16 +83,16 @@ export default function (props) {
               className={classes.menuButton}
               color='inherit'
               aria-label='menu'
-              onClick={toggleDrawer('left', true)}
+              onClick={toggleDrawer(true)}
             >
               <MenuIcon />
             </IconButton>
             <SwipeableDrawer
-              open={state.left}
-              onOpen={toggleDrawer('left', true)}
-              onClose={toggleDrawer('left', false)}
+              open={drawerOpen}
+              onOpen={toggleDrawer(true)}
+              onClose={toggleDrawer(false)}
             >
-              {sideList('left')}
+              <SideBar setDrawerOpen={setDrawerOpen} />
             </SwipeableDrawer >
             <Typography variant='h6' className={classes.title}>
               {props.title}
@@ -189,6 +119,6 @@ export default function (props) {
         </AppBar>
       </ElevationScroll>
       <Toolbar />
-    </React.Fragment>
+    </Fragment>
   )
 }
