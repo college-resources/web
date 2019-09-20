@@ -1,5 +1,4 @@
-import { useState, useContext, forwardRef, cloneElement, Fragment } from 'react'
-import Link from 'next/link'
+import { useState, useContext, cloneElement, Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import AppBar from '@material-ui/core/AppBar'
@@ -12,6 +11,7 @@ import Avatar from '@material-ui/core/Avatar'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Button from '@material-ui/core/Button'
 import UserContext from './UserContext'
+import ButtonLink from './ButtonLink'
 import SideBar from './SideBar'
 
 function ElevationScroll (props) {
@@ -51,14 +51,6 @@ const useStyles = makeStyles(theme => ({
     height: '32px'
   }
 }))
-
-const ButtonLink = forwardRef((props, ref) => (
-  <Link href={props.href} children={(
-    <a {...props} ref={ref} href='#'>
-      {props.children}
-    </a>
-  )} />
-))
 
 export default function (props) {
   const classes = useStyles()

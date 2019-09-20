@@ -1,5 +1,4 @@
-import { useContext, forwardRef, Fragment } from 'react'
-import Link from 'next/link'
+import { useContext, Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -7,26 +6,19 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import Router from 'next/router'
-import UserContext from './UserContext'
 import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
+import UserContext from './UserContext'
+import ButtonLink from './ButtonLink'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   list: {
     width: 250
   }
-}))
-
-const ButtonLink = forwardRef((props, ref) => (
-  <Link href={props.href} children={(
-    <a {...props} ref={ref} href='#'>
-      {props.children}
-    </a>
-  )} />
-))
+})
 
 function ListItemLink (props) {
   return (
@@ -34,7 +26,7 @@ function ListItemLink (props) {
   )
 }
 
-export default function Semester (props) {
+export default function (props) {
   const classes = useStyles()
   const { user, setUser } = useContext(UserContext)
 

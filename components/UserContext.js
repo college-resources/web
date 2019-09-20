@@ -1,9 +1,7 @@
 import { createContext } from 'react'
 
-const UserContext = createContext({
+export default createContext({
   user: null,
   signIn: null,
   signOut: null
 })
-
-export default UserContext

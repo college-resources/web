@@ -1,6 +1,6 @@
-import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import { useState } from 'react'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -76,10 +76,10 @@ const ExpansionPanelSummary = withStyles(theme => ({
   expanded: {}
 }))(MuiExpansionPanelSummary)
 
-export default function Semester (props) {
+export default function (props) {
   const classes = useStyles()
   const rows = props.rows
-  const [expanded, setExpanded] = React.useState('panel1')
+  const [expanded, setExpanded] = useState('panel1')
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)
   }
