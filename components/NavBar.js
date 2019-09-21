@@ -105,7 +105,7 @@ export default function (props) {
                 )}
               </IconButton>
             ) : (
-              <Button color='inherit' href='/login'>Login</Button>
+              <Button color='inherit' component={ButtonLink} href='/login'>Login</Button>
             )}
           </Toolbar>
         </AppBar>
