@@ -65,3 +65,6 @@ typings/
 
 # Visual Studio Code configuration files
 .vscode
+
+# Next.js export folder
+out
