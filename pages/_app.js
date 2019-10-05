@@ -1,6 +1,7 @@
 /* global fetch */
 
-import App, { Container } from 'next/app'
+import { Fragment } from 'react'
+import App from 'next/app'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
 import { ThemeProvider } from '@material-ui/styles'
@@ -56,7 +57,7 @@ class MyApp extends App {
     }
 
     return (
-      <Container>
+      <Fragment>
         <Head>
           <title>{this.state.title} | College Resources</title>
         </Head>
@@ -67,7 +68,7 @@ class MyApp extends App {
             <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
           </UserContext.Provider>
         </ThemeProvider>
-      </Container>
+      </Fragment>
     )
   }
 }
