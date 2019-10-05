@@ -18,7 +18,7 @@
   "author": "College Resources",
   "license": "GPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/project-ile/web/issues"
+    "url": "https://github.com/college-resources/web/issues"
   },
   "homepage": "https://gitlab.com/college-resources/web#readme",
   "dependencies": {
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.6",
+    "npm-check": "^5.9.0",
     "standard": "^13.1.0"
   }
 }
