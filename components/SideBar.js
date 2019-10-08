@@ -63,8 +63,8 @@ export default function (props) {
         <Fragment>
           <Divider />
           <List>
-            {['Settings'].map((text) => (
-              <ListItem button key={text}>
+            {['Settings [TODO]'].map((text) => (
+              <ListItem disabled='true' button key={text}>
                 <ListItemIcon><SettingsIcon /></ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
