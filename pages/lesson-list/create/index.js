@@ -5,8 +5,12 @@ import Grid from '@material-ui/core/Grid'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
+import PlusIcon from '@material-ui/icons/Add'
+import MinusIcon from '@material-ui/icons/Remove'
 import gql from '../../../scripts/graphql'
 import { dynamicSort } from '../../../scripts/sorting'
+import Box from '@material-ui/core/Box'
+import Fab from '@material-ui/core/Fab'
 
 const departmentHandler = () => Promise.resolve(
   gql(`
@@ -70,14 +74,26 @@ export default function Index (props) {
     setValues({ ...values, [name]: event.target.value })
   }
 
+  const semesterChangeHandler = (num) => {
+    const newValue = values.semester + num
+
+    if (newValue < 1) {
+      setValues({ ...values, semester: 1 })
+    } else if (newValue > 10) {
+      setValues({ ...values, semester: 10 })
+    } else {
+      setValues({ ...values, semester: newValue })
+    }
+  }
+
   const semesterValidator = event => {
     const semester = event.target.value
     handleChange('semester')(event)
 
     if (semester < 1) {
-      setValues({ ...values, [semester]: 1 })
+      setValues({ ...values, semester: 1 })
     } else if (semester > 10) {
-      setValues({ ...values, [semester]: 10 })
+      setValues({ ...values, semester: 10 })
     }
   }
 
@@ -125,20 +141,36 @@ export default function Index (props) {
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          required
-          id='lesson-semester'
-          label='Semester'
-          onChange={e => semesterValidator(e)}
-          type='number'
-          value={values.semester}
-          InputLabelProps={{
-            shrink: true
-          }}
-          margin='normal'
-          variant='outlined'
-          fullWidth
-        />
+        <div style={{ width: '100%' }}>
+          <Box display='flex'>
+            <Box flexGrow={1}>
+              <TextField
+                required
+                id='lesson-semester'
+                label='Semester'
+                onChange={e => semesterValidator(e)}
+                type='number'
+                value={values.semester}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                margin='normal'
+                variant='outlined'
+                fullWidth
+              />
+            </Box>
+            <Box ml={1} my='auto'>
+              <Fab color='secondary' aria-label='decrement semester' onClick={() => semesterChangeHandler(-1)}>
+                <MinusIcon />
+              </Fab>
+            </Box>
+            <Box ml={1} my='auto'>
+              <Fab color='primary' aria-label='increment semester' onClick={() => semesterChangeHandler(1)}>
+                <PlusIcon />
+              </Fab>
+            </Box>
+          </Box>
+        </div>
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Button
