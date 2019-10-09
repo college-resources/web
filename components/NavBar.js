@@ -1,4 +1,4 @@
-import { useState, useContext, cloneElement, Fragment } from 'react'
+import { useState, useContext, cloneElement } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import AppBar from '@material-ui/core/AppBar'
@@ -66,7 +66,7 @@ export default function (props) {
   }
 
   return (
-    <Fragment>
+    <>
       <ElevationScroll {...props}>
         <AppBar className={classes.navbar}>
           <Toolbar>
@@ -85,7 +85,7 @@ export default function (props) {
               onClose={toggleDrawer(false)}
             >
               <SideBar setDrawerOpen={setDrawerOpen} />
-            </SwipeableDrawer >
+            </SwipeableDrawer>
             <Typography variant='h6' className={classes.title}>
               {props.title}
             </Typography>
@@ -111,6 +111,6 @@ export default function (props) {
         </AppBar>
       </ElevationScroll>
       <Toolbar />
-    </Fragment>
+    </>
   )
 }

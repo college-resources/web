@@ -1,4 +1,4 @@
-import { useContext, Fragment } from 'react'
+import { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -46,21 +46,21 @@ export default function (props) {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItemLink button href='/' key={'Home'}>
+        <ListItemLink button href='/' key='Home'>
           <ListItemIcon><HomeIcon /></ListItemIcon>
-          <ListItemText primary={'Home'} />
+          <ListItemText primary='Home' />
         </ListItemLink>
-        <ListItemLink button href='/lesson-list' key={'Lesson List'}>
+        <ListItemLink button href='/lesson-list' key='Lesson List'>
           <ListItemIcon><BookIcon /></ListItemIcon>
-          <ListItemText primary={'Lesson List'} />
+          <ListItemText primary='Lesson List' />
         </ListItemLink>
-        <ListItemLink button href='/feeding' key={'Feeding'}>
+        <ListItemLink button href='/feeding' key='Feeding'>
           <ListItemIcon><RestaurantIcon /></ListItemIcon>
-          <ListItemText primary={'Feeding'} />
+          <ListItemText primary='Feeding' />
         </ListItemLink>
       </List>
       {user && (
-        <Fragment>
+        <>
           <Divider />
           <List>
             {['Settings [TODO]'].map((text) => (
@@ -73,16 +73,18 @@ export default function (props) {
           <Divider />
           <List>
             {['Log out'].map((text) => (
-              <ListItem button key={text} onClick={() => {
-                setUser(null)
-                Router.push('/auth/logout')
-              }}>
+              <ListItem
+                button key={text} onClick={() => {
+                  setUser(null)
+                  Router.push('/auth/logout')
+                }}
+              >
                 <ListItemIcon><SignoutIcon /></ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
-        </Fragment>
+        </>
       )}
     </div>
   )

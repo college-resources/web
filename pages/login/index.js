@@ -143,7 +143,7 @@ export default function () {
               </Link>
             </Grid>
             <Grid item>
-              <Link href={'/register'}>
+              <Link href='/register'>
                 <a>Don't have an account? Sign Up</a>
               </Link>
             </Grid>
