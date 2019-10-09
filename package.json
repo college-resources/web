@@ -7,7 +7,8 @@
     "build": "next build",
     "dev": "node bin/www --dev",
     "debug": "node --inspect bin/www --dev",
-    "fix": "npx standard --fix",
+    "fix": "npx standard --fix --parser babel-eslint",
+    "standard": "npx standard --parser babel-eslint",
     "start": "node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -45,6 +46,7 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "babel-plugin-styled-components": "^1.10.6",
     "npm-check": "^5.9.0",
     "standard": "^14.3.1"
