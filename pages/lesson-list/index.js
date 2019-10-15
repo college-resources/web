@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from '@material-ui/core/Container'
 import Semester from '../../components/Semester'
 import gql from '../../scripts/graphql'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
+import UserContext from './../../components/UserContext'
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -33,6 +34,7 @@ const lessonHandler = () => Promise.resolve(
 function Index (props) {
   const [lessons, setLessons] = useState([])
   const classes = useStyles()
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     props.updateTitle('Lesson List')
@@ -45,11 +47,13 @@ function Index (props) {
 
   return (
     <Container>
-      <Link href='/lesson-list/create'>
-        <Button variant='contained' color='primary' className={classes.button}>
+      {user && (
+        <Link href='/lesson-list/create'>
+          <Button variant='contained' color='primary' className={classes.button}>
             Create Lesson
-        </Button>
-      </Link>
+          </Button>
+        </Link>
+      )}
       <div style={{ marginTop: '16px' }}>
         <Semester rows={lessons} />
       </div>
