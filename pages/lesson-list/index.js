@@ -24,14 +24,20 @@ const lessonHandler = () => Promise.resolve(
   gql(`
       query {
         lessons {
+          _id
+          lessonCode
           name
           semester
+          type
+          hoursTheory
+          hoursLab
+          credit
           department {
             name
           }
         }
       }
-    `).then(data => data.lessons && data.lessons.sort(dynamicSortMultiple('semester', 'name')))
+    `).then(data => data.lessons && data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode')))
 )
 
 export default function Index (props) {
@@ -71,7 +77,7 @@ export default function Index (props) {
       )}
       <Grid container spacing={3}>
         {semesters.map((sem, index) => (
-          <Grid item xs={12} sm={6} key={'semester-' + index}>
+          <Grid item xs={12} md={6} key={'semester-' + index}>
             <Semester rows={sem} semester={index} />
           </Grid>
         ))}
