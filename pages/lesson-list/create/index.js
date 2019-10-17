@@ -5,12 +5,12 @@ import Grid from '@material-ui/core/Grid'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
-import PlusIcon from '@material-ui/icons/Add'
-import MinusIcon from '@material-ui/icons/Remove'
-import gql from '../../../scripts/graphql'
-import { dynamicSort } from '../../../scripts/sorting'
 import Box from '@material-ui/core/Box'
 import Fab from '@material-ui/core/Fab'
+import PlusIcon from '@material-ui/icons/Add'
+import MinusIcon from '@material-ui/icons/Remove'
+import { dynamicSort } from '../../../scripts/sorting'
+import gql from '../../../scripts/graphql'
 
 const departmentHandler = () => Promise.resolve(
   gql(`
