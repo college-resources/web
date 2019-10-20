@@ -43,29 +43,35 @@ function a11yProps (index) {
 
 const feedingHandler = () => Promise.resolve(
   gql(`
-      query {
-   feeding {
-    weeks {
-      days {
-        meals {
-          time
-          menu
+  query {
+    feeding {
+      weeks {
+        days {
+          meals {
+            timeStart
+            timeEnd
+            menu
+          }
         }
       }
+      startsFrom
+      name
+      _id
     }
   }
-}
     `).then(data => data.feeding)
 )
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    width: '100%'
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    width: '100%'
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -125,14 +131,20 @@ export default function Index (props) {
         >
           {feeding.map(feed => (
             <MenuItem key={feed._id} value={feed._id}>
-              {feed._id}
+              {feed.name}
             </MenuItem>
           ))}
         </TextField>
       </form>
       <div className={classes.root}>
         <AppBar position='static'>
-          <Tabs value={value} onChange={handleChange2} aria-label='simple tabs example' variant='scrollable' scrollButtons='on'>
+          <Tabs
+            value={value}
+            onChange={handleChange2}
+            aria-label='simple tabs example'
+            variant='scrollable'
+            scrollButtons='auto'
+          >
             <Tab label='Day One' {...a11yProps(0)} />
             <Tab label='Day Two' {...a11yProps(1)} />
             <Tab label='Day Three' {...a11yProps(2)} />
@@ -142,9 +154,28 @@ export default function Index (props) {
             <Tab label='Day Seven' {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
+        {feeding.map(feed => (
+          <TabPanel value={value} key={feed.weeks[0].days[0]} index={0}>
+            <div>
+              <b>Breakfast</b><br />
+            Consists of: {feed.weeks[0].days[0].meals[0].menu}<br />
+            From: {feed.weeks[0].days[0].meals[0].timeStart}<br />
+            To: {feed.weeks[0].days[0].meals[0].timeEnd}<br />
+            </div><br />
+            <div>
+              <b>Lunch</b><br />
+              Consists of: {feed.weeks[0].days[0].meals[1].menu}<br />
+              From: {feed.weeks[0].days[0].meals[1].timeStart}<br />
+              To: {feed.weeks[0].days[0].meals[1].timeEnd}<br />
+            </div><br />
+            <div>
+              <b>Dinner</b><br />
+              Consists of: {feed.weeks[0].days[0].meals[2].menu}<br />
+              From: {feed.weeks[0].days[0].meals[2].timeStart}<br />
+              To: {feed.weeks[0].days[0].meals[2].timeEnd}<br />
+            </div>
+          </TabPanel>
+        ))}
         <TabPanel value={value} index={1}>
           Item Two
         </TabPanel>
