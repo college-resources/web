@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
 import NavBar from '../components/NavBar'
 import UserContext from '../components/UserContext'
+import { version } from '../lib/version'
 
 class MyApp extends App {
   constructor (props) {
@@ -46,6 +47,8 @@ class MyApp extends App {
         .then(data => this.setState({ user: data.profile }))
         .catch(err => console.error(err.message))
     }
+
+    console.log('v' + version)
   }
 
   render () {

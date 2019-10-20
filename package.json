@@ -4,12 +4,12 @@
   "description": "College Resources website",
   "main": "index.js",
   "scripts": {
-    "build": "next build",
-    "dev": "node bin/www --dev",
-    "debug": "node --inspect bin/www --dev",
+    "build": "genversion --es6 --semi lib/version.js && next build",
+    "dev": "genversion --es6 --semi lib/version.js && node bin/www --dev",
+    "debug": "genversion --es6 --semi lib/version.js && node --inspect bin/www --dev",
     "fix": "npx standard --fix --parser babel-eslint",
     "standard": "npx standard --parser babel-eslint",
-    "start": "node bin/www",
+    "start": "genversion --es6 --semi lib/version.js && node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
     "express-session": "^1.16.2",
+    "genversion": "^2.2.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "jsonwebtoken": "^8.5.1",
