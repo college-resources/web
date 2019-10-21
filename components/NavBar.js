@@ -96,7 +96,7 @@ export default function (props) {
                 aria-haspopup='true'
                 color='inherit'
                 component={ButtonLink}
-                href='/user'
+                href='/profile'
               >
                 {user.picture ? (
                   <Avatar alt='account picture' src={user.picture} className={classes.avatar} />
