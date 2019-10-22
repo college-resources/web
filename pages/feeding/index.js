@@ -154,46 +154,30 @@ export default function Index (props) {
             <Tab label='Day Seven' {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        {feeding.map(feed => (
-          <TabPanel value={value} key={feed.weeks[0].days[0]} index={0}>
-            <div>
-              <b>Breakfast</b><br />
-            Consists of: {feed.weeks[0].days[0].meals[0].menu}<br />
-            From: {feed.weeks[0].days[0].meals[0].timeStart}<br />
-            To: {feed.weeks[0].days[0].meals[0].timeEnd}<br />
-            </div><br />
-            <div>
-              <b>Lunch</b><br />
-              Consists of: {feed.weeks[0].days[0].meals[1].menu}<br />
-              From: {feed.weeks[0].days[0].meals[1].timeStart}<br />
-              To: {feed.weeks[0].days[0].meals[1].timeEnd}<br />
-            </div><br />
-            <div>
-              <b>Dinner</b><br />
-              Consists of: {feed.weeks[0].days[0].meals[2].menu}<br />
-              From: {feed.weeks[0].days[0].meals[2].timeStart}<br />
-              To: {feed.weeks[0].days[0].meals[2].timeEnd}<br />
-            </div>
-          </TabPanel>
+        {feeding.map((week) => (
+          week.days.map((day, index) => (
+            <TabPanel value={value} key={index} index={index}>
+              <div>
+                <b>Breakfast</b><br />
+            Consists of: {day.meals[0].menu}<br />
+            From: {day.meals[0].timeStart}<br />
+            To: {day.meals[0].timeEnd}<br />
+              </div><br />
+              <div>
+                <b>Lunch</b><br />
+              Consists of: {day.meals[1].menu}<br />
+              From: {day.meals[1].timeStart}<br />
+              To: {day.meals[1].timeEnd}<br />
+              </div><br />
+              <div>
+                <b>Dinner</b><br />
+              Consists of: {day.meals[2].menu}<br />
+              From: {day.meals[2].timeStart}<br />
+              To: {day.meals[2].timeEnd}<br />
+              </div>
+            </TabPanel>
+          ))
         ))}
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          Item Seven
-        </TabPanel>
       </div>
     </Container>
   )
