@@ -76,7 +76,7 @@ export default function () {
       .then(res => res.json())
       .then(json => {
         setUser(json)
-        Router.push('/user')
+        Router.push('/profile')
       })
       .catch(err => console.log(err.message)) // TODO: Implement error handling
   }
