@@ -86,6 +86,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+function formatMs (ms) {
+  const [time] = new Date(ms).toUTCString().match(/(\d\d):(\d\d)/)
+  return time
+}
+
 export default function Index (props) {
   const classes = useStyles()
   const [feedings, setFeedings] = useState([])
@@ -152,22 +157,25 @@ export default function Index (props) {
           week.days.map((day, index) => (
             <TabPanel value={value} key={index} index={index}>
               <div>
-                <b>Breakfast</b><br />
-          Consists of: {day.meals[0].menu}<br />
-          From: {day.meals[0].timeStart}<br />
-          To: {day.meals[0].timeEnd}<br />
-              </div><br />
+                <b>Breakfast</b>
+                <p>
+                  Consists of: {day.meals[0].menu}<br />
+                  Time: {formatMs(day.meals[0].timeStart)} - {formatMs(day.meals[0].timeEnd)}
+                </p>
+              </div>
               <div>
-                <b>Lunch</b><br />
-            Consists of: {day.meals[1].menu}<br />
-            From: {day.meals[1].timeStart}<br />
-            To: {day.meals[1].timeEnd}<br />
-              </div><br />
+                <b>Lunch</b>
+                <p>
+                  Consists of: {day.meals[1].menu}<br />
+                  Time: {formatMs(day.meals[1].timeStart)} - {formatMs(day.meals[1].timeEnd)}
+                </p>
+              </div>
               <div>
-                <b>Dinner</b><br />
-            Consists of: {day.meals[2].menu}<br />
-            From: {day.meals[2].timeStart}<br />
-            To: {day.meals[2].timeEnd}<br />
+                <b>Dinner</b>
+                <p>
+                  Consists of: {day.meals[2].menu}<br />
+                  Time: {formatMs(day.meals[2].timeStart)} - {formatMs(day.meals[2].timeEnd)}
+                </p>
               </div>
             </TabPanel>
           ))
