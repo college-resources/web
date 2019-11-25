@@ -88,7 +88,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Index (props) {
   const classes = useStyles()
-  const [feeding, setFeeding] = useState([])
+  const [feedings, setFeedings] = useState([])
+  const [selectedFeeding, setSelectedFeeding] = useState([])
   const [values, setValues] = useState({
     selectedFeedingId: ''
   })
@@ -98,7 +99,7 @@ export default function Index (props) {
     props.updateTitle('Feeding')
     feedingHandler().then(gqlFeeding => {
       if (gqlFeeding) {
-        setFeeding(gqlFeeding)
+        setFeedings(gqlFeeding)
       }
     })
   }, [])
@@ -129,7 +130,7 @@ export default function Index (props) {
           margin='normal'
           variant='outlined'
         >
-          {feeding.map(feed => (
+          {feedings.map(feed => (
             <MenuItem key={feed._id} value={feed._id}>
               {feed.name}
             </MenuItem>
@@ -154,28 +155,30 @@ export default function Index (props) {
             <Tab label='Day Seven' {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        {feeding.map((week) => (
-          week.days.map((day, index) => (
-            <TabPanel value={value} key={index} index={index}>
-              <div>
-                <b>Breakfast</b><br />
+        {feedings.map(feed => (
+          feed.weeks.map(week => (
+            week.days.map((day, index) => (
+              <TabPanel value={value} key={index} index={index}>
+                <div>
+                  <b>Breakfast</b><br />
             Consists of: {day.meals[0].menu}<br />
             From: {day.meals[0].timeStart}<br />
             To: {day.meals[0].timeEnd}<br />
-              </div><br />
-              <div>
-                <b>Lunch</b><br />
+                </div><br />
+                <div>
+                  <b>Lunch</b><br />
               Consists of: {day.meals[1].menu}<br />
               From: {day.meals[1].timeStart}<br />
               To: {day.meals[1].timeEnd}<br />
-              </div><br />
-              <div>
-                <b>Dinner</b><br />
+                </div><br />
+                <div>
+                  <b>Dinner</b><br />
               Consists of: {day.meals[2].menu}<br />
               From: {day.meals[2].timeStart}<br />
               To: {day.meals[2].timeEnd}<br />
-              </div>
-            </TabPanel>
+                </div>
+              </TabPanel>
+            ))
           ))
         ))}
       </div>
