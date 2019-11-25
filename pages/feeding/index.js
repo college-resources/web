@@ -10,6 +10,10 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -94,8 +98,9 @@ function formatMs (ms) {
 export default function Index (props) {
   const classes = useStyles()
   const [feedings, setFeedings] = useState([])
-  const [selectedFeedingIndex, setSelectedFeedingIndex] = useState(undefined)
-  const [value, setValue] = React.useState(0)
+  const [selectedFeedingIndex, setSelectedFeedingIndex] = useState(-1)
+  const [value, setValue] = useState(0)
+  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0)
 
   useEffect(() => {
     props.updateTitle('Feeding')
@@ -135,6 +140,25 @@ export default function Index (props) {
           ))}
         </TextField>
       </form>
+      <FormControl component='fieldset'>
+        <RadioGroup
+          aria-label='position'
+          name='position'
+          value={selectedWeekIndex}
+          onChange={event => setSelectedWeekIndex(parseInt(event.target.value))}
+          row
+        >
+          {(selectedFeedingIndex !== -1) && feedings[selectedFeedingIndex].weeks.map((week, index) => (
+            <FormControlLabel
+              key={'week-' + index}
+              value={index}
+              control={<Radio color='primary' />}
+              label={'Week ' + (index + 1)}
+              labelPlacement='start'
+            />
+          ))}
+        </RadioGroup>
+      </FormControl>
       <div className={classes.root}>
         <AppBar position='static'>
           <Tabs
@@ -153,32 +177,30 @@ export default function Index (props) {
             <Tab label='Day Seven' {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        {(selectedFeedingIndex !== undefined) && feedings[selectedFeedingIndex].weeks.map(week => (
-          week.days.map((day, index) => (
-            <TabPanel value={value} key={index} index={index}>
-              <div>
-                <b>Breakfast</b>
-                <p>
+        {(selectedFeedingIndex !== -1) && feedings[selectedFeedingIndex].weeks[selectedWeekIndex].days.map((day, index) => (
+          <TabPanel value={value} key={index} index={index}>
+            <div>
+              <b>Breakfast</b>
+              <p>
                   Consists of: {day.meals[0].menu}<br />
                   Time: {formatMs(day.meals[0].timeStart)} - {formatMs(day.meals[0].timeEnd)}
-                </p>
-              </div>
-              <div>
-                <b>Lunch</b>
-                <p>
+              </p>
+            </div>
+            <div>
+              <b>Lunch</b>
+              <p>
                   Consists of: {day.meals[1].menu}<br />
                   Time: {formatMs(day.meals[1].timeStart)} - {formatMs(day.meals[1].timeEnd)}
-                </p>
-              </div>
-              <div>
-                <b>Dinner</b>
-                <p>
+              </p>
+            </div>
+            <div>
+              <b>Dinner</b>
+              <p>
                   Consists of: {day.meals[2].menu}<br />
                   Time: {formatMs(day.meals[2].timeStart)} - {formatMs(day.meals[2].timeEnd)}
-                </p>
-              </div>
-            </TabPanel>
-          ))
+              </p>
+            </div>
+          </TabPanel>
         ))}
       </div>
     </Container>
