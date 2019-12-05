@@ -4,6 +4,7 @@ const router = express.Router()
 const passport = require('passport')
 const util = require('util')
 const querystring = require('querystring')
+const { check, validationResult } = require('express-validator')
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
@@ -21,6 +22,33 @@ router.get('/login/:connection', (req, res, next) => passport.authenticate('auth
   scope: process.env.AUTH0_SCOPE
 })(req, res, next), function (req, res) {
   res.redirect('/')
+})
+
+router.post('/register', [
+  check('email').isEmail(),
+  check('given_name').isLength(1),
+  check('family_name').isLength(1),
+  check('password').isLength(8)
+], async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() })
+  }
+
+  try {
+    const user = await req.auth0.managementClient.createUser({
+      email: req.body.email,
+      email_verified: true, // TODO: Implement Email verification support
+      given_name: req.body.given_name,
+      family_name: req.body.family_name,
+      password: req.body.password,
+      connection: 'Username-Password-Authentication'
+    })
+
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.post('/login', passport.authenticate('password', {
