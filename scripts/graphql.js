@@ -1,6 +1,5 @@
-/* global fetch */
-
 import Router from 'next/router'
+import fetch from 'isomorphic-unfetch'
 
 export default function (query) {
   return new Promise((resolve, reject) => {

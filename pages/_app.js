@@ -1,10 +1,9 @@
-/* global fetch */
-
 import App from 'next/app'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import fetch from 'isomorphic-unfetch'
 import theme from '../src/theme'
 import NavBar from '../components/NavBar'
 import UserContext from '../components/UserContext'

@@ -1,6 +1,5 @@
-/* global fetch */
-
 import Router from 'next/router'
+import fetch from 'isomorphic-unfetch'
 
 export function login (ctx, email, passwd) {
   fetch('auth/login', {
