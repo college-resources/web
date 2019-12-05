@@ -1,8 +1,5 @@
-/* global fetch */
-
 import React from 'react'
 import Link from 'next/link'
-import Router from 'next/router'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -16,6 +13,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import UserContext from '../../components/UserContext'
 import { red } from '@material-ui/core/colors'
+import { login } from '../../scripts/auth'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -62,23 +60,7 @@ export default function () {
   const { setUser } = React.useContext(UserContext)
 
   const loginOnClickHandler = () => {
-    fetch('auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        passwd
-      }),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        setUser(json)
-        Router.push('/profile')
-      })
-      .catch(err => console.log(err.message)) // TODO: Implement error handling
+    login(setUser, email, passwd)
   }
 
   const loginWithGoogleOnClickHandler = () => {

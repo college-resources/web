@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -8,6 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import UserContext from '../../components/UserContext'
+import { register } from '../../scripts/auth'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -40,6 +43,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp () {
   const classes = useStyles()
+  const [givenName, setGivenName] = React.useState('')
+  const [familyName, setFamilyName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const { setUser } = React.useContext(UserContext)
+
+  const signUpOnClickHandler = () => {
+    register(setUser, email, givenName, familyName, password)
+  }
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -55,14 +67,16 @@ export default function SignUp () {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete='fname'
-                name='firstName'
+                autoComplete='given-name'
+                name='fname'
                 variant='outlined'
                 required
                 fullWidth
                 id='firstName'
                 label='First Name'
                 autoFocus
+                value={givenName}
+                onChange={e => setGivenName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -72,8 +86,10 @@ export default function SignUp () {
                 fullWidth
                 id='lastName'
                 label='Last Name'
-                name='lastName'
-                autoComplete='lname'
+                name='lname'
+                autoComplete='family-name'
+                value={familyName}
+                onChange={e => setFamilyName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -85,6 +101,8 @@ export default function SignUp () {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -96,16 +114,19 @@ export default function SignUp () {
                 label='Password'
                 type='password'
                 id='password'
-                autoComplete='current-password'
+                autoComplete='new-password'
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
             </Grid>
           </Grid>
           <Button
-            type='submit'
+            type='button'
             fullWidth
             variant='contained'
             color='primary'
             className={classes.submit}
+            onClick={signUpOnClickHandler}
           >
             Sign Up
           </Button>
