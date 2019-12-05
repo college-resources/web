@@ -18,7 +18,11 @@ module.exports = new LocalStrategy(
 
       const accessToken = userData.access_token
       const refreshToken = userData.refresh_token
-      const profile = await req.auth0.authenticationClient.getProfile(accessToken)
+      let profile = await req.auth0.authenticationClient.getProfile(accessToken)
+
+      if (profile && profile._json) {
+        profile = profile._json
+      }
 
       const info = {
         accessToken,

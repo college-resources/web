@@ -9,6 +9,10 @@ module.exports = new Auth0Strategy(
       process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/auth/callback'
   },
   function (accessToken, refreshToken, profile, done) {
+    if (profile && profile._json) {
+      profile = profile._json
+    }
+
     const info = {
       accessToken,
       refreshToken,

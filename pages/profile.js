@@ -44,33 +44,39 @@ export default function (props) {
             <Paper className={classes.paper}>
               <Avatar alt='account picture' src={user.picture} className={classes.avatar} />
               <TextField
-                id='email-input-'
-                label="Display Name"
-                defaultValue={user.displayName}
+                label='First Name'
+                defaultValue={user.given_name}
+                InputProps={{
+                  readOnly: true
+                }}
+                variant='outlined'
+                fullWidth
+                margin='normal'
+              />
+              <TextField
+                label='Last Name'
+                defaultValue={user.family_name}
+                InputProps={{
+                  readOnly: true
+                }}
+                variant='outlined'
+                fullWidth
+                margin='normal'
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper className={classes.paper}>
+              <Box fontSize='h6.fontSize' fontWeight='fontWeightMedium'>Email Address</Box>
+              <TextField
+                defaultValue={user.email}
+                margin='normal'
                 InputProps={{
                   readOnly: true
                 }}
                 variant='outlined'
                 fullWidth
               />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper className={classes.paper}>
-              <Box fontSize='h6.fontSize' fontWeight='fontWeightMedium'>Email Addresses</Box>
-              {user.emails.map((email, index) => (
-                <TextField
-                  id={'email-input-' + index}
-                  defaultValue={email.value}
-                  margin='normal'
-                  InputProps={{
-                    readOnly: true
-                  }}
-                  key={'email-' + index}
-                  variant='outlined'
-                  fullWidth
-                />
-              ))}
             </Paper>
           </Grid>
         </Grid>
