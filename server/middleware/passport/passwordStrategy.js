@@ -30,6 +30,8 @@ module.exports = new LocalStrategy(
         profile
       }
 
+      await req.auth0.syncProfileWithApi(info)
+
       done(null, info)
     } catch (err) {
       done(err)
