@@ -124,7 +124,7 @@ export default function Index (props) {
           className={classes.textField}
           label='Feeding'
           value={selectedFeedingIndex}
-          onChange={event => setSelectedFeedingIndex(event.target.value)}
+          onChange={event => { setSelectedFeedingIndex(event.target.value); setSelectedWeekIndex(0) }}
           SelectProps={{
             MenuProps: {
               className: classes.menu
