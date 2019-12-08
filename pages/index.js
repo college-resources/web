@@ -39,7 +39,7 @@ const findLastAndNextMeal = feeding => {
     let lastMeal
     let nextMeal
 
-    const currentTimeMs = (Date.now() + new Date().getTimezoneOffset() * 60 * 1000) % (24 * 3600 * 1000)
+    const currentTimeMs = (Date.now() - new Date().getTimezoneOffset() * 60 * 1000) % (24 * 3600 * 1000)
 
     day.meals.forEach(meal => {
       if (meal.timeStart < currentTimeMs) {
@@ -49,7 +49,7 @@ const findLastAndNextMeal = feeding => {
         }
       }
 
-      if (meal.timeStart > currentTimeMs && !currentTimeMs) {
+      if (meal.timeStart > currentTimeMs && !nextMeal) {
         nextMeal = meal
       }
     })
