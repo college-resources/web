@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import fetch from 'isomorphic-unfetch'
 import theme from '../src/theme'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/navigation/NavBar'
 import UserContext from '../components/UserContext'
 import { version } from '../lib/version'
 

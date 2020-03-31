@@ -1,24 +1,17 @@
 import { useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import Router from 'next/router'
 import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import Router from 'next/router'
 import HomeIcon from '@material-ui/icons/Home'
 import BookIcon from '@material-ui/icons/Book'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
-import UserContext from './UserContext'
-import ButtonLink from './ButtonLink'
-
-const useStyles = makeStyles({
-  list: {
-    width: 250
-  }
-})
+import Divider from '@material-ui/core/Divider'
+import UserContext from '../UserContext'
+import ButtonLink from '../ButtonLink'
 
 function ListItemLink (props) {
   return (
@@ -26,25 +19,11 @@ function ListItemLink (props) {
   )
 }
 
-export default function (props) {
-  const classes = useStyles()
+export default function () {
   const { user, setUser } = useContext(UserContext)
 
-  const toggleDrawer = (open) => event => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return
-    }
-
-    props.setDrawerOpen(open)
-  }
-
   return (
-    <div
-      className={classes.list}
-      role='presentation'
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <>
       <List>
         <ListItemLink button href='/' key='Home'>
           <ListItemIcon><HomeIcon /></ListItemIcon>
@@ -86,6 +65,6 @@ export default function (props) {
           </List>
         </>
       )}
-    </div>
+    </>
   )
 }
