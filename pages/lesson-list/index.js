@@ -9,6 +9,7 @@ import groupBy from '../../scripts/groupBy'
 import gql from '../../scripts/graphql'
 import Semester from '../../components/Semester'
 import UserContext from '../../components/UserContext'
+import { Box } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -72,16 +73,17 @@ export default function Index (props) {
               Create Lesson
             </Button>
           </Link>
-          <br /><br />
         </>
       )}
-      <Grid container spacing={3}>
-        {semesters.map((sem, index) => (
-          <Grid item xs={12} md={6} key={'semester-' + index}>
-            <Semester rows={sem} semester={index} />
-          </Grid>
-        ))}
-      </Grid>
+      <Box mt={2}>
+        <Grid container spacing={3}>
+          {semesters.map((sem, index) => (
+            <Grid item xs={12} md={6} key={'semester-' + index}>
+              <Semester rows={sem} semester={index} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Container>
   )
 }
