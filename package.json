@@ -14,45 +14,45 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/college-resources/web.git"
+    "url": "git+https://github.com/college-resources/web.git"
   },
   "author": "College Resources",
   "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/college-resources/web/issues"
   },
-  "homepage": "https://gitlab.com/college-resources/web#readme",
+  "homepage": "https://github.com/college-resources/web#readme",
   "dependencies": {
-    "@material-ui/core": "^4.5.0",
-    "@material-ui/icons": "^4.4.3",
-    "@material-ui/styles": "^4.5.0",
-    "apollo-boost": "^0.4.4",
-    "auth0": "^2.19.0",
-    "dotenv": "^8.0.0",
+    "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.9.6",
+    "apollo-boost": "^0.4.7",
+    "auth0": "^2.24.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
-    "express-session": "^1.16.2",
-    "express-validator": "^6.3.0",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
     "genversion": "^2.2.0",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
-    "jwks-rsa": "^1.6.0",
-    "next": "^9.1.1",
-    "passport": "^0.4.0",
-    "passport-auth0": "^1.2.1",
+    "jwks-rsa": "^1.7.0",
+    "next": "^9.3.3",
+    "passport": "^0.4.1",
+    "passport-auth0": "^1.3.2",
     "passport-local": "^1.0.0",
-    "react": "^16.8.6",
-    "react-apollo": "^3.0.0",
-    "react-dom": "^16.8.6",
+    "react": "^16.13.1",
+    "react-apollo": "^3.1.3",
+    "react-dom": "^16.13.1",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-styled-components": "^1.10.6",
-    "npm-check": "^5.9.0",
-    "standard": "^14.3.1"
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "npm-check": "^5.9.2",
+    "standard": "^14.3.3"
   },
   "standard": {
     "parser": "babel-eslint"
