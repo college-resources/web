@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -13,6 +13,7 @@ import SwipeableBar from './SwipeableBar'
 import PermanentBar from './PermanentBar'
 import UserContext from '../UserContext'
 import ButtonLink from '../ButtonLink'
+import { useChangeTheme } from '../ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   navbar: {
@@ -28,14 +29,19 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('xl')]: {
       display: 'none'
     },
+    color: theme.palette.common.white,
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    color: theme.palette.common.white
   },
   avatar: {
     width: '32px',
     height: '32px'
+  },
+  button: {
+    color: theme.palette.common.white
   }
 }))
 
@@ -45,6 +51,14 @@ export default function (props) {
   const classes = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const { user } = useContext(UserContext)
+
+  const theme = useTheme()
+  const changeTheme = useChangeTheme()
+  const handleTogglePaletteType = () => {
+    const paletteType = theme.palette.type === 'light' ? 'dark' : 'light'
+
+    changeTheme({ paletteType })
+  }
 
   const toggleDrawer = (open) => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -80,6 +94,9 @@ export default function (props) {
           <Typography variant='h6' className={classes.title}>
             {props.title}
           </Typography>
+          <Button color='inherit' onClick={handleTogglePaletteType} className={classes.button}>
+            Theme toggle
+          </Button>
           {user ? (
             <IconButton
               aria-label='account of current user'
@@ -96,7 +113,7 @@ export default function (props) {
               )}
             </IconButton>
           ) : (
-            <Button color='inherit' component={ButtonLink} href='/login'>Login</Button>
+            <Button color='inherit' component={ButtonLink} href='/login' className={classes.button}>Login</Button>
           )}
         </Toolbar>
       </AppBar>

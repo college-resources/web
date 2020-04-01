@@ -1,7 +1,7 @@
 import App from 'next/app'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
-import { ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider } from '../components/ThemeContext'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import fetch from 'isomorphic-unfetch'
 import theme from '../src/theme'
