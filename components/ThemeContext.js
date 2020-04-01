@@ -64,17 +64,18 @@ export function ThemeProvider (props) {
           type: paletteType,
           primary: {
             dark: indigo[800],
-            main: paletteType === 'light' ? indigo[700] : indigo[200],
+            main: indigo[700],
             light: indigo[600]
           },
           secondary: {
-            main: paletteType === 'light' ? indigo[700] : indigo[200]
+            main: indigo[700]
           },
           error: {
             main: red.A400
           },
           background: {
-            default: paletteType === 'light' ? '#fff' : '#36393f'
+            default: paletteType === 'light' ? '#fff' : '#2f3136',
+            tertiary: paletteType === 'light' ? '#fff' : '#202225'
           },
           text: {
             permanentLight: '#dcddde',
