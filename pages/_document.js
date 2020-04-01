@@ -54,13 +54,8 @@ MyDocument.getInitialProps = async ctx => {
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      // eslint-disable-next-line react/jsx-no-undef
-      <React.Fragment key='styles'>
-        {initialProps.styles}
-        {sheets.getStyleElement()}
-      </React.Fragment>
-    ]
+    // eslint-disable-next-line no-undef
+    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()]
   }
 }
 
