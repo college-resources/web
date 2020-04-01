@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('lg')]: {
       display: 'none'
     },
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundColor: theme.palette.background.tertiary
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar
