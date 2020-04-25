@@ -50,14 +50,14 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-styled-components": "^1.10.6",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^25.4.0",
-    "npm-check": "^5.9.0",
+    "npm-check": "^5.9.2",
     "react-test-renderer": "^16.13.1",
-    "standard": "^14.3.1"
+    "standard": "^14.3.3"
   },
   "standard": {
     "parser": "babel-eslint",
