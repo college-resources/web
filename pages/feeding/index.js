@@ -78,6 +78,14 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   textField: {
+    '& label.Mui-focused': {
+      color: theme.palette.type === 'dark' && theme.palette.common.white
+    },
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: 'gray'
+      }
+    },
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '100%'
