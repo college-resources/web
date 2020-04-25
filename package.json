@@ -64,7 +64,8 @@
     "globals": [
       "it",
       "describe",
-      "expect"
+      "expect",
+      "mount"
     ]
   }
 }
