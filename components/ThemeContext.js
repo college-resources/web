@@ -65,7 +65,8 @@ export function ThemeProvider (props) {
           primary: {
             dark: indigo[800],
             main: indigo[700],
-            light: indigo[600]
+            light: indigo[600],
+            level3: indigo[500]
           },
           secondary: {
             main: indigo[700]
