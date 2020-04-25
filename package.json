@@ -10,7 +10,8 @@
     "fix": "npx standard --fix --parser babel-eslint",
     "standard": "npx standard --parser babel-eslint",
     "start": "genversion --es6 --semi lib/version.js && node bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -51,10 +52,19 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "babel-plugin-styled-components": "^1.10.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.4.0",
     "npm-check": "^5.9.0",
+    "react-test-renderer": "^16.13.1",
     "standard": "^14.3.1"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "it",
+      "describe",
+      "expect"
+    ]
   }
 }
