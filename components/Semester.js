@@ -13,36 +13,36 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { lightBlue } from '@material-ui/core/colors'
 
 const StyledTableCell = withStyles(theme => ({
+  root: {
+    borderBottom: 0
+  },
   head: {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white
-  },
-  body: {
-    fontSize: 14
   }
-}))(TableCell)
+})) (TableCell)
 
-const StyledTableRow = withStyles(() => ({
+const StyledTableRow = withStyles(theme => ({
   root: {
     '&:nth-of-type(even)': {
-      backgroundColor: lightBlue[50]
+      backgroundColor: theme.palette.type === 'light' ? lightBlue[50] : theme.palette.primary.light
     },
     '&:nth-of-type(odd)': {
-      backgroundColor: lightBlue[100]
+      backgroundColor: theme.palette.type === 'light' ? lightBlue[100] : theme.palette.primary.level3
     }
   }
-}))(TableRow)
+})) (TableRow)
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%'
   },
   icon: {
-    color: 'white'
+    color: theme.palette.common.white
   },
   summary: {
-    backgroundColor: theme.palette.secondary.dark,
-    color: 'white'
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white
   }
 }))
 
@@ -78,7 +78,7 @@ export default function (props) {
                 <StyledTableCell rowSpan='2' style={{ minWidth: '16px', width: '32px' }} align='center'>Κωδ.</StyledTableCell>
                 <StyledTableCell rowSpan='2' style={{ minWidth: '10rem' }}>Τίτλος</StyledTableCell>
                 <StyledTableCell rowSpan='2' style={{ minWidth: '16px', width: '32px' }} align='center'>Είδος</StyledTableCell>
-                <StyledTableCell colSpan='2' style={{ minWidth: '16px', width: '32px' }} align='center'>Ώρες</StyledTableCell>
+                <StyledTableCell colSpan='2' style={{ minWidth: '16px', width: '32px', borderBottom: '1px solid rgba(224, 224, 224, 1)' }} align='center'>Ώρες</StyledTableCell>
                 <StyledTableCell rowSpan='2' style={{ minWidth: '16px', width: '32px' }} align='center'>Π.Μ.</StyledTableCell>
               </TableRow>
               <TableRow>
