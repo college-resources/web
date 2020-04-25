@@ -4,12 +4,12 @@
   "description": "College Resources website",
   "main": "index.js",
   "scripts": {
-    "build": "genversion --es6 --semi lib/version.js && next build",
-    "dev": "genversion --es6 --semi lib/version.js && node bin/www --dev",
-    "debug": "genversion --es6 --semi lib/version.js && node --inspect bin/www --dev",
+    "build": "genversion --es6 lib/version.js && next build",
+    "dev": "genversion --es6 lib/version.js && node bin/www --dev",
+    "debug": "genversion --es6 lib/version.js && node --inspect bin/www --dev",
     "fix": "npx standard --fix --parser babel-eslint",
     "standard": "npx standard --parser babel-eslint",
-    "start": "genversion --es6 --semi lib/version.js && node bin/www",
+    "start": "genversion --es6 lib/version.js && node bin/www",
     "test": "jest",
     "test:watch": "npm run test -- --watch"
   },
