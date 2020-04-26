@@ -20,7 +20,7 @@ const StyledTableCell = withStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white
   }
-})) (TableCell)
+}))(TableCell)
 
 const StyledTableRow = withStyles(theme => ({
   root: {
@@ -31,7 +31,7 @@ const StyledTableRow = withStyles(theme => ({
       backgroundColor: theme.palette.type === 'light' ? lightBlue[100] : theme.palette.primary.level3
     }
   }
-})) (TableRow)
+}))(TableRow)
 
 const useStyles = makeStyles(theme => ({
   root: {
