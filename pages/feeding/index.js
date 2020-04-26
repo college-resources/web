@@ -14,6 +14,7 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
+import formatMsTo24HourClock from '../../scripts/formatMsTo24HourClock'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -97,11 +98,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   }
 }))
-
-function formatMs (ms) {
-  const [time] = new Date(ms).toUTCString().match(/(\d\d):(\d\d)/)
-  return time
-}
 
 export default function Index (props) {
   const classes = useStyles()
@@ -191,21 +187,21 @@ export default function Index (props) {
               <b>Breakfast</b>
               <p>
                   Consists of: {day.meals[0].menu}<br />
-                  Time: {formatMs(day.meals[0].timeStart)} - {formatMs(day.meals[0].timeEnd)}
+                  Time: {formatMsTo24HourClock(day.meals[0].timeStart)} - {formatMsTo24HourClock(day.meals[0].timeEnd)}
               </p>
             </div>
             <div>
               <b>Lunch</b>
               <p>
                   Consists of: {day.meals[1].menu}<br />
-                  Time: {formatMs(day.meals[1].timeStart)} - {formatMs(day.meals[1].timeEnd)}
+                  Time: {formatMsTo24HourClock(day.meals[1].timeStart)} - {formatMsTo24HourClock(day.meals[1].timeEnd)}
               </p>
             </div>
             <div>
               <b>Dinner</b>
               <p>
                   Consists of: {day.meals[2].menu}<br />
-                  Time: {formatMs(day.meals[2].timeStart)} - {formatMs(day.meals[2].timeEnd)}
+                  Time: {formatMsTo24HourClock(day.meals[2].timeStart)} - {formatMsTo24HourClock(day.meals[2].timeEnd)}
               </p>
             </div>
           </TabPanel>
