@@ -84,6 +84,20 @@ export function ThemeProvider (props) {
             reverse: paletteType === 'light' ? '#dcddde' : 'black'
           },
           ...paletteColors
+        },
+        typography: {
+          fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"'
+          ].join(',')
         }
       }
     )
