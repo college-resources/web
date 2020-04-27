@@ -66,7 +66,9 @@ class MyApp extends App {
           <CssBaseline />
           <UserContext.Provider value={userValue}>
             <NavBar title={this.state.title} />
-            <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
+            <Box mt={2}>
+              <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
+            </Box>
           </UserContext.Provider>
         </ThemeProvider>
       </>
