@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
-import gql from '../../scripts/graphql'
 import MenuItem from '@material-ui/core/MenuItem'
-import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -14,7 +12,9 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
+import PropTypes from 'prop-types'
 import formatMsTo24HourClock from '../../scripts/formatMsTo24HourClock'
+import gql from '../../scripts/graphql'
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -28,7 +28,7 @@ function TabPanel (props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      <Box p={7}>{children}</Box>
+      <Box p={3}>{children}</Box>
     </Typography>
   )
 }
@@ -41,8 +41,8 @@ TabPanel.propTypes = {
 
 function a11yProps (index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
+    id: `day-tab-${index}`,
+    'aria-controls': `day-tabpanel-${index}`
   }
 }
 
@@ -71,12 +71,12 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    width: '100%'
+    marginTop: '8px',
+    marginBottom: '8px'
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
-    width: '100%'
+    flexWrap: 'wrap'
   },
   textField: {
     '& label.Mui-focused': {
@@ -87,23 +87,22 @@ const useStyles = makeStyles(theme => ({
         borderColor: 'gray'
       }
     },
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
     width: '100%'
+  },
+  formControl: {
+    marginTop: '8px',
+    marginBottom: '8px'
   },
   dense: {
     marginTop: theme.spacing(2)
-  },
-  menu: {
-    width: '100%'
   }
 }))
 
 export default function Index (props) {
   const classes = useStyles()
   const [feedings, setFeedings] = useState([])
-  const [selectedFeedingIndex, setSelectedFeedingIndex] = useState(-1)
-  const [value, setValue] = useState(0)
+  const [selectedFeedingIndex, setSelectedFeedingIndex] = useState('')
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0)
   const [selectedWeekIndex, setSelectedWeekIndex] = useState(0)
 
   useEffect(() => {
@@ -115,25 +114,20 @@ export default function Index (props) {
     })
   }, [])
 
-  const handleChange2 = (event, newValue) => {
-    setValue(newValue)
+  const handleTabChange = (event, newValue) => {
+    setSelectedTabIndex(newValue)
   }
 
   return (
     <Container>
       <form className={classes.container} noValidate autoComplete='off'>
         <TextField
-          id='feeding'
+          id='restaurant'
           select
           className={classes.textField}
-          label='Feeding'
+          label='Restaurant'
           value={selectedFeedingIndex}
           onChange={event => { setSelectedFeedingIndex(event.target.value); setSelectedWeekIndex(0) }}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu
-            }
-          }}
           margin='normal'
           variant='outlined'
         >
@@ -144,15 +138,15 @@ export default function Index (props) {
           ))}
         </TextField>
       </form>
-      <FormControl component='fieldset'>
+      <FormControl component='fieldset' className={classes.formControl}>
         <RadioGroup
-          aria-label='position'
-          name='position'
+          aria-label='weeks'
+          name='weeks'
           value={selectedWeekIndex}
           onChange={event => setSelectedWeekIndex(parseInt(event.target.value))}
           row
         >
-          {(selectedFeedingIndex !== -1) && feedings[selectedFeedingIndex].weeks.map((week, index) => (
+          {(selectedFeedingIndex !== '') && feedings[selectedFeedingIndex].weeks.map((week, index) => (
             <FormControlLabel
               key={'week-' + index}
               value={index}
@@ -166,44 +160,50 @@ export default function Index (props) {
       <div className={classes.root}>
         <AppBar position='static'>
           <Tabs
-            value={value}
-            onChange={handleChange2}
-            aria-label='simple tabs example'
+            value={selectedTabIndex}
+            onChange={handleTabChange}
+            aria-label='days'
             variant='scrollable'
             scrollButtons='auto'
           >
-            <Tab label='Day One' {...a11yProps(0)} />
-            <Tab label='Day Two' {...a11yProps(1)} />
-            <Tab label='Day Three' {...a11yProps(2)} />
-            <Tab label='Day Four' {...a11yProps(3)} />
-            <Tab label='Day Five' {...a11yProps(4)} />
-            <Tab label='Day Six' {...a11yProps(5)} />
-            <Tab label='Day Seven' {...a11yProps(6)} />
+            <Tab label='Monday' {...a11yProps(0)} />
+            <Tab label='Tuesday' {...a11yProps(1)} />
+            <Tab label='Wednesday' {...a11yProps(2)} />
+            <Tab label='Thursday' {...a11yProps(3)} />
+            <Tab label='Friday' {...a11yProps(4)} />
+            <Tab label='Saturday' {...a11yProps(5)} />
+            <Tab label='Sunday' {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        {(selectedFeedingIndex !== -1) && feedings[selectedFeedingIndex].weeks[selectedWeekIndex].days.map((day, index) => (
-          <TabPanel value={value} key={index} index={index}>
-            <div>
-              <b>Breakfast</b>
-              <p>
-                  Consists of: {day.meals[0].menu}<br />
-                  Time: {formatMsTo24HourClock(day.meals[0].timeStart)} - {formatMsTo24HourClock(day.meals[0].timeEnd)}
-              </p>
-            </div>
-            <div>
-              <b>Lunch</b>
-              <p>
-                  Consists of: {day.meals[1].menu}<br />
-                  Time: {formatMsTo24HourClock(day.meals[1].timeStart)} - {formatMsTo24HourClock(day.meals[1].timeEnd)}
-              </p>
-            </div>
-            <div>
-              <b>Dinner</b>
-              <p>
-                  Consists of: {day.meals[2].menu}<br />
-                  Time: {formatMsTo24HourClock(day.meals[2].timeStart)} - {formatMsTo24HourClock(day.meals[2].timeEnd)}
-              </p>
-            </div>
+        {(selectedFeedingIndex !== '') && feedings[selectedFeedingIndex].weeks[selectedWeekIndex].days.map((day, index) => (
+          <TabPanel value={selectedTabIndex} key={'day-' + (index + 1)} index={index}>
+            <Box>
+              <Typography variant='h6' gutterBottom>
+                <b>
+                  Breakfast
+                  ({formatMsTo24HourClock(day.meals[0].timeStart)} - {formatMsTo24HourClock(day.meals[0].timeEnd)})
+                </b>
+              </Typography>
+              {day.meals[0].menu}
+            </Box>
+            <Box mt={3}>
+              <Typography variant='h6' gutterBottom>
+                <b>
+                  Lunch
+                  ({formatMsTo24HourClock(day.meals[1].timeStart)} - {formatMsTo24HourClock(day.meals[1].timeEnd)})
+                </b>
+              </Typography>
+              {day.meals[1].menu}
+            </Box>
+            <Box mt={3}>
+              <Typography variant='h6' gutterBottom>
+                <b>
+                  Dinner
+                  ({formatMsTo24HourClock(day.meals[2].timeStart)} - {formatMsTo24HourClock(day.meals[2].timeEnd)})
+                </b>
+              </Typography>
+              {day.meals[2].menu}
+            </Box>
           </TabPanel>
         ))}
       </div>
