@@ -1,6 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/styles'
-import theme from '../src/theme'
+import { themeColor } from '../components/ThemeContext'
 
 class MyDocument extends Document {
   render () {
@@ -26,9 +26,9 @@ class MyDocument extends Document {
           <link rel='icon' type='image/png' sizes='96x96' href='/favicon-96x96.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
           <link rel='manifest' href='/manifest.json' />
-          <meta name='msapplication-TileColor' content={theme.palette.primary.dark} />
+          <meta name='msapplication-TileColor' content={themeColor} />
           <meta name='msapplication-TileImage' content='/ms-icon-144x144.png' />
-          <meta name='theme-color' content={theme.palette.primary.dark} />
+          <meta name='theme-color' content={themeColor} />
         </Head>
         <body>
           <Main />

@@ -5,6 +5,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { getCookie } from '../scripts/helpers'
 import { indigo, red } from '@material-ui/core/colors'
 
+export const themeColor = indigo[800]
+
 const themeInitialOptions = {
   paletteColors: {}
 }

@@ -2,11 +2,11 @@ import App from 'next/app'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
 import { ThemeProvider } from '../components/ThemeContext'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import fetch from 'isomorphic-unfetch'
-import theme from '../src/theme'
-import NavBar from '../components/navigation/NavBar'
 import UserContext from '../components/UserContext'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Box from '@material-ui/core/Box'
+import fetch from 'isomorphic-unfetch'
+import NavBar from '../components/navigation/NavBar'
 import { version } from '../lib/version'
 
 class MyApp extends App {
@@ -62,7 +62,7 @@ class MyApp extends App {
         <Head>
           <title>{this.state.title} | College Resources</title>
         </Head>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider>
           <CssBaseline />
           <UserContext.Provider value={userValue}>
             <NavBar title={this.state.title} />
