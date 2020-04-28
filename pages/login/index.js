@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -53,11 +53,15 @@ const GoogleButton = withStyles({
   }
 })(Button)
 
-export default function () {
+export default function (props) {
   const classes = useStyles()
   const [email, setEmail] = React.useState('')
   const [passwd, setPasswd] = React.useState('')
   const { setUser } = React.useContext(UserContext)
+
+  useEffect(() => {
+    props.updateTitle('Login')
+  }, [])
 
   const loginOnClickHandler = () => {
     login(setUser, email, passwd)
