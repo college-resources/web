@@ -33,9 +33,6 @@ const lessonHandler = () => Promise.resolve(
           hoursTheory
           hoursLab
           credit
-          department {
-            name
-          }
         }
       }
     `).then(data => data.lessons && data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode')))
