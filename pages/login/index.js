@@ -1,30 +1,28 @@
 import { useContext, useEffect, useState } from 'react'
-import StyledLink from '../../components/StyledLink'
-import styled from 'styled-components'
 import { makeStyles, withTheme } from '@material-ui/core/styles'
+import styled from 'styled-components'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import Container from '@material-ui/core/Container'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import StyledLink from '../../components/StyledLink'
+import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
 import UserContext from '../../components/UserContext'
-import { red } from '@material-ui/core/colors'
 import { login } from '../../scripts/auth'
+import { red } from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
   avatar: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.type === 'dark' && theme.palette.text.permanentLight
   },
@@ -76,7 +74,6 @@ export default function (props) {
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
