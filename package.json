@@ -4,13 +4,14 @@
   "description": "College Resources website",
   "main": "index.js",
   "scripts": {
-    "build": "genversion --es6 lib/version.js && next build",
-    "dev": "genversion --es6 lib/version.js && node bin/www --dev",
-    "debug": "genversion --es6 lib/version.js && node --inspect bin/www --dev",
+    "build": "npm run version && next build",
+    "dev": "npm run version && node bin/www --dev",
+    "debug": "npm run version && node --inspect bin/www --dev",
     "fix": "npx standard --fix --parser babel-eslint",
     "standard": "npx standard --parser babel-eslint",
-    "start": "genversion --es6 lib/version.js && node bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run version && node bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "genversion --es6 lib/version.js"
   },
   "repository": {
     "type": "git",
