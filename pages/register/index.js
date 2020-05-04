@@ -1,36 +1,38 @@
-import React from 'react'
-import Link from 'next/link'
+import { useContext, useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import StyledLink from '../../components/StyledLink'
+import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
 import UserContext from '../../components/UserContext'
 import { register } from '../../scripts/auth'
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
-  },
   paper: {
-    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.type === 'dark' && theme.palette.text.permanentLight
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
+    '& label.Mui-focused': {
+      color: theme.palette.type === 'dark' && theme.palette.common.white
+    },
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: theme.palette.text.permanentLight
+      }
+    }
   },
   submit: {
     backgroundColor: theme.palette.primary.light,
@@ -43,11 +45,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp () {
   const classes = useStyles()
-  const [givenName, setGivenName] = React.useState('')
-  const [familyName, setFamilyName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const { setUser } = React.useContext(UserContext)
+  const [givenName, setGivenName] = useState('')
+  const [familyName, setFamilyName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { setUser } = useContext(UserContext)
 
   const signUpOnClickHandler = () => {
     register(setUser, email, givenName, familyName, password)
@@ -55,7 +57,6 @@ export default function SignUp () {
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -132,9 +133,9 @@ export default function SignUp () {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='/login'>
-                <a>Already have an account? Sign in</a>
-              </Link>
+              <StyledLink href='/login'>
+                Already have an account? Sign in
+              </StyledLink>
             </Grid>
           </Grid>
         </form>
