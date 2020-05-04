@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ThemeProvider as MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { getCookie } from '../scripts/helpers'
-import { indigo, red } from '@material-ui/core/colors'
+import { indigo } from '@material-ui/core/colors'
 
 export const themeColor = indigo[800]
 
@@ -72,9 +72,6 @@ export function ThemeProvider (props) {
           },
           secondary: {
             main: indigo[700]
-          },
-          error: {
-            main: red.A400
           },
           background: {
             default: paletteType === 'light' ? '#fff' : '#2f3136',
