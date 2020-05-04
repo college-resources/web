@@ -1,6 +1,7 @@
 import App from 'next/app'
 import Head from 'next/head'
 import { withRouter } from 'next/router'
+import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from '../components/ThemeContext'
 import UserContext from '../components/UserContext'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -62,15 +63,17 @@ class MyApp extends App {
         <Head>
           <title>{this.state.title} | College Resources</title>
         </Head>
-        <ThemeProvider>
-          <CssBaseline />
-          <UserContext.Provider value={userValue}>
-            <NavBar title={this.state.title} />
-            <Box mt={2}>
-              <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
-            </Box>
-          </UserContext.Provider>
-        </ThemeProvider>
+        <StylesProvider injectFirst>
+          <ThemeProvider>
+            <CssBaseline />
+            <UserContext.Provider value={userValue}>
+              <NavBar title={this.state.title} />
+              <Box mt={2}>
+                <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
+              </Box>
+            </UserContext.Provider>
+          </ThemeProvider>
+        </StylesProvider>
       </>
     )
   }
