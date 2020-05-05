@@ -20,7 +20,11 @@
       "jsx": true
     }
   },
-
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     // Default
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
@@ -40,12 +44,18 @@
     /* Temporary end */
 
     // Disable from all rules
+    "consistent-return": "warn",
+    "id-length": "off",
+    "lines-around-comment": "off",
     "max-len": "off",
     "max-lines-per-function": "off",
+    "max-params": "off",
     "max-statements": "off",
+    "no-plusplus": "off",
     "no-process-env": "off",
     "no-ternary": "off",
     "no-underscore-dangle": "off",
+    "no-warning-comments": "warn",
     "react/jsx-indent": "off",
     "react/jsx-indent-props": "off",
     "react/jsx-max-depth": "off",

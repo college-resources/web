@@ -5,5 +5,6 @@ export default function (items, key) {
       result[item[key]].push(item)
       return result
     },
-    [])
+    []
+  )
 }

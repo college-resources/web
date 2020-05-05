@@ -2,26 +2,25 @@ const Auth0Strategy = require('passport-auth0')
 
 module.exports = new Auth0Strategy(
   {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
       process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/auth/callback',
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    domain: process.env.AUTH0_DOMAIN,
     passReqToCallback: true
   },
-  async function (req, accessToken, refreshToken, _, profile, done) {
-    if (profile && profile._json) {
-      profile = profile._json
-    }
-
+  async (req, accessToken, refreshToken, _, profile, done) => {
     const info = {
       accessToken,
-      refreshToken,
-      profile
+      profile: profile && profile._json,
+      refreshToken
     }
 
     await req.auth0.syncProfileWithApi(info)
 
-    return done(null, info)
+    return done(
+      null,
+      info
+    )
   }
 )

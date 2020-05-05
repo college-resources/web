@@ -7,8 +7,8 @@
     "build": "npm run version && next build",
     "dev": "npm run version && node bin/www --dev",
     "debug": "npm run version && node --inspect bin/www --dev",
-    "fix": "npx eslint --fix --parser babel-eslint --ext .js,.jsx **",
-    "lint": "npx eslint --parser babel-eslint --ext .js,.jsx **",
+    "fix": "npx eslint . --fix --parser babel-eslint --ext .js,.jsx",
+    "lint": "npx eslint . --parser babel-eslint --ext .js,.jsx",
     "start": "npm run version && node bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version": "genversion --es6 lib/version.js"

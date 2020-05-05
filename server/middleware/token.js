@@ -1,33 +1,36 @@
 const jwt = require('jsonwebtoken')
 const jwksRsa = require('jwks-rsa')
 
-const init = req => {
+const init = (req) => {
   // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
   const secretProvider = jwksRsa({
     cache: true,
-    rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    rateLimit: true
   })
 
-  const getSecret = async kid => new Promise((resolve, reject) => {
-    secretProvider.getSigningKey(kid, (err, key) => {
-      if (err) {
-        reject(err)
-      } else {
-        const publicKey = key.publicKey || key.rsaPublicKey
-        resolve(publicKey)
+  const getSecret = (kid) => new Promise((resolve, reject) => {
+    secretProvider.getSigningKey(
+      kid,
+      (err, key) => {
+        if (err) {
+          reject(err)
+        } else {
+          const publicKey = key.publicKey || key.rsaPublicKey
+          resolve(publicKey)
+        }
       }
-    })
+    )
   })
 
   // Verify token using kid, audience and issuer
   return async (token, tokenHeader) => {
     const secret = await getSecret(tokenHeader.kid)
     const options = {
+      algorithms: ['RS256'],
       audience: process.env.AUTH0_AUDIENCE,
-      issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-      algorithms: ['RS256']
+      issuer: `https://${process.env.AUTH0_DOMAIN}/`
     }
 
     try {
@@ -38,12 +41,13 @@ const init = req => {
       )
     } catch (err) {
       if (err.name === 'TokenExpiredError') {
-        const { access_token: accessToken } = await req.auth0.authenticationClient.refreshToken({
+        await req.auth0.authenticationClient.refreshToken({
           client_secret: process.env.AUTH0_CLIENT_SECRET,
           refresh_token: req.user.refreshToken
         })
-
-        req.user.accessToken = accessToken
+          .then(({ access_token: accessToken }) => {
+            req.user.accessToken = accessToken
+          })
       }
     }
   }
@@ -53,9 +57,15 @@ module.exports = async (req, res, next) => {
   try {
     // Decode JWT without verification to get kid from header
     const token = req.user && req.user.accessToken
-    const { header } = jwt.decode(token, { complete: true }) || {}
+    const { header } = jwt.decode(
+      token,
+      { complete: true }
+    ) || {}
     const verifier = init(req)
-    await verifier(token, header)
+    await verifier(
+      token,
+      header
+    )
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {
       console.log(err.message)

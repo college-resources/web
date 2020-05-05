@@ -2,18 +2,18 @@ const LocalStrategy = require('passport-local')
 
 module.exports = new LocalStrategy(
   {
-    usernameField: 'email',
+    passReqToCallback: true,
     passwordField: 'passwd',
-    passReqToCallback: true
+    usernameField: 'email'
   },
-  async function (req, username, password, done) {
+  async (req, username, password, done) => {
     try {
       const userData = await req.auth0.authenticationClient.passwordGrant({
         audience: process.env.AUTH0_AUDIENCE,
-        scope: process.env.AUTH0_SCOPE,
+        password,
         realm: process.env.AUTH0_REALM,
-        username,
-        password
+        scope: process.env.AUTH0_SCOPE,
+        username
       })
 
       const accessToken = userData.access_token
@@ -26,13 +26,16 @@ module.exports = new LocalStrategy(
 
       const info = {
         accessToken,
-        refreshToken,
-        profile
+        profile,
+        refreshToken
       }
 
       await req.auth0.syncProfileWithApi(info)
 
-      done(null, info)
+      done(
+        null,
+        info
+      )
     } catch (err) {
       done(err)
     }
