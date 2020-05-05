@@ -20,9 +20,35 @@
       "jsx": true
     }
   },
+
   "rules": {
+    // Default
+    "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "no-console": "warn",
     "no-eval": "error",
-    "import/first": "error"
+    "import/first": "error",
+
+    /* Temporary start */
+    // Will need to discuss
+    "no-magic-numbers": "off",
+    // Will probably enable after i18n
+    "react/jsx-no-literals": "off",
+    // Should probably remove className and style from all components at some point
+    "react/forbid-component-props": "off",
+    // Type checking
+    "react/prop-types": "off",
+    /* Temporary end */
+
+    // Disable from all rules
+    "max-len": "off",
+    "max-lines-per-function": "off",
+    "max-statements": "off",
+    "no-process-env": "off",
+    "no-ternary": "off",
+    "no-underscore-dangle": "off",
+    "react/jsx-indent": "off",
+    "react/jsx-indent-props": "off",
+    "react/jsx-max-depth": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
