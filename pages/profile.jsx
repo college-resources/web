@@ -1,81 +1,101 @@
-import { useContext, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useContext, useEffect } from 'react'
+import Avatar from '@material-ui/core/Avatar'
+import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import Avatar from '@material-ui/core/Avatar'
-import Box from '@material-ui/core/Box'
 import TextField from '@material-ui/core/TextField'
 import UserContext from '../components/UserContext'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
+const useStyles = makeStyles((theme) => ({
   avatar: {
+    height: '5rem',
     margin: 'auto',
     marginBottom: '1rem',
-    width: '5rem',
-    height: '5rem'
+    width: '5rem'
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center'
+  },
+  root: {
+    flexGrow: 1
   }
 }))
 
-export default function (props) {
+export default function ProfilePage (props) {
   const { user } = useContext(UserContext)
   const classes = useStyles()
 
-  useEffect(() => {
-    props.updateTitle('Profile')
-  }, [])
+  useEffect(
+    () => {
+      props.updateTitle('Profile')
+    },
+    []
+  )
 
   return (
     <Container>
       <Box mt={2}>
         <Grid
           container
-          justify='center'
+          justify="center"
           spacing={3}
         >
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            md={6}
+            xs={12}
+          >
             <Paper className={classes.paper}>
-              <Avatar alt='account picture' src={user.picture} className={classes.avatar} />
-              <TextField
-                label='First Name'
-                defaultValue={user.given_name}
-                InputProps={{
-                  readOnly: true
-                }}
-                variant='outlined'
-                fullWidth
-                margin='normal'
+              <Avatar
+                alt="account picture"
+                className={classes.avatar}
+                src={user.picture}
               />
               <TextField
-                label='Last Name'
-                defaultValue={user.family_name}
+                defaultValue={user.given_name}
+                fullWidth
                 InputProps={{
                   readOnly: true
                 }}
-                variant='outlined'
+                label="First Name"
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                defaultValue={user.family_name}
                 fullWidth
-                margin='normal'
+                InputProps={{
+                  readOnly: true
+                }}
+                label="Last Name"
+                margin="normal"
+                variant="outlined"
               />
             </Paper>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            md={6}
+            xs={12}
+          >
             <Paper className={classes.paper}>
-              <Box fontSize='h6.fontSize' fontWeight='fontWeightMedium'>Email Address</Box>
+              <Box
+                fontSize="h6.fontSize"
+                fontWeight="fontWeightMedium"
+              >
+                Email Address
+              </Box>
               <TextField
                 defaultValue={user.email}
-                margin='normal'
+                fullWidth
                 InputProps={{
                   readOnly: true
                 }}
-                variant='outlined'
-                fullWidth
+                margin="normal"
+                variant="outlined"
               />
             </Paper>
           </Grid>
