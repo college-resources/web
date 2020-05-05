@@ -1,3 +1,8 @@
 module.exports = {
-  exportTrailingSlash: true
+  // TODO: Revisit to see if stil needed
+  exportTrailingSlash: true,
+  pageExtensions: [
+    'js',
+    'jsx'
+  ]
 }

@@ -1,14 +1,15 @@
 import App from 'next/app'
+import Box from '@material-ui/core/Box'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
-import { withRouter } from 'next/router'
+import NavBar from '../components/navigation/NavBar'
+import React from 'react'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from '../components/ThemeContext'
 import UserContext from '../components/UserContext'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Box from '@material-ui/core/Box'
 import fetch from 'isomorphic-unfetch'
-import NavBar from '../components/navigation/NavBar'
 import { version } from '../lib/version'
+import { withRouter } from 'next/router'
 
 class MyApp extends App {
   constructor (props) {
@@ -17,6 +18,7 @@ class MyApp extends App {
       title: '',
       user: props.user || null
     }
+    this._updateTitle = this._updateTitle.bind(this)
   }
 
   static async getInitialProps ({ ctx }) {
@@ -29,7 +31,7 @@ class MyApp extends App {
     return initialProps
   }
 
-  updateTitle (newValue) {
+  _updateTitle (newValue) {
     this.setState({ title: newValue })
   }
 
@@ -43,25 +45,29 @@ class MyApp extends App {
     // Get profile from session
     if (!this.state.user) {
       fetch('/session/profile')
-        .then(res => res.json())
-        .then(data => this.setState({ user: data.profile }))
-        .catch(err => console.error(err.message))
+        .then((res) => res.json())
+        .then((data) => this.setState({ user: data.profile }))
+        .catch((err) => console.error(err.message))
     }
 
-    console.log('v' + version)
+    console.log(`v${version}`)
   }
 
   render () {
     const { Component, pageProps } = this.props
     const userValue = {
-      user: this.state.user,
-      setUser: user => this.setState({ user })
+      setUser: (user) => this.setState({ user }),
+      user: this.state.user
     }
 
     return (
       <>
         <Head>
-          <title>{this.state.title} | College Resources</title>
+          <title>
+            {this.state.title}
+            {' '}
+            | College Resources
+          </title>
         </Head>
         <StylesProvider injectFirst>
           <ThemeProvider>
@@ -69,7 +75,10 @@ class MyApp extends App {
             <UserContext.Provider value={userValue}>
               <NavBar title={this.state.title} />
               <Box mt={2}>
-                <Component updateTitle={this.updateTitle.bind(this)} {...pageProps} />
+                <Component
+                  updateTitle={this._updateTitle}
+                  {...pageProps}
+                />
               </Box>
             </UserContext.Provider>
           </ThemeProvider>

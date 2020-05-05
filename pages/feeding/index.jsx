@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Menu from '../../components/feeding/Menu'
@@ -7,9 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import gql from '../../scripts/graphql'
+import { makeStyles } from '@material-ui/core/styles'
 
-const feedingHandler = () => Promise.resolve(
-  gql(`
+const feedingHandler = () => Promise.resolve(gql(`
   query {
     feeding {
       weeks {
@@ -26,56 +25,75 @@ const feedingHandler = () => Promise.resolve(
       _id
     }
   }
-    `).then(data => data.feeding)
-)
+    `).then((data) => data.feeding))
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap'
   },
   textField: {
-    '& label.Mui-focused': {
-      color: theme.palette.type === 'dark' && theme.palette.common.white
-    },
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
         borderColor: 'gray'
       }
     },
+    '& label.Mui-focused': {
+      color: theme.palette.type === 'dark' && theme.palette.common.white
+    },
     width: '100%'
   }
 }))
 
-export default function Index (props) {
+export default function FeedingPage (props) {
   const classes = useStyles()
-  const [feedings, setFeedings] = useState([])
-  const [selectedFeedingIndex, setSelectedFeedingIndex] = useState('')
+  const [
+    feedings,
+    setFeedings
+  ] = useState([])
+  const [
+    selectedFeedingIndex,
+    setSelectedFeedingIndex
+  ] = useState('')
 
-  useEffect(() => {
-    props.updateTitle('Feeding')
-    feedingHandler().then(gqlFeeding => {
-      if (gqlFeeding) {
-        setFeedings(gqlFeeding)
-      }
-    })
-  }, [])
+  useEffect(
+    () => {
+      props.updateTitle('Feeding')
+      feedingHandler().then((gqlFeeding) => {
+        if (gqlFeeding) {
+          setFeedings(gqlFeeding)
+        }
+      })
+    },
+    []
+  )
+
+  function handleFeedingChange (event) {
+    setSelectedFeedingIndex(event.target.value)
+  }
 
   return (
     <Container>
-      <form className={classes.container} noValidate autoComplete='off'>
+      <form
+        autoComplete="off"
+        className={classes.container}
+        noValidate
+      >
         <TextField
-          id='restaurant'
-          select
           className={classes.textField}
-          label='Restaurant'
+          id="restaurant"
+          label="Restaurant"
+          margin="normal"
+          onChange={handleFeedingChange}
+          select
           value={selectedFeedingIndex}
-          onChange={event => { setSelectedFeedingIndex(event.target.value) }}
-          margin='normal'
-          variant='outlined'
+          variant="outlined"
         >
           {feedings.map((feed, index) => (
-            <MenuItem key={feed._id} value={index}>
+            <MenuItem
+              key={feed._id}
+              value={index}
+            >
               {feed.name}
             </MenuItem>
           ))}
@@ -83,7 +101,7 @@ export default function Index (props) {
       </form>
       {selectedFeedingIndex === '' ? (
         <Box mt={5}>
-          <Typography align='center'>
+          <Typography align="center">
             Select a restaurant from the dropdown to see its menu.
           </Typography>
         </Box>
