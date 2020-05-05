@@ -21,7 +21,7 @@ class MyApp extends App {
     this._updateTitle = this._updateTitle.bind(this)
   }
 
-  static async getInitialProps ({ ctx }) {
+  static getInitialProps ({ ctx }) {
     const initialProps = {}
 
     if (ctx.req) {

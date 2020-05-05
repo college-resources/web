@@ -1,12 +1,13 @@
 const session = require('express-session')
 
 const sess = {
-  secret: require('crypto')
-    .randomBytes(64)
-    .toString('hex'),
   cookie: {},
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  // eslint-disable-next-line global-require
+  secret: require('crypto')
+    .randomBytes(64)
+    .toString('hex')
 }
 
 module.exports = session(sess)
