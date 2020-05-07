@@ -36,13 +36,13 @@ export default function SideBarList () {
         </ListItemLink>
         <ListItemLink
           button
-          href="/lesson-list"
-          key="Lesson List"
+          href="/courses"
+          key="Courses"
         >
           <ListItemIcon>
             <BookIcon />
           </ListItemIcon>
-          <ListItemText primary="Lesson List" />
+          <ListItemText primary="Courses" />
         </ListItemLink>
         <ListItemLink
           button
