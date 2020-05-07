@@ -124,6 +124,8 @@ export function ThemeProvider (props) {
         }
       })
 
+      if (paletteType === 'dark') nextTheme.palette.background.paper = '#36393f'
+
       nextTheme.palette.background.level2 = paletteType === 'light'
         ? nextTheme.palette.grey[100]
         : '#333'
