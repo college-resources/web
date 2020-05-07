@@ -3,6 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import AppBar from '@material-ui/core/AppBar'
 import Avatar from '@material-ui/core/Avatar'
+import Brightness4Icon from '@material-ui/icons/Brightness4'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
 import Button from '@material-ui/core/Button'
 import ButtonLink from '../ButtonLink'
 import IconButton from '@material-ui/core/IconButton'
@@ -103,13 +105,16 @@ export default function NavBar (props) {
           >
             {title}
           </Typography>
-          <Button
-            className={classes.button}
+          <IconButton
             color="inherit"
             onClick={handleTogglePaletteType}
           >
-            Theme toggle
-          </Button>
+            {
+              theme.palette.type === 'light'
+                ? <Brightness4Icon />
+                : <Brightness7Icon />
+            }
+          </IconButton>
           {user ? (
             <IconButton
               aria-controls="menu-appbar"
@@ -136,7 +141,7 @@ export default function NavBar (props) {
               component={ButtonLink}
               href="/login"
             >
-Login
+              Login
             </Button>
           )}
         </Toolbar>
