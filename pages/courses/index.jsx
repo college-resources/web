@@ -83,7 +83,7 @@ export default function CoursesPage (props) {
   return (
     <Container>
       {user && (
-        <Link href="/lesson-list/create">
+        <Link href="/courses/create">
           <Button
             className={classes.button}
             color="primary"
