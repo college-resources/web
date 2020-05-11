@@ -1,38 +1,237 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import BookIcon from '@material-ui/icons/Book'
+import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
-import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import RestaurantIcon from '@material-ui/icons/Restaurant'
+import { Typography } from '@material-ui/core'
+import gql from '../scripts/graphql'
+import { green } from '@material-ui/core/colors'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default function HomePage (props) {
+const feedingHandler = () => Promise.resolve(gql(`
+  query {
+    feeding {
+      weeks {
+        days {
+          meals {
+            timeStart
+            timeEnd
+            menu
+          }
+        }
+      }
+      startsFrom
+      name
+      _id
+    }
+  }
+    `).then((data) => data.feeding))
+
+const findLastAndNextMeal = (feeding) => {
+  const currentDayInWeeks = feeding.weeks.map((week) => week.days[(new Date().getDay() + 6) % 7])
+  return currentDayInWeeks.map((day) => {
+    let isLastOpen = false
+    let lastMeal = ''
+    let nextMeal = ''
+
+    const currentTimeMs = (Date.now() - new Date().getTimezoneOffset() * 60 * 1000) % (24 * 3600 * 1000)
+
+    day.meals.forEach((meal) => {
+      if (meal.timeStart < currentTimeMs) {
+        lastMeal = meal
+        if (meal.timeEnd > currentTimeMs) {
+          isLastOpen = true
+        }
+      }
+
+      if (meal.timeStart > currentTimeMs && !nextMeal) {
+        nextMeal = meal
+      }
+    })
+
+    if (!nextMeal) {
+      nextMeal = day.meals[0]
+    }
+
+    return { isLastOpen, lastMeal, nextMeal }
+  })
+}
+
+const findCurrentWeek = (feeding) => {
+  const weeksLength = feeding.weeks.length
+  if (weeksLength < 2) return 0
+
+  const msInADay = 1000 * 60 * 60 * 24
+
+  const startsFrom = new Date(feeding.startsFrom)
+  const daysFromStart = Math.floor((Date.now() - startsFrom.getTime()) / msInADay)
+  const daysFromReset = daysFromStart % (weeksLength * 7)
+
+  return Math.floor(daysFromReset / 7)
+}
+
+const formatMs = (ms) => {
+  const [time] = new Date(ms).toUTCString()
+    .match(/(\d\d):(\d\d)/)
+  return time
+}
+
+const useStyles = makeStyles((theme) => ({
+  green: {
+    color: green['600']
+  },
+  paper: {
+    color: theme.palette.text.secondary,
+    padding: theme.spacing(2),
+    textAlign: 'center'
+  },
+  red: {
+    color: theme.palette.error.main
+  },
+  root: {
+    flexGrow: 1
+  }
+}))
+
+export default function Homepage (props) {
+  const classes = useStyles()
+  const [
+    feedings,
+    setFeedings
+  ] = useState([])
+
   useEffect(
     () => {
       props.updateTitle('Home')
+      feedingHandler().then((gqlFeeding) => {
+        if (gqlFeeding) {
+          setFeedings(gqlFeeding)
+        }
+      })
     },
     []
   )
 
   return (
     <Container>
-      <Typography
-        component="h1"
-        gutterBottom
-        variant="h5"
-      >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus lorem a est viverra, quis mattis dolor commodo. Aliquam eros lacus, lacinia id efficitur id, eleifend sit amet lectus. Mauris ut vehicula nisi. In in est efficitur, tempor turpis quis, eleifend metus. Nam congue diam eu erat finibus laoreet. Nunc fermentum hendrerit felis sagittis finibus. Curabitur varius dui quis dictum consequat. Proin imperdiet nisl nec nunc facilisis, vel tristique tortor blandit.
-        </p>
-        <p>
-          Cras ac massa at eros semper maximus. Maecenas vel sagittis mauris. Mauris a risus et tellus tempor volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu nunc ac est pulvinar mattis nec sed orci. Aliquam erat volutpat. Proin a sapien consectetur, bibendum quam feugiat, ultricies mi. Pellentesque tincidunt, elit quis feugiat tempus, nisi dolor cursus urna, ac lobortis sapien massa vitae dui. Vivamus orci purus, condimentum vitae viverra sed, mattis sed ipsum. Sed lacus felis, iaculis nec sapien eu, congue laoreet nunc.
-        </p>
-        <p>
-          Vivamus quis lacinia urna. Nulla feugiat rutrum semper. Cras consequat volutpat enim at bibendum. Ut viverra ante vel nulla finibus ullamcorper. Donec interdum laoreet nisi in viverra. Ut egestas consectetur euismod. Pellentesque pulvinar felis sit amet ex ullamcorper, vitae pharetra urna dignissim.
-        </p>
-        <p>
-          Vestibulum sodales porttitor lectus, at elementum lacus interdum in. Integer id lectus posuere, varius augue sit amet, rutrum enim. Vivamus ac nulla mauris. Donec nisi purus, mattis non sem posuere, tempor dictum est. Aliquam ultrices tincidunt est, sed eleifend augue ullamcorper eget. Aenean ut cursus orci. Suspendisse sodales vel risus sit amet consectetur. Pellentesque sem orci, porttitor vitae venenatis sit amet, scelerisque id nunc. Vestibulum ullamcorper rhoncus lectus, a ultrices diam convallis quis.
-        </p>
-        <p>
-          Donec turpis ante, convallis non interdum a, ultricies auctor urna. Sed eget felis lacus. Nullam nec molestie dolor. Aliquam id massa et turpis auctor aliquam. Pellentesque congue sollicitudin eros, non iaculis enim posuere ac. Pellentesque metus nulla, dignissim eget convallis nec, convallis eu orci. Phasellus interdum vitae urna ut blandit. Ut mollis, lacus a congue pretium, velit quam semper eros, et congue sapien diam quis ante. Cras nulla ante, hendrerit sed ipsum sed, consequat dapibus lorem. Praesent ante erat, interdum id varius a, luctus at augue. Etiam ullamcorper mollis efficitur. Morbi suscipit felis eget rutrum placerat. Sed ac accumsan risus. Vivamus in turpis eget elit convallis convallis id vel nulla.
-        </p>
-      </Typography>
+      <Box mt={2}>
+        <div className={classes.root}>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              sm={6}
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+                <Box mb={2}>
+                  <Typography mb={5}>
+                    <RestaurantIcon />
+                    <b>
+                      {' '}
+                      FEEDING
+                      {' '}
+                    </b>
+                    <RestaurantIcon />
+                  </Typography>
+                </Box>
+                <Divider />
+                <Box
+                  pt={1}
+                  px={1}
+                >
+                  {feedings.map((feed) => {
+                    const meals = findLastAndNextMeal(feed)
+                    const currentWeekIndex = findCurrentWeek(feed)
+
+                    return (
+                      <Grid
+                        alignItems="flex-start"
+                        container
+                        direction="row"
+                        justify="space-between"
+                        key={feed._id}
+                      >
+                        <p>
+                          <b>
+                            {feed.name}
+                          </b>
+                        </p>
+                        <Grid
+                          alignItems="flex-start"
+                          container
+                          direction="row"
+                          justify="space-between"
+                          // eslint-disable-next-line react/no-array-index-key
+                        >
+                          <p>
+                            {`Week ${currentWeekIndex + 1}`}
+                          </p>
+                          <Divider orientation="vertical" />
+                          <p>
+                            <span
+                              className={
+                                meals[currentWeekIndex].isLastOpen
+                                  ? classes.green
+                                  : classes.red
+                              }
+                            >
+                              <b>
+                                {
+                                  meals[currentWeekIndex].isLastOpen
+                                    ? `Open until ${formatMs(meals[currentWeekIndex].lastMeal.timeEnd)}`
+                                    : 'Closed'
+                                }
+                              </b>
+                            </span>
+                          </p>
+                          <Divider orientation="vertical" />
+                          <p>
+                            Next meal
+                            {' '}
+                            <b>
+                              {formatMs(meals[currentWeekIndex].nextMeal.timeStart)}
+                            </b>
+                          </p>
+                        </Grid>
+                        <Divider orientation="horizontal" />
+                      </Grid>
+                    )
+                  })}
+                </Box>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              sm={6}
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+                <Box mb={2}>
+                  <Typography mb={5}>
+                    <BookIcon />
+                    <b>
+                      {' '}
+                      LESSON LIST
+                      {' '}
+                    </b>
+                    <BookIcon />
+                  </Typography>
+                </Box>
+                <Divider />
+                <Box mt={2}>
+                  List of lessons...
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </div>
+      </Box>
     </Container>
   )
 }
