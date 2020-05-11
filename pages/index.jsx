@@ -125,7 +125,7 @@ export default function Homepage (props) {
           >
             <Grid
               item
-              sm={6}
+              md={6}
               xs={12}
             >
               <Paper className={classes.paper}>
@@ -143,7 +143,7 @@ export default function Homepage (props) {
                 <Divider />
                 <Box
                   pt={1}
-                  px={1}
+                  px={2}
                 >
                   {feedings.map((feed) => {
                     const meals = findLastAndNextMeal(feed)
@@ -157,11 +157,6 @@ export default function Homepage (props) {
                         justify="space-between"
                         key={feed._id}
                       >
-                        <p>
-                          <b>
-                            {feed.name}
-                          </b>
-                        </p>
                         <Grid
                           alignItems="flex-start"
                           container
@@ -169,9 +164,14 @@ export default function Homepage (props) {
                           justify="space-between"
                           // eslint-disable-next-line react/no-array-index-key
                         >
-                          <p>
-                            {`Week ${currentWeekIndex + 1}`}
-                          </p>
+                          <Box mr={2}>
+                            <p>
+                              <b>
+                                {feed.name}
+                              </b>
+                              {` (Week ${currentWeekIndex + 1})`}
+                            </p>
+                          </Box>
                           <Divider orientation="vertical" />
                           <p>
                             <span
@@ -189,9 +189,7 @@ export default function Homepage (props) {
                                 }
                               </b>
                             </span>
-                          </p>
-                          <Divider orientation="vertical" />
-                          <p>
+                            {' - '}
                             Next meal
                             {' '}
                             <b>
@@ -208,7 +206,7 @@ export default function Homepage (props) {
             </Grid>
             <Grid
               item
-              sm={6}
+              md={6}
               xs={12}
             >
               <Paper className={classes.paper}>
