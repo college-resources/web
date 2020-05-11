@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import { Typography } from '@material-ui/core'
+import formatMsTo24HourClock from '../scripts/formatMsTo24HourClock'
 import gql from '../scripts/graphql'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
@@ -72,16 +73,22 @@ const findCurrentWeek = (feeding) => {
 
   return Math.floor(daysFromReset / 7)
 }
-
-const formatMs = (ms) => {
-  const [time] = new Date(ms).toUTCString()
-    .match(/(\d\d):(\d\d)/)
-  return time
-}
-
 const useStyles = makeStyles((theme) => ({
   green: {
     color: green['600']
+  },
+  lesson: {
+    '& hr': {
+      margin: theme.spacing(
+        0,
+        0.5
+      )
+    },
+    '& svg': {
+      margin: theme.spacing(1.5)
+    },
+    backgroundColor: '#40444b',
+    borderRadius: theme.shape.borderRadius
   },
   paper: {
     color: theme.palette.text.secondary,
@@ -129,16 +136,21 @@ export default function Homepage (props) {
               xs={12}
             >
               <Paper className={classes.paper}>
-                <Box mb={2}>
-                  <Typography mb={5}>
-                    <RestaurantIcon />
-                    <b>
-                      {' '}
+                <Box
+                  alignItems="center"
+                  css={{ height: 20 }}
+                  display="flex"
+                  justifyContent="center"
+                  mb={2.5}
+                  mt={0.5}
+                >
+                  <RestaurantIcon />
+                  <Box mx={1}>
+                    <Typography variant="h6">
                       FEEDING
-                      {' '}
-                    </b>
-                    <RestaurantIcon />
-                  </Typography>
+                    </Typography>
+                  </Box>
+                  <RestaurantIcon />
                 </Box>
                 <Divider />
                 <Box
@@ -184,7 +196,7 @@ export default function Homepage (props) {
                               <b>
                                 {
                                   meals[currentWeekIndex].isLastOpen
-                                    ? `Open until ${formatMs(meals[currentWeekIndex].lastMeal.timeEnd)}`
+                                    ? `Open until ${formatMsTo24HourClock(meals[currentWeekIndex].lastMeal.timeEnd)}`
                                     : 'Closed'
                                 }
                               </b>
@@ -193,7 +205,7 @@ export default function Homepage (props) {
                             Next meal
                             {' '}
                             <b>
-                              {formatMs(meals[currentWeekIndex].nextMeal.timeStart)}
+                              {formatMsTo24HourClock(meals[currentWeekIndex].nextMeal.timeStart)}
                             </b>
                           </p>
                         </Grid>
@@ -210,20 +222,90 @@ export default function Homepage (props) {
               xs={12}
             >
               <Paper className={classes.paper}>
-                <Box mb={2}>
-                  <Typography mb={5}>
-                    <BookIcon />
-                    <b>
-                      {' '}
-                      LESSON LIST
-                      {' '}
-                    </b>
-                    <BookIcon />
-                  </Typography>
+                <Box
+                  alignItems="center"
+                  css={{ height: 20 }}
+                  display="flex"
+                  justifyContent="center"
+                  mb={2.5}
+                  mt={0.5}
+                >
+                  <BookIcon />
+                  <Box mx={1}>
+                    <Typography variant="h6">
+                      COURSES
+                    </Typography>
+                  </Box>
+                  <BookIcon />
                 </Box>
                 <Divider />
                 <Box mt={2}>
-                  List of lessons...
+                  <Box mb={0.5}>
+                    <Grid
+                      alignItems="center"
+                      className={classes.lesson}
+                      container
+                    >
+                      <Box p={2}>
+                        <Typography>
+                          1
+                        </Typography>
+                      </Box>
+                      <Divider
+                        flexItem
+                        orientation="vertical"
+                      />
+                      <Box ml={1}>
+                        <Typography>
+                          [PH] Lesson 1
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Box>
+                  <Box mb={0.5}>
+                    <Grid
+                      alignItems="center"
+                      className={classes.lesson}
+                      container
+                    >
+                      <Box p={2}>
+                        <Typography>
+                          2
+                        </Typography>
+                      </Box>
+                      <Divider
+                        flexItem
+                        orientation="vertical"
+                      />
+                      <Box ml={1}>
+                        <Typography>
+                          [PH] Lesson 2
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Box>
+                  <Box mb={0.5}>
+                    <Grid
+                      alignItems="center"
+                      className={classes.lesson}
+                      container
+                    >
+                      <Box p={2}>
+                        <Typography>
+                          2
+                        </Typography>
+                      </Box>
+                      <Divider
+                        flexItem
+                        orientation="vertical"
+                      />
+                      <Box ml={1}>
+                        <Typography>
+                          [PH] Lesson 3
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Box>
                 </Box>
               </Paper>
             </Grid>
