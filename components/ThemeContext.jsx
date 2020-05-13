@@ -1,7 +1,7 @@
 import { ThemeProvider as MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { getCookie } from '../scripts/helpers'
+import { getCookie } from 'scripts/helpers'
 import { indigo } from '@material-ui/core/colors'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 

@@ -11,7 +11,7 @@ import RestaurantIcon from '@material-ui/icons/Restaurant'
 import Router from 'next/router'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
-import UserContext from '../UserContext'
+import UserContext from 'components/UserContext'
 
 export default function SideBarList () {
   const { user, setUser } = useContext(UserContext)

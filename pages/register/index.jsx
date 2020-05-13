@@ -4,12 +4,12 @@ import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import StyledLink from '../../components/StyledLink'
+import StyledLink from 'components/StyledLink'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import UserContext from '../../components/UserContext'
+import UserContext from 'components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
-import { register } from '../../scripts/auth'
+import { register } from 'scripts/auth'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {

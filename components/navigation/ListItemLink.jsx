@@ -1,4 +1,4 @@
-import ButtonLink from '../ButtonLink'
+import ButtonLink from 'components/ButtonLink'
 import ListItem from '@material-ui/core/ListItem'
 import React from 'react'
 
