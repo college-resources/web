@@ -53,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Menu (props) {
   const classes = useStyles()
   const { feed } = props
-  const [
+  const {
     selectedWeekIndex,
     setSelectedWeekIndex
-  ] = useState(0)
+  } = props
   const [
     selectedTabIndex,
     setSelectedTabIndex
