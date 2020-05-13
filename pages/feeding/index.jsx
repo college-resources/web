@@ -55,6 +55,10 @@ export default function FeedingPage (props) {
     selectedFeedingIndex,
     setSelectedFeedingIndex
   ] = useState('')
+  const [
+    selectedWeekIndex,
+    setSelectedWeekIndex
+  ] = useState(0)
 
   useEffect(
     () => {
@@ -69,6 +73,7 @@ export default function FeedingPage (props) {
   )
 
   function handleFeedingChange (event) {
+    setSelectedWeekIndex(0)
     setSelectedFeedingIndex(event.target.value)
   }
 
@@ -106,7 +111,11 @@ export default function FeedingPage (props) {
           </Typography>
         </Box>
       ) : (
-        <Menu feed={feedings[selectedFeedingIndex]} />
+        <Menu
+          feed={feedings[selectedFeedingIndex]}
+          selectedWeekIndex={selectedWeekIndex}
+          setSelectedWeekIndex={setSelectedWeekIndex}
+        />
       )}
     </Container>
   )
