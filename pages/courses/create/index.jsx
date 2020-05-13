@@ -8,8 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MinusIcon from '@material-ui/icons/Remove'
 import PlusIcon from '@material-ui/icons/Add'
 import TextField from '@material-ui/core/TextField'
-import { dynamicSort } from '../../../scripts/sorting'
-import gql from '../../../scripts/graphql'
+import { dynamicSort } from 'scripts/sorting'
+import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
 
 const departmentHandler = () => Promise.resolve(gql(`

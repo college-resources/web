@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
-import Menu from '../../components/feeding/Menu'
+import Menu from 'components/feeding/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import gql from '../../scripts/graphql'
+import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
 
 const feedingHandler = () => Promise.resolve(gql(`

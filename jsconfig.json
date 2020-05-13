@@ -1,0 +1,6 @@
+{
+  // TODO: https://code.visualstudio.com/docs/languages/jsconfig#_jsconfig-options
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}

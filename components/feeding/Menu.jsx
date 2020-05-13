@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab'
 import TabPanel from './TabPanel'
 import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
-import formatMsTo24HourClock from '../../scripts/formatMsTo24HourClock'
+import formatMsTo24HourClock from 'scripts/formatMsTo24HourClock'
 import { makeStyles } from '@material-ui/core/styles'
 
 function a11yProps (index) {

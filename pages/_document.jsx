@@ -2,7 +2,7 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import React from 'react'
 import { ServerStyleSheets } from '@material-ui/styles'
-import { themeColor } from '../components/ThemeContext'
+import { themeColor } from 'components/ThemeContext'
 
 class MyDocument extends Document {
   render () {
