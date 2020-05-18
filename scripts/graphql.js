@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
-export default function (query) {
+export default function gql (query) {
   return new Promise((resolve, reject) => {
     fetch(
       '/api/graphql',
