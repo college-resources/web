@@ -32,7 +32,7 @@
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
     "express-session": "^1.17.1",
-    "express-validator": "^6.4.0",
+    "express-validator": "^6.5.0",
     "genversion": "^2.2.1",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
