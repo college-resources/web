@@ -52,7 +52,7 @@ const findLastAndNextMeal = (feeding) => {
     })
 
     if (!nextMeal) {
-      nextMeal = day.meals[0]
+      [nextMeal] = day.meals
     }
 
     return { isLastOpen, lastMeal, nextMeal }
