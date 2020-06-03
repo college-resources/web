@@ -59,6 +59,7 @@
     "react/jsx-indent": "off",
     "react/jsx-indent-props": "off",
     "react/jsx-max-depth": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "sort-keys": "off"
   }
 }
