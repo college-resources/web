@@ -73,24 +73,38 @@ export default function CreatePage (props) {
   )
 
   const lessonHandler = () => {
-    gql(`
-      mutation {
+    const query = `
+      mutation (
+        $name: String!,
+        $department: ID!,
+        $semester: Int!,
+        $code: String!,
+        $lectureHours: Int!,
+        $labHours: Int!,
+        $credit: Int!,
+        $type: String!
+      ) {
         addLesson(
           lesson: {
-            name: "${values.name}",
-            department: "${values.department}",
-            semester: ${values.semester},
-            lessonCode: "${values.code}",
-            hoursTheory: ${values.lectureHours},
-            hoursLab: ${values.labHours},
-            credit: ${values.credit},
-            type: "${values.type}"
+            name: $name,
+            department: $department,
+            semester: $semester,
+            lessonCode: $code,
+            hoursTheory: $lectureHours,
+            hoursLab: $labHours,
+            credit: $credit,
+            type: $type
           }
         ) {
           _id
         }
       }
-    `)
+    `
+
+    gql(
+      query,
+      values
+    )
   }
 
   const handleChange = (name) => (event) => {
