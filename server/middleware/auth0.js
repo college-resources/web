@@ -1,5 +1,4 @@
 const auth0 = require('auth0')
-const fetch = require('isomorphic-unfetch')
 
 const authenticationClient = new auth0.AuthenticationClient({
   clientId: process.env.AUTH0_CLIENT_ID,

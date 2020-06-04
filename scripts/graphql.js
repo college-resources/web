@@ -1,5 +1,4 @@
 import Router from 'next/router'
-import fetch from 'isomorphic-unfetch'
 
 export default function gql (query, variables) {
   const body = { query }
