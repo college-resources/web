@@ -50,6 +50,6 @@ API_ADDRESS=<YOUR_API_ADDRESS>
 
 ### Running
 
-1. Open a terminal in the root of the projects and run `npm run dev`.
+1. Open a terminal in the root of the project and run `npm run dev`.
 
 2. Wait for it to compile and click the `localhost:3000` link when it appears.
