@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import CodeInput from 'components/courses/create/CodeInput'
 import Container from '@material-ui/core/Container'
-import Fab from '@material-ui/core/Fab'
+import CreditInput from 'components/courses/create/CreditInput'
+import DepartmentInput from 'components/courses/create/DepartmentInput'
 import Grid from '@material-ui/core/Grid'
-import MenuItem from '@material-ui/core/MenuItem'
-import MinusIcon from '@material-ui/icons/Remove'
-import PlusIcon from '@material-ui/icons/Add'
-import TextField from '@material-ui/core/TextField'
+import HoursLabInput from 'components/courses/create/HoursLabInput'
+import HoursLectureInput from 'components/courses/create/HoursLectureInput'
+import NameInput from 'components/courses/create/NameInput'
+import SemesterInput from 'components/courses/create/SemesterInput'
 import { dynamicSort } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
+import TypeInput from '../../../components/courses/create/TypeInput'
 
 const departmentHandler = () => Promise.resolve(gql(`
   query {
@@ -34,6 +36,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+function formDefaults () {
+  return {
+    name: '',
+    department: '',
+    semester: 1,
+    code: '',
+    lectureHours: 0,
+    labHours: 0,
+    credit: 0,
+    type: ''
+  }
+}
+
 export default function CreatePage (props) {
   const classes = useStyles()
   const [
@@ -43,15 +58,11 @@ export default function CreatePage (props) {
   const [
     values,
     setValues
-  ] = useState({
-    department: '',
-    name: '',
-    semester: 1
-  })
+  ] = useState(formDefaults())
 
   useEffect(
     () => {
-      props.updateTitle('Create lesson')
+      props.updateTitle('Create course')
       departmentHandler().then((gqlDepartments) => {
         if (gqlDepartments) {
           setDepartments(gqlDepartments)
@@ -68,7 +79,12 @@ export default function CreatePage (props) {
           lesson: {
             name: "${values.name}",
             department: "${values.department}",
-            semester: ${values.semester}
+            semester: ${values.semester},
+            lessonCode: "${values.code}",
+            hoursTheory: ${values.lectureHours},
+            hoursLab: ${values.labHours},
+            credit: ${values.credit},
+            type: "${values.type}"
           }
         ) {
           _id
@@ -78,44 +94,21 @@ export default function CreatePage (props) {
   }
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value })
+    setValues({
+      ...values,
+      [name]: event.target
+        ? event.target.value
+        : event
+    })
   }
 
   function handleClear () {
-    setValues({
-      ...values,
-      department: '',
-      name: '',
-      semester: 1
-    })
+    setValues(formDefaults())
   }
 
   function handleSave () {
     lessonHandler()
     handleClear()
-  }
-
-  const handleSemesterChange = (num) => () => {
-    const newValue = values.semester + num
-
-    if (newValue < 1) {
-      setValues({ ...values, semester: 1 })
-    } else if (newValue > 10) {
-      setValues({ ...values, semester: 10 })
-    } else {
-      setValues({ ...values, semester: newValue })
-    }
-  }
-
-  function semesterValidator (event) {
-    const semester = event.target.value
-    handleChange('semester')(event)
-
-    if (semester < 1) {
-      setValues({ ...values, semester: 1 })
-    } else if (semester > 10) {
-      setValues({ ...values, semester: 10 })
-    }
   }
 
   return (
@@ -125,85 +118,40 @@ export default function CreatePage (props) {
         className={classes.container}
         noValidate
       >
-        <TextField
-          fullWidth
-          id="lesson-name"
-          label="Lesson Name"
-          margin="normal"
+        <NameInput
           onChange={handleChange('name')}
-          required
           value={values.name}
-          variant="outlined"
         />
-        <TextField
-          fullWidth
-          id="lesson-dept"
-          label="Department"
-          margin="normal"
+        <DepartmentInput
+          departments={departments}
           onChange={handleChange('department')}
-          required
-          select
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu
-            }
-          }}
           value={values.department}
-          variant="outlined"
-        >
-          {departments.map((dept) => (
-            <MenuItem
-              key={dept._id}
-              value={dept._id}
-            >
-              {dept.name}
-            </MenuItem>
-          ))}
-        </TextField>
-        <div style={{ width: '100%' }}>
-          <Box display="flex">
-            <Box flexGrow={1}>
-              <TextField
-                fullWidth
-                id="lesson-semester"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                label="Semester"
-                margin="normal"
-                onChange={semesterValidator}
-                required
-                type="number"
-                value={values.semester}
-                variant="outlined"
-              />
-            </Box>
-            <Box
-              ml={1}
-              my="auto"
-            >
-              <Fab
-                aria-label="decrement semester"
-                color="secondary"
-                onClick={handleSemesterChange(-1)}
-              >
-                <MinusIcon />
-              </Fab>
-            </Box>
-            <Box
-              ml={1}
-              my="auto"
-            >
-              <Fab
-                aria-label="increment semester"
-                color="primary"
-                onClick={handleSemesterChange(1)}
-              >
-                <PlusIcon />
-              </Fab>
-            </Box>
-          </Box>
-        </div>
+        />
+        <SemesterInput
+          onChange={handleChange('semester')}
+          setValues={setValues}
+          value={values.semester}
+        />
+        <CodeInput
+          onChange={handleChange('code')}
+          value={values.code}
+        />
+        <HoursLectureInput
+          onChange={handleChange('lectureHours')}
+          value={values.lectureHours}
+        />
+        <HoursLabInput
+          onChange={handleChange('labHours')}
+          value={values.labHours}
+        />
+        <CreditInput
+          onChange={handleChange('credit')}
+          value={values.credit}
+        />
+        <TypeInput
+          onChange={handleChange('type')}
+          value={values.type}
+        />
         <Grid
           container
           spacing={3}
