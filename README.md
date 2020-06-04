@@ -12,9 +12,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites (Windows)
 
-**Warning! We only support 64 bit versions of Windows 7 SP1 or later**<br/>
-We do not support any 32 bit Windows version or any version prior to Windows 7 SP1 
-
 1. [NodeJS 12.X](https://nodejs.org/dist/latest-v12.x)
 (Recommended version: [NodeJS 12.16.0 x64](https://nodejs.org/dist/v12.16.3/node-v12.16.3-x64.msi))
 
@@ -33,7 +30,7 @@ git clone https://github.com/college-resources/web.git
 
 ### Preparing
 
-1. Navigate to the root of the project and run `npm i`.
+1. Navigate to the root of the project and run `npm install`.
 
 2. Create a `.env` file in the root of the project and add the following details:
 
@@ -45,11 +42,23 @@ AUTH0_AUDIENCE=<YOUR_AUTH0_AUDIENCE>
 AUTH0_SCOPE=openid email profile offline_access
 AUTH0_REALM=<YOUR_AUTH0_REALM>
 
-API_ADDRESS=<YOUR_API_ADDRESS>
+API_ADDRESS=<COLLEGE_RESOURCES_API_ADDRESS>
 ```
 
 ### Running
 
+#### Development
+
 1. Open a terminal in the root of the project and run `npm run dev`.
 
-2. Wait for it to compile and click the `localhost:3000` link when it appears.
+2. Wait for it to compile and click the `http://localhost:3000` link when it appears.
+
+#### Production
+
+1. Open a terminal in the root of the project and run
+```bash
+npm run build
+npm start
+```
+
+2. When the server starts, go to `http://localhost:3000`
