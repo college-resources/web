@@ -1,12 +1,17 @@
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 
-export default function gql (query) {
+export default function gql (query, variables) {
+  const body = { query }
+  if (variables) {
+    body.variables = variables
+  }
+
   return new Promise((resolve, reject) => {
     fetch(
       '/api/graphql',
       {
-        body: JSON.stringify({ query }),
+        body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json'
         },
