@@ -7,7 +7,6 @@ import React from 'react'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'components/ThemeContext'
 import UserContext from 'components/UserContext'
-import fetch from 'isomorphic-unfetch'
 import { version } from 'lib/version'
 import { withRouter } from 'next/router'
 
