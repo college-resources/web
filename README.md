@@ -23,7 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Downloading
 
-Navigate to the folder where you want the project to be saved, open a terminal and run the following command:
+Navigate to the folder where you want the project to be saved and run the following command:
 ```bash
 git clone https://github.com/college-resources/web.git
 ```
@@ -49,13 +49,13 @@ API_ADDRESS=<COLLEGE_RESOURCES_API_ADDRESS>
 
 #### Development
 
-1. Open a terminal in the root of the project and run `npm run dev`.
+1. In the root of the project run `npm run dev`.
 
 2. Wait for it to compile and click the `http://localhost:3000` link when it appears.
 
 #### Production
 
-1. Open a terminal in the root of the project and run
+1. In the root of the project run
 ```bash
 npm run build
 npm start
