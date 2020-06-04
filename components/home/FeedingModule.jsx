@@ -105,7 +105,10 @@ export default function FeedingModule () {
   )
 
   return (
-    <Paper className={classes.paper}>
+    <Paper
+      className={classes.paper}
+      elevation={3}
+    >
       <Box
         alignItems="center"
         css={{ height: 20 }}

@@ -9,8 +9,11 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   lesson: {
-    backgroundColor: '#40444b',
-    borderRadius: theme.shape.borderRadius
+    backgroundColor: theme.palette.type === 'light'
+      ? '#fff'
+      : '#40444b',
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.text.normal
   },
   paper: {
     color: theme.palette.text.secondary,
@@ -25,7 +28,10 @@ export default function CoursesModule () {
   const classes = useStyles()
 
   return (
-    <Paper className={classes.paper}>
+    <Paper
+      className={classes.paper}
+      elevation={3}
+    >
       <Box
         alignItems="center"
         css={{ height: 20 }}
@@ -44,86 +50,92 @@ export default function CoursesModule () {
       </Box>
       <Divider />
       <Box mt={2}>
-        <Box mb={0.5}>
-          <Grid
-            alignItems="center"
-            className={classes.lesson}
-            container
-            wrap="nowrap"
-          >
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  1
-                </Typography>
-              </Box>
+        <Box mb={1}>
+          <Paper>
+            <Grid
+              alignItems="center"
+              className={classes.lesson}
+              container
+              wrap="nowrap"
+            >
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    1
+                  </Typography>
+                </Box>
+              </Grid>
+              <Divider
+                flexItem
+                orientation="vertical"
+              />
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    [PH] Lesson 1
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Divider
-              flexItem
-              orientation="vertical"
-            />
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  [PH] Lesson 1
-                </Typography>
-              </Box>
+          </Paper>
+        </Box>
+        <Box mb={1}>
+          <Paper>
+            <Grid
+              alignItems="center"
+              className={classes.lesson}
+              container
+              wrap="nowrap"
+            >
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    2
+                  </Typography>
+                </Box>
+              </Grid>
+              <Divider
+                flexItem
+                orientation="vertical"
+              />
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    [PH] Lesson 2
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          </Paper>
         </Box>
         <Box mb={0.5}>
-          <Grid
-            alignItems="center"
-            className={classes.lesson}
-            container
-            wrap="nowrap"
-          >
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  2
-                </Typography>
-              </Box>
+          <Paper>
+            <Grid
+              alignItems="center"
+              className={classes.lesson}
+              container
+              wrap="nowrap"
+            >
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    2
+                  </Typography>
+                </Box>
+              </Grid>
+              <Divider
+                flexItem
+                orientation="vertical"
+              />
+              <Grid item>
+                <Box p={2}>
+                  <Typography>
+                    [PH] Lesson 3
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Divider
-              flexItem
-              orientation="vertical"
-            />
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  [PH] Lesson 2
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box mb={0.5}>
-          <Grid
-            alignItems="center"
-            className={classes.lesson}
-            container
-            wrap="nowrap"
-          >
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  2
-                </Typography>
-              </Box>
-            </Grid>
-            <Divider
-              flexItem
-              orientation="vertical"
-            />
-            <Grid item>
-              <Box p={2}>
-                <Typography>
-                  [PH] Lesson 3
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
+          </Paper>
         </Box>
       </Box>
     </Paper>
