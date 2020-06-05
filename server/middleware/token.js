@@ -26,6 +26,7 @@ const init = (req) => {
 
   // Verify token using kid, audience and issuer
   return async (token, tokenHeader) => {
+    if (!tokenHeader) return
     const secret = await getSecret(tokenHeader.kid)
     const options = {
       algorithms: ['RS256'],
