@@ -29,9 +29,10 @@ const lessonHandler = () => Promise.resolve(gql(`
 
 const notesHandler = () => Promise.resolve(gql(`
     query {
-    lessonNotes(lesson: "5d611ff874fd7b001753b7da") {
-    _id
-    }
+        lessons{
+            _id
+            name
+        }
     }
     `).then((data) => data.lessonNotes))
 
@@ -160,8 +161,8 @@ export default function CoursesPage (props) {
     <Container>
         <Autocomplete
         id="combo-box-demo"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
+        options={lessons}
+        getOptionLabel={(option) => option.name}
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
     />
