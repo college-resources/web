@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -67,13 +67,12 @@ export default function Semester (props) {
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel
+      <Accordion
         className={classes.summary}
         expanded={expanded === (`panel${semester}`)}
         onChange={handleChange(`panel${semester}`)}
-        TransitionProps={{ unmountOnExit: true }}
       >
-        <ExpansionPanelSummary
+        <AccordionSummary
           aria-controls="panel-content"
           expandIcon={<ExpandMoreIcon className={classes.icon} />}
           id="panel1d-header"
@@ -82,8 +81,8 @@ export default function Semester (props) {
             Εξάμηνο&nbsp;
             {semester}
           </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails style={{ overflowX: 'auto', overflowY: 'hidden', padding: 0 }}>
+        </AccordionSummary>
+        <AccordionDetails style={{ overflowX: 'auto', overflowY: 'hidden', padding: 0 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -156,8 +155,8 @@ export default function Semester (props) {
               ))}
             </TableBody>
           </Table>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     </div>
   )
 }
