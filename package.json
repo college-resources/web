@@ -31,7 +31,7 @@
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
     "express-session": "^1.17.1",
-    "express-validator": "^6.5.0",
+    "express-validator": "^6.6.1",
     "genversion": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.8.1",
