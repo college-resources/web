@@ -28,16 +28,21 @@ const lessonHandler = () => Promise.resolve(gql(`
 
 const notesHandler = () => Promise.resolve(gql(`
     query {
-    lessonNotes(lesson: "5d611ff874fd7b001753b7da") {
-    _id
+      lessons {
+        _id
+        name
     }
     }
-    `).then((data) => data.lessonNotes))
+    `).then((data) => data.lessonNotes && data.lessonNotes.sort(dynamicSortMultiple(
+  'name'
+))))
 
 export default function CoursesPage (props) {
   const [
     lessons,
-    setLessons
+    setLessons,
+    lessonNotes,
+    setLessonNotes
   ] = useState([])
 
   useEffect(
@@ -54,7 +59,7 @@ export default function CoursesPage (props) {
 
   useEffect(
     () => {
-      lessonHandler().then((gqlLessonNotes) => {
+      notesHandler().then((gqlLessonNotes) => {
         if (gqlLessonNotes) {
           setLessonNotes(gqlLessonNotes)
         }
@@ -66,14 +71,15 @@ export default function CoursesPage (props) {
   return (
     <Container>
       <Autocomplete
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option.name}
         id='combo-box-demo'
-        options={top100Films}
+        options={lessonNotes}
         renderInput={(params) => (<TextField
           {...params}
           label='Combo box'
           variant='outlined'
-                                  />)}
+          fullWidth
+        />)}
       />
     </Container>
   )
