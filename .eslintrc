@@ -51,6 +51,7 @@
     "max-lines-per-function": "off",
     "max-params": "off",
     "max-statements": "off",
+    "multiline-ternary": "off",
     "no-plusplus": "off",
     "no-process-env": "off",
     "no-ternary": "off",
