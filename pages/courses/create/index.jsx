@@ -9,10 +9,10 @@ import HoursLabInput from 'components/courses/create/HoursLabInput'
 import HoursLectureInput from 'components/courses/create/HoursLectureInput'
 import NameInput from 'components/courses/create/NameInput'
 import SemesterInput from 'components/courses/create/SemesterInput'
+import TypeInput from '../../../components/courses/create/TypeInput'
 import { dynamicSort } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
-import TypeInput from '../../../components/courses/create/TypeInput'
 
 const departmentHandler = () => Promise.resolve(gql(`
   query {

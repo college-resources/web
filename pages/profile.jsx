@@ -55,21 +55,21 @@ export default function ProfilePage (props) {
                 src={user.picture}
               />
               <TextField
-                defaultValue={user.given_name}
-                fullWidth
                 InputProps={{
                   readOnly: true
                 }}
+                defaultValue={user.given_name}
+                fullWidth
                 label="First Name"
                 margin="normal"
                 variant="outlined"
               />
               <TextField
-                defaultValue={user.family_name}
-                fullWidth
                 InputProps={{
                   readOnly: true
                 }}
+                defaultValue={user.family_name}
+                fullWidth
                 label="Last Name"
                 margin="normal"
                 variant="outlined"
@@ -89,11 +89,11 @@ export default function ProfilePage (props) {
                 Email Address
               </Box>
               <TextField
-                defaultValue={user.email}
-                fullWidth
                 InputProps={{
                   readOnly: true
                 }}
+                defaultValue={user.email}
+                fullWidth
                 margin="normal"
                 variant="outlined"
               />

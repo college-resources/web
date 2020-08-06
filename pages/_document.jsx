@@ -10,10 +10,6 @@ class MyDocument extends Document {
       // TODO automatic lang selection
       <html lang="en">
         <Head>
-          <meta
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
-            name="viewport"
-          />
           <link href="/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57" />
           <link href="/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60" />
           <link href="/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
