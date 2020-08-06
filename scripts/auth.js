@@ -1,12 +1,12 @@
 import Router from 'next/router'
 
-export function login (ctx, email, passwd) {
+export function login (ctx, email, password) {
   fetch(
-    'auth/login',
+    '/auth/login',
     {
       body: JSON.stringify({
         email,
-        passwd
+        password
       }),
       headers: {
         Accept: 'application/json',
@@ -16,24 +16,23 @@ export function login (ctx, email, passwd) {
     }
   )
     .then((res) => {
-      if (res.ok) {
-        return res.json()
+      if (!res.ok) {
+        // TODO: Implement error handling
+        return res.text().then((text) => console.log(text))
       }
-      // TODO: Implement error handling
-      res.text().then((text) => console.log(text))
+      return res.json()
+        .then((json) => {
+          ctx(json)
+          Router.push('/')
+        })
     })
-    .then((json) => {
-      ctx(json)
-      Router.push('/profile')
-    })
-    // TODO: Implement error handling
     .catch((err) => console.log(err.message))
 }
 
 // eslint-disable-next-line
 export function register (ctx, email, given_name, family_name, password) {
   fetch(
-    'auth/register',
+    '/auth/register',
     {
       body: JSON.stringify({
         email,
