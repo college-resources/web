@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local')
 module.exports = new LocalStrategy(
   {
     passReqToCallback: true,
-    passwordField: 'passwd',
+    passwordField: 'password',
     usernameField: 'email'
   },
   async (req, username, password, done) => {
