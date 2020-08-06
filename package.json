@@ -47,7 +47,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^7.6.0",
-    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.0",
     "npm-check": "^5.9.2",
     "standard": "^14.3.4"
