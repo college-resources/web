@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import AppBar from '@material-ui/core/AppBar'
@@ -14,8 +14,9 @@ import SwipeableBar from './SwipeableBar'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import UserContext from 'components/UserContext'
+import { selectUser } from 'redux/authSlice'
 import { useChangeTheme } from 'components/ThemeContext'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -55,8 +56,8 @@ export default function NavBar (props) {
     drawerOpen,
     setDrawerOpen
   ] = useState(false)
-  const { user } = useContext(UserContext)
   const { title } = props
+  const user = useSelector(selectUser)
 
   const theme = useTheme()
   const changeTheme = useChangeTheme()

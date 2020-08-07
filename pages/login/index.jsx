@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles, withTheme } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -10,10 +10,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import StyledLink from 'components/StyledLink'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import UserContext from 'components/UserContext'
-import { login } from 'scripts/auth'
+import { login } from 'redux/authSlice'
 import { red } from '@material-ui/core/colors'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -65,6 +65,7 @@ const GoogleButton = withTheme(styled(Button)`
 
 export default function LoginPage (props) {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [
     email,
     setEmail
@@ -73,7 +74,6 @@ export default function LoginPage (props) {
     password,
     setPassword
   ] = useState('')
-  const { setUser } = useContext(UserContext)
 
   useEffect(
     () => {
@@ -87,20 +87,10 @@ export default function LoginPage (props) {
   }
 
   function handleLoginWithAuth0 () {
-    login(
-      setUser,
+    dispatch(login(
       email,
       password
-    ).catch((err) => {
-      if (typeof err === 'object') {
-        // TODO: Change
-        // eslint-disable-next-line no-alert
-        alert('Something went wrong. Please try again.')
-        return console.error(err)
-      }
-
-      // TODO: Show UI message
-    })
+    ))
   }
 
   function handleLoginWithGoogle () {
