@@ -57,7 +57,7 @@ router.post(
     }
 
     try {
-      const user = await req.auth0.managementClient.createUser({
+      await req.auth0.managementClient.createUser({
         connection: 'Username-Password-Authentication',
         email: req.body.email,
         // TODO: Implement Email verification support
@@ -67,10 +67,19 @@ router.post(
         password: req.body.password
       })
 
-      res.json(user)
+      next()
     } catch (err) {
       return next(err)
     }
+  },
+  passport.authenticate(
+    'password',
+    {
+      failureRedirect: '/login'
+    }
+  ),
+  (req, res) => {
+    res.json(req.user.profile)
   }
 )
 
