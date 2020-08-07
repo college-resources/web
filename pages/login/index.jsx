@@ -91,7 +91,16 @@ export default function LoginPage (props) {
       setUser,
       email,
       password
-    )
+    ).catch((err) => {
+      if (typeof err === 'object') {
+        // TODO: Change
+        // eslint-disable-next-line no-alert
+        alert('Something went wrong. Please try again.')
+        return console.error(err)
+      }
+
+      // TODO: Show UI message
+    })
   }
 
   function handleLoginWithGoogle () {
