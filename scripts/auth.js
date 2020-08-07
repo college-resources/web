@@ -1,7 +1,7 @@
 import Router from 'next/router'
 
 export function login (ctx, email, password) {
-  fetch(
+  return fetch(
     '/auth/login',
     {
       body: JSON.stringify({
@@ -17,27 +17,25 @@ export function login (ctx, email, password) {
   )
     .then((res) => {
       if (!res.ok) {
-        // TODO: Implement error handling
-        return res.text().then((text) => console.log(text))
+        return Promise.reject(res.statusCode)
       }
+
       return res.json()
         .then((json) => {
           ctx(json)
           Router.push('/')
         })
     })
-    .catch((err) => console.log(err.message))
 }
 
-// eslint-disable-next-line
-export function register (ctx, email, given_name, family_name, password) {
-  fetch(
+export function register (ctx, email, givenName, familyName, password) {
+  return fetch(
     '/auth/register',
     {
       body: JSON.stringify({
         email,
-        family_name,
-        given_name,
+        family_name: familyName,
+        given_name: givenName,
         password
       }),
       headers: {
@@ -48,17 +46,14 @@ export function register (ctx, email, given_name, family_name, password) {
     }
   )
     .then((res) => {
-      if (res.ok) {
-        login(
-          ctx,
-          email,
-          password
-        )
-      } else {
-        // TODO: Implement error handling
-        res.text().then((text) => console.log(text))
+      if (!res.ok) {
+        return Promise.reject(res.statusCode)
       }
+
+      return login(
+        ctx,
+        email,
+        password
+      )
     })
-    // TODO: Implement error handling
-    .catch((err) => console.log(err.message))
 }
