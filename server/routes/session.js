@@ -5,9 +5,7 @@ router.get(
   '/profile',
   (req, res) => {
     const profile = (req.user && req.user.profile) || null
-    res.json({
-      data: profile
-    })
+    res.json(profile)
   }
 )
 
