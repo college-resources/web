@@ -91,7 +91,6 @@ export default function RegisterPage (props) {
     setPassword(event.target.value)
   }
 
-  // TODO: Redux
   function handleRegister () {
     dispatch(register(
       email,

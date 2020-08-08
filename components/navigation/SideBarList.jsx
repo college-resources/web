@@ -10,7 +10,6 @@ import ListItemLink from './ListItemLink'
 import ListItemText from '@material-ui/core/ListItemText'
 import React from 'react'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
-import Router from 'next/router'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
 
