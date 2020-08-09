@@ -1,4 +1,4 @@
-import { logout, selectUser } from 'redux/authSlice'
+import { status as authStatus, logout, selectStatus } from 'redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import BookIcon from '@material-ui/icons/Book'
 import Divider from '@material-ui/core/Divider'
@@ -15,7 +15,7 @@ import SignoutIcon from '@material-ui/icons/ExitToApp'
 
 export default function SideBarList () {
   const dispatch = useDispatch()
-  const user = useSelector(selectUser)
+  const currentAuthStatus = useSelector(selectStatus)
 
   function handleLogout () {
     dispatch(logout())
@@ -55,7 +55,7 @@ export default function SideBarList () {
           <ListItemText primary="Feeding" />
         </ListItemLink>
       </List>
-      {user && (
+      {currentAuthStatus === authStatus.AUTHENTICATED && (
         <>
           <Divider />
           <List>
