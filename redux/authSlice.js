@@ -36,8 +36,8 @@ export default slice.reducer
 export function setUser (user) {
   return (dispatch) => {
     if (user) {
-      dispatch(slice.actions.updateStatus(status.AUTHENTICATED))
       dispatch(slice.actions.updateUser(user))
+      dispatch(slice.actions.updateStatus(status.AUTHENTICATED))
     }
 
     if (!user) {
@@ -149,4 +149,12 @@ export function logout () {
 
 export function selectUser (state) {
   return state.auth.user
+}
+
+export function selectError (state) {
+  return state.auth.error
+}
+
+export function selectStatus (state) {
+  return state.auth.status
 }

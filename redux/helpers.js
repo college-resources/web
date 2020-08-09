@@ -1,18 +1,17 @@
+import { status } from './authSlice'
+
 export function handleAuthResponse (slice, dispatch, res) {
   if (res.ok) {
     res.json().then((user) => {
-      dispatch(slice.actions.updateStatus(status.AUTHENTICATED))
       dispatch(slice.actions.updateUser(user))
+      dispatch(slice.actions.updateStatus(status.AUTHENTICATED))
     })
   }
 
   if (!res.ok) {
-    res.text().then((resText) => {
+    res.json().then((error) => {
       dispatch(slice.actions.updateStatus(status.FAILURE))
-      dispatch(slice.actions.updateError({
-        message: resText,
-        statusCode: res.statusCode
-      }))
+      dispatch(slice.actions.updateError(error))
     })
   }
 
