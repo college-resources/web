@@ -10,7 +10,8 @@ export function handleAuthResponse (slice, dispatch, res) {
 
   if (!res.ok) {
     res.json().then((error) => {
-      dispatch(slice.actions.updateStatus(status.FAILURE))
+      const newStatus = error.statusCode === 401 ? status.UNAUTHENTICATED : status.FAILURE
+      dispatch(slice.actions.updateStatus(newStatus))
       dispatch(slice.actions.updateError(error))
     })
   }
