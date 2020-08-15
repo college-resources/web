@@ -78,7 +78,10 @@ export default function NotesPage (props) {
   }
 
   function handleClickOpen (text) {
-    setDialog({ open: true, text })
+    // eslint-disable-next-line func-names
+    return function () {
+      setDialog({ open: true, text })
+    }
   }
 
   useEffect(
