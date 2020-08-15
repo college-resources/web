@@ -9,15 +9,25 @@ import { dynamicSortMultiple } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 100,
     marginTop: 16
   },
   title: {
     fontSize: 14
+  },
+  autocomplete: {
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: 'gray'
+      }
+    },
+    '& label.Mui-focused': {
+      color: theme.palette.type === 'dark' && theme.palette.common.white
+    }
   }
-})
+}))
 
 const lessonHandler = () => Promise.resolve(gql(`
   query {
@@ -103,6 +113,7 @@ export default function NotesPage (props) {
   return (
     <Container>
       <Autocomplete
+        className={classes.autocomplete}
         fullWidth
         getOptionLabel={getOptionLabelHandler}
         groupBy={groupByHandler}
