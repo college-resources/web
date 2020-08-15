@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemLink from './ListItemLink'
 import ListItemText from '@material-ui/core/ListItemText'
+import NotesIcon from '@material-ui/icons/Notes'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import Router from 'next/router'
 import SettingsIcon from '@material-ui/icons/Settings'
@@ -43,6 +44,16 @@ export default function SideBarList () {
             <BookIcon />
           </ListItemIcon>
           <ListItemText primary="Courses" />
+        </ListItemLink>
+        <ListItemLink
+          button
+          href="/notes"
+          key="Notes"
+        >
+          <ListItemIcon>
+            <NotesIcon />
+          </ListItemIcon>
+          <ListItemText primary="Notes" />
         </ListItemLink>
         <ListItemLink
           button
