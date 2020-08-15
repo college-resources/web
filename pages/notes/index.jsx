@@ -106,7 +106,7 @@ export default function NotesPage (props) {
         fullWidth
         getOptionLabel={getOptionLabelHandler}
         groupBy={groupByHandler}
-        id="controllable-states-demo"
+        id="notes"
         onChange={changeHandler}
         options={lessons}
         renderInput={renderInputHandler}
