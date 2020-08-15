@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
+import Dialog from 'components/notes/Dialog'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { dynamicSortMultiple } from 'scripts/sorting'
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const lessonHandler = () => Promise.resolve(gql(`
+const courseHandler = () => Promise.resolve(gql(`
   query {
     lessons {
       _id
@@ -66,11 +68,23 @@ export default function NotesPage (props) {
     notes,
     setNotes
   ] = useState([])
+  const [
+    dialog,
+    setDialog
+  ] = React.useState({ open: false, text: '' })
+
+  function setOpen (open) {
+    setDialog({ ...dialog, open })
+  }
+
+  function handleClickOpen (text) {
+    setDialog({ open: true, text })
+  }
 
   useEffect(
     () => {
       props.updateTitle('Notes')
-      lessonHandler().then((gqlLessons) => {
+      courseHandler().then((gqlLessons) => {
         if (gqlLessons) {
           setLessons(gqlLessons)
         }
@@ -131,29 +145,36 @@ export default function NotesPage (props) {
               // eslint-disable-next-line react/no-array-index-key
               key={`hypertext-${index}`}
             >
-              <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  Course Note
-                </Typography>
-                <Typography
-                  component="h2"
-                  variant="h5"
-                />
-                <Typography
-                  component="p"
-                  variant="body2"
-                >
-                  {hypertext}
-                </Typography>
-              </CardContent>
+              <CardActionArea onClick={handleClickOpen(hypertext)}>
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    2020 - Winter exams
+                  </Typography>
+                  <Typography
+                    component="h2"
+                    variant="h5"
+                  />
+                  <Typography
+                    component="p"
+                    variant="body2"
+                  >
+                    {hypertext}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           ))
         ))
       }
+      <Dialog
+        open={dialog.open}
+        setOpen={setOpen}
+        text={dialog.text}
+      />
     </Container>
   )
 }
