@@ -54,6 +54,7 @@
     "eslint": "^7.6.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "npm-check": "^5.9.2",
     "standard": "^14.3.4"
   }
