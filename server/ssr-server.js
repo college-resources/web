@@ -9,6 +9,8 @@ const apiRouter = require('./routes/api')
 const authRouter = require('./routes/auth')
 const sessionRouter = require('./routes/session')
 
+const { handleError } = require('./lib/error')
+
 const server = express()
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -42,42 +44,13 @@ server.get(
   handle
 )
 
-// Error handlers
-if (server.get('env') === 'development') {
-  /*
-   * Development error handler
-   * Will print stacktrace
-   */
-  server.use((err, req, res) => {
-    res.status(err.status || 500)
-    app.render(
-      req,
-      res,
-      '/error',
-      {
-        error: err,
-        message: err.message
-      }
-    )
-  })
-} else {
-  /*
-   * Production error handler
-   * No stack traces leaked to user
-   */
-  server.use((err, req, res) => {
-    server.status(err.status || 500)
-    app.render(
-      req,
-      res,
-      '/error',
-      {
-        error: {},
-        message: err.message
-      }
-    )
-  })
-}
+// Error handling - Requires 4 parameters
+server.use((err, req, res, _) => {
+  handleError(
+    err,
+    res
+  )
+})
 
 module.exports = () => {
   app

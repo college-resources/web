@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { status as authStatus, selectStatus } from 'redux/authSlice'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Link from 'next/link'
 import Semester from 'components/courses/Semester'
-import UserContext from 'components/UserContext'
 import { dynamicSortMultiple } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import groupBy from 'scripts/groupBy'
 import { makeStyles } from '@material-ui/core/styles'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -52,7 +53,7 @@ export default function CoursesPage (props) {
     setSemesters
   ] = useState([])
   const classes = useStyles()
-  const { user } = useContext(UserContext)
+  const currentAuthStatus = useSelector(selectStatus)
 
   useEffect(
     () => {
@@ -82,7 +83,7 @@ export default function CoursesPage (props) {
 
   return (
     <Container>
-      {user && (
+      {currentAuthStatus === authStatus.AUTHENTICATED && (
         <Link href="/courses/create">
           <Button
             className={classes.button}

@@ -1,3 +1,6 @@
+import { Provider, connect } from 'react-redux'
+import { session, setUser } from 'redux/authSlice'
+import store, { wrapper } from 'redux/store'
 import App from 'next/app'
 import Box from '@material-ui/core/Box'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -6,25 +9,22 @@ import NavBar from 'components/navigation/NavBar'
 import React from 'react'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'components/ThemeContext'
-import UserContext from 'components/UserContext'
 import { version } from 'lib/version'
 import { withRouter } from 'next/router'
 
 class MyApp extends App {
   constructor (props) {
     super(props)
-    this.state = {
-      title: '',
-      user: props.user || null
-    }
+    this.state = { title: '' }
     this._updateTitle = this._updateTitle.bind(this)
+    this.props.setUser(this.props.ctxUser)
   }
 
   static getInitialProps ({ ctx }) {
     const initialProps = {}
 
     if (ctx.req) {
-      initialProps.user = ctx.req.user && ctx.req.user.profile
+      initialProps.ctxUser = ctx.req.user && ctx.req.user.profile
     }
 
     return initialProps
@@ -42,11 +42,8 @@ class MyApp extends App {
     }
 
     // Get profile from session
-    if (!this.state.user) {
-      fetch('/session/profile')
-        .then((res) => res.json())
-        .then((data) => this.setState({ user: data.profile }))
-        .catch((err) => console.error(err.message))
+    if (!this.props.user) {
+      this.props.session()
     }
 
     console.log(`v${version}`)
@@ -54,10 +51,6 @@ class MyApp extends App {
 
   render () {
     const { Component, pageProps } = this.props
-    const userValue = {
-      setUser: (user) => this.setState({ user }),
-      user: this.state.user
-    }
 
     return (
       <>
@@ -75,7 +68,7 @@ class MyApp extends App {
         <StylesProvider injectFirst>
           <ThemeProvider>
             <CssBaseline />
-            <UserContext.Provider value={userValue}>
+            <Provider store={store}>
               <NavBar title={this.state.title} />
               <Box mt={2}>
                 <Component
@@ -83,7 +76,7 @@ class MyApp extends App {
                   {...pageProps}
                 />
               </Box>
-            </UserContext.Provider>
+            </Provider>
           </ThemeProvider>
         </StylesProvider>
       </>
@@ -91,4 +84,16 @@ class MyApp extends App {
   }
 }
 
-export default withRouter(MyApp)
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
+const mapDispatchToProps = {
+  session,
+  setUser
+}
+
+export default wrapper.withRedux((withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyApp))))

@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { status as authStatus, login, selectStatus } from 'redux/authSlice'
 import { makeStyles, withTheme } from '@material-ui/core/styles'
+import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -10,8 +12,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import StyledLink from 'components/StyledLink'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import UserContext from 'components/UserContext'
-import { login } from 'scripts/auth'
 import { red } from '@material-ui/core/colors'
 import styled from 'styled-components'
 
@@ -65,6 +65,8 @@ const GoogleButton = withTheme(styled(Button)`
 
 export default function LoginPage (props) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const currentAuthStatus = useSelector(selectStatus)
   const [
     email,
     setEmail
@@ -73,7 +75,6 @@ export default function LoginPage (props) {
     password,
     setPassword
   ] = useState('')
-  const { setUser } = useContext(UserContext)
 
   useEffect(
     () => {
@@ -87,11 +88,10 @@ export default function LoginPage (props) {
   }
 
   function handleLoginWithAuth0 () {
-    login(
-      setUser,
+    dispatch(login(
       email,
       password
-    )
+    ))
   }
 
   function handleLoginWithGoogle () {
@@ -124,6 +124,7 @@ export default function LoginPage (props) {
           <TextField
             autoComplete="email"
             autoFocus
+            error={currentAuthStatus === authStatus.FAILURE}
             fullWidth
             id="email"
             label="Email Address"
@@ -136,6 +137,7 @@ export default function LoginPage (props) {
           />
           <TextField
             autoComplete="current-password"
+            error={currentAuthStatus === authStatus.FAILURE}
             fullWidth
             id="password"
             label="Password"

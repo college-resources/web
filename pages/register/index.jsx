@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
@@ -7,9 +7,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import StyledLink from 'components/StyledLink'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import UserContext from 'components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
-import { register } from 'scripts/auth'
+import { register } from 'redux/authSlice'
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegisterPage (props) {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [
     email,
     setEmail
@@ -66,7 +67,6 @@ export default function RegisterPage (props) {
     password,
     setPassword
   ] = useState('')
-  const { setUser } = useContext(UserContext)
 
   useEffect(
     () => {
@@ -92,13 +92,12 @@ export default function RegisterPage (props) {
   }
 
   function handleRegister () {
-    register(
-      setUser,
+    dispatch(register(
       email,
       givenName,
       familyName,
       password
-    )
+    ))
   }
 
   return (

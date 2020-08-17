@@ -6,6 +6,8 @@ const util = require('util')
 const querystring = require('querystring')
 const { check, validationResult } = require('express-validator')
 
+const { ErrorHandler } = require('../lib/error')
+
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
@@ -57,7 +59,7 @@ router.post(
     }
 
     try {
-      const user = await req.auth0.managementClient.createUser({
+      await req.auth0.managementClient.createUser({
         connection: 'Username-Password-Authentication',
         email: req.body.email,
         // TODO: Implement Email verification support
@@ -67,15 +69,11 @@ router.post(
         password: req.body.password
       })
 
-      res.json(user)
+      next()
     } catch (err) {
       return next(err)
     }
-  }
-)
-
-router.post(
-  '/login',
+  },
   passport.authenticate(
     'password',
     {
@@ -84,6 +82,44 @@ router.post(
   ),
   (req, res) => {
     res.json(req.user.profile)
+  }
+)
+
+router.post(
+  '/login',
+  [
+    check('email').isEmail(),
+    check('password').isLength(8)
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+
+    passport.authenticate(
+      'password',
+      (err, user, info) => {
+        if (err) {
+          return next(err)
+        }
+
+        if (!user) {
+          next(new ErrorHandler(
+            401,
+            'Not authenticated'
+          ))
+        }
+
+        req.login(user, (err) => {
+          if (err) {
+            return next(err)
+          }
+
+          res.json(req.user.profile)
+        })
+      }
+    )(req, res, next)
   }
 )
 

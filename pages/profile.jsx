@@ -1,12 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
-import UserContext from 'components/UserContext'
 import { makeStyles } from '@material-ui/core/styles'
+import { selectUser } from 'redux/authSlice'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function ProfilePage (props) {
-  const { user } = useContext(UserContext)
+  const user = useSelector(selectUser)
   const classes = useStyles()
 
   useEffect(
