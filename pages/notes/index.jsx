@@ -49,7 +49,9 @@ const notesHandler = (courseId) => Promise.resolve(gql(`
   query {
     lessonNotes(lesson: "${courseId}") {
       _id
+      date
       hypertexts
+      title
     }
   }
 `).then((data) => data.lessonNotes))
@@ -71,16 +73,16 @@ export default function NotesPage (props) {
   const [
     dialog,
     setDialog
-  ] = React.useState({ open: false, text: '' })
+  ] = React.useState({ open: false, title: '', texts: [] })
 
   function setOpen (open) {
     setDialog({ ...dialog, open })
   }
 
-  function handleClickOpen (text) {
+  function handleClickOpen (title, texts) {
     // eslint-disable-next-line func-names
     return function () {
-      setDialog({ open: true, text })
+      setDialog({ open: true, title, texts })
     }
   }
 
@@ -141,42 +143,45 @@ export default function NotesPage (props) {
         value={selectedLesson}
       />
       {
-        notes && notes.map((note) => (
-          note.hypertexts && note.hypertexts.map((hypertext, index) => (
-            <Card
-              className={classes.root}
-              // eslint-disable-next-line react/no-array-index-key
-              key={`hypertext-${index}`}
+        notes && notes.map((note, index) => (
+          <Card
+            className={classes.root}
+            // eslint-disable-next-line react/no-array-index-key
+            key={`hypertext-${index}`}
+          >
+            <CardActionArea onClick={handleClickOpen(
+              note.title,
+              note.hypertexts
+            )}
             >
-              <CardActionArea onClick={handleClickOpen(hypertext)}>
-                <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    2020 - Winter exams
-                  </Typography>
-                  <Typography
-                    component="h2"
-                    variant="h5"
-                  />
-                  <Typography
-                    component="p"
-                    variant="body2"
-                  >
-                    {hypertext}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))
+              <CardContent>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {note.date}
+                </Typography>
+                <Typography
+                  component="h2"
+                  variant="h5"
+                />
+                <Typography
+                  component="p"
+                  variant="body2"
+                >
+                  {note.title}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         ))
       }
       <Dialog
         open={dialog.open}
         setOpen={setOpen}
-        text={dialog.text}
+        texts={dialog.texts}
+        title={dialog.title}
       />
     </Container>
   )

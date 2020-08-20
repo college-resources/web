@@ -64,7 +64,7 @@ const DialogTitle = withStyles(styles)((props) => {
 
 export default function ScrollDialog (props) {
   const classes = useStyles()
-  const { open, setOpen, text } = props
+  const { open, setOpen, texts, title } = props
 
   function handleClose () {
     setOpen(false)
@@ -99,7 +99,7 @@ export default function ScrollDialog (props) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          [PH] Title
+          {title}
         </DialogTitle>
         <DialogContent
           className={classes.content}
@@ -110,7 +110,14 @@ export default function ScrollDialog (props) {
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            {text}
+            {
+              texts.map((text, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <p key={`text-${index}`}>
+                  {text}
+                </p>
+              ))
+            }
           </DialogContentText>
         </DialogContent>
       </Dialog>
