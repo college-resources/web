@@ -45,7 +45,10 @@
    "density": "4.0"
   }
  ],
+ "scope": "",
+ "orientation": "portrait",
  "start_url": "/",
  "display": "standalone",
- "theme_color": "#283593"
+ "theme_color": "#283593",
+ "background_color": "#2F3136"
 }
