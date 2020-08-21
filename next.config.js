@@ -1,3 +1,5 @@
+const withPWA = require('next-pwa')
+
 module.exports = {
   // TODO: Revisit to see if stil needed
   exportTrailingSlash: true,
@@ -6,3 +8,9 @@ module.exports = {
     'jsx'
   ]
 }
+
+module.exports = withPWA({
+  pwa: {
+    dest: 'public'
+  }
+})
