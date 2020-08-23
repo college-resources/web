@@ -9,7 +9,9 @@ class ErrorHandler extends Error {
 }
 
 const handleError = (err, res) => {
-  const { statusCode, message } = err
+  let { statusCode, message } = err
+  statusCode = statusCode || 500
+  message = message || 'Internal server error'
 
   // Used for Passport errors
   const { error, error_description: errorDescription } = tryParseJSON(message) || {}
