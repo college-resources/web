@@ -8,6 +8,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { withStyles } from '@material-ui/styles'
+import Markdown from 'markdown-to-jsx'
 
 const useStyles = makeStyles({
   root: {
@@ -117,7 +118,9 @@ export default function ScrollDialog (props) {
               texts.map((text, index) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <p key={`text-${index}`}>
-                  {text}
+                  <Markdown>
+                    {text}
+                  </Markdown>
                 </p>
               ))
             }
