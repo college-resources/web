@@ -19,6 +19,9 @@ const useStyles = makeStyles({
   },
   content: {
     padding: '8px 16px'
+  },
+  image: {
+    maxWidth: '100%'
   }
 })
 
@@ -64,7 +67,7 @@ const DialogTitle = withStyles(styles)((props) => {
 
 export default function ScrollDialog (props) {
   const classes = useStyles()
-  const { open, setOpen, texts, title } = props
+  const { open, setOpen, texts, title, images } = props
 
   function handleClose () {
     setOpen(false)
@@ -119,6 +122,16 @@ export default function ScrollDialog (props) {
               ))
             }
           </DialogContentText>
+          {
+            images && images.map((image, index) => (
+              <img
+                className={classes.image}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`image-${index}`}
+                src={image.details.url || image.url}
+              />
+            ))
+          }
         </DialogContent>
       </Dialog>
     </div>

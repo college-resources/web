@@ -52,9 +52,20 @@ const notesHandler = (courseId) => Promise.resolve(gql(`
       date
       hypertexts
       title
+      images {
+        url
+        details {
+          url
+          width
+          height
+        }
+      }
     }
   }
-`).then((data) => data.lessonNotes))
+`).then((data) => data.lessonNotes && data.lessonNotes.sort(dynamicSortMultiple(
+  '-date',
+  'title'
+))))
 
 export default function NotesPage (props) {
   const classes = useStyles()
@@ -73,16 +84,16 @@ export default function NotesPage (props) {
   const [
     dialog,
     setDialog
-  ] = React.useState({ open: false, title: '', texts: [] })
+  ] = React.useState({ open: false, title: '', texts: [], image: [] })
 
   function setOpen (open) {
     setDialog({ ...dialog, open })
   }
 
-  function handleClickOpen (title, texts) {
+  function handleClickOpen (title, texts, images) {
     // eslint-disable-next-line func-names
     return function () {
-      setDialog({ open: true, title, texts })
+      setDialog({ open: true, title, texts, images })
     }
   }
 
@@ -151,7 +162,8 @@ export default function NotesPage (props) {
           >
             <CardActionArea onClick={handleClickOpen(
               note.title,
-              note.hypertexts
+              note.hypertexts,
+              note.images
             )}
             >
               <CardContent>
@@ -178,6 +190,7 @@ export default function NotesPage (props) {
         ))
       }
       <Dialog
+        images={dialog.images}
         open={dialog.open}
         setOpen={setOpen}
         texts={dialog.texts}
