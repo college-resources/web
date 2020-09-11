@@ -3,12 +3,12 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import IconButton from '@material-ui/core/IconButton'
+import Markdown from 'markdown-to-jsx'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { withStyles } from '@material-ui/styles'
-import Markdown from 'markdown-to-jsx'
 
 const useStyles = makeStyles({
   root: {
@@ -88,55 +88,53 @@ export default function ScrollDialog (props) {
   )
 
   return (
-    <div>
-      <Dialog
-        aria-describedby="scroll-dialog-description"
-        aria-labelledby="scroll-dialog-title"
-        className={classes.root}
-        fullWidth
-        maxWidth="lg"
+    <Dialog
+      aria-describedby="scroll-dialog-description"
+      aria-labelledby="scroll-dialog-title"
+      className={classes.root}
+      fullWidth
+      maxWidth="lg"
+      onClose={handleClose}
+      open={open}
+      scroll="body"
+    >
+      <DialogTitle
+        id="customized-dialog-title"
         onClose={handleClose}
-        open={open}
-        scroll="body"
       >
-        <DialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
+        {title}
+      </DialogTitle>
+      <DialogContent
+        className={classes.content}
+        dividers
+      >
+        <DialogContentText
+          id="scroll-dialog-description"
+          ref={descriptionElementRef}
+          tabIndex={-1}
         >
-          {title}
-        </DialogTitle>
-        <DialogContent
-          className={classes.content}
-          dividers
-        >
-          <DialogContentText
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}
-          >
-            {
-              texts.map((text, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <p key={`text-${index}`}>
-                  <Markdown>
-                    {text}
-                  </Markdown>
-                </p>
-              ))
-            }
-          </DialogContentText>
           {
-            images && images.map((image, index) => (
-              <img
-                className={classes.image}
-                // eslint-disable-next-line react/no-array-index-key
-                key={`image-${index}`}
-                src={image.details.url || image.url}
-              />
+            texts.map((text, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={`text-${index}`}>
+                <Markdown>
+                  {text}
+                </Markdown>
+              </p>
             ))
           }
-        </DialogContent>
-      </Dialog>
-    </div>
+        </DialogContentText>
+        {
+          images && images.map((image, index) => (
+            <img
+              className={classes.image}
+              // eslint-disable-next-line react/no-array-index-key
+              key={`image-${index}`}
+              src={image.details.url || image.url}
+            />
+          ))
+        }
+      </DialogContent>
+    </Dialog>
   )
 }
