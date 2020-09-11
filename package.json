@@ -29,6 +29,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
     "auth0": "^2.27.1",
     "dotenv": "^8.2.0",
@@ -56,6 +57,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "markdown-to-jsx": "^7.0.0",
     "next-redux-wrapper": "^6.0.2",
     "npm-check": "^5.9.2",
     "react-redux": "^7.2.1",
