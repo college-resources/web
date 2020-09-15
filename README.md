@@ -1,4 +1,4 @@
-# <p align="center">![College Resources](https://cdn.discordapp.com/attachments/605735460635148319/624586733647953941/cr.png)</p>
+# <p align="center">![College Resources](https://raw.githubusercontent.com/college-resources/static/master/cores_logo_512.png)</p>
 
 # The website of College Resources
 
@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites (Windows)
 
 1. [NodeJS 12.X](https://nodejs.org/dist/latest-v12.x)
-(Recommended version: [NodeJS 12.16.0 x64](https://nodejs.org/dist/v12.16.3/node-v12.16.3-x64.msi))
+(Recommended version: [NodeJS 12.18.4 x64](https://nodejs.org/dist/latest-v12.x/node-v12.18.4-x64.msi))
 
 2. [Git for Windows](https://git-scm.com/download/win)
 
