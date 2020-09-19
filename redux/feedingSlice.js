@@ -26,7 +26,10 @@ const slice = createSlice({
 export default slice.reducer
 
 export function getFeeding () {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const stateBefore = getState()
+    if (stateBefore.feeding.feedings.length) return
+
     Promise.resolve(gql(`
       query {
         feeding {
