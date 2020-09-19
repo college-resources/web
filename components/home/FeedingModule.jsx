@@ -1,33 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import { Typography } from '@material-ui/core'
-import gql from 'scripts/graphql'
 import formatMsTo24h from 'scripts/formatMsTo24h'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
-
-const feedingHandler = () => Promise.resolve(gql(`
-  query {
-    feeding {
-      weeks {
-        days {
-          meals {
-            timeStart
-            timeEnd
-            menu
-          }
-        }
-      }
-      startsFrom
-      name
-      _id
-    }
-  }
-    `).then((data) => data.feeding))
+import { getFeeding, selectFeedings } from '../../redux/feedingSlice'
 
 const findLastAndNextMeal = (feeding) => {
   const currentDayInWeeks = feeding.weeks.map((week) => week.days[(new Date().getDay() + 6) % 7])
@@ -88,18 +70,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FeedingModule () {
   const classes = useStyles()
-  const [
-    feedings,
-    setFeedings
-  ] = useState([])
+  const dispatch = useDispatch()
+  const feedings = useSelector(selectFeedings)
 
   useEffect(
     () => {
-      feedingHandler().then((gqlFeeding) => {
-        if (gqlFeeding) {
-          setFeedings(gqlFeeding)
-        }
-      })
+      dispatch(getFeeding())
     },
     []
   )
