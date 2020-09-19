@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { selectFeeding, selectWeekIndex, updateWeek } from 'redux/feedingSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import Box from '@material-ui/core/Box'
 import FormControl from '@material-ui/core/FormControl'
@@ -50,27 +52,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Menu (props) {
+export default function Menu () {
   const classes = useStyles()
-  const { feed } = props
-  const {
-    selectedWeekIndex,
-    setSelectedWeekIndex
-  } = props
+  const dispatch = useDispatch()
+  const feed = useSelector(selectFeeding)
+  const selectedWeekIndex = useSelector(selectWeekIndex)
   const [
-    selectedTabIndex,
-    setSelectedTabIndex
+    tabIndex,
+    setTabIndex
   ] = useState(0)
 
   function handleWeekChange (event) {
-    setSelectedWeekIndex(parseInt(
+    dispatch(updateWeek(parseInt(
       event.target.value,
       10
-    ))
+    )))
   }
 
   function handleTabChange (event, newValue) {
-    setSelectedTabIndex(newValue)
+    setTabIndex(newValue)
   }
 
   return (
@@ -104,7 +104,7 @@ export default function Menu (props) {
             aria-label="days"
             onChange={handleTabChange}
             scrollButtons="auto"
-            value={selectedTabIndex}
+            value={tabIndex}
             variant="scrollable"
           >
             <Tab
@@ -141,7 +141,7 @@ export default function Menu (props) {
           <TabPanel
             index={index}
             key={`day-${index + 1}`}
-            value={selectedTabIndex}
+            value={tabIndex}
           >
             <Box>
               <Typography

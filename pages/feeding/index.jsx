@@ -1,31 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { getFeeding, selectFeedingIndex, selectFeedings, updateFeeding } from 'redux/feedingSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Menu from 'components/feeding/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
-
-const feedingHandler = () => Promise.resolve(gql(`
-  query {
-    feeding {
-      weeks {
-        days {
-          meals {
-            timeStart
-            timeEnd
-            menu
-          }
-        }
-      }
-      startsFrom
-      name
-      _id
-    }
-  }
-    `).then((data) => data.feeding))
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,34 +29,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FeedingPage (props) {
   const classes = useStyles()
-  const [
-    feedings,
-    setFeedings
-  ] = useState([])
-  const [
-    selectedFeedingIndex,
-    setSelectedFeedingIndex
-  ] = useState('')
-  const [
-    selectedWeekIndex,
-    setSelectedWeekIndex
-  ] = useState(0)
+  const dispatch = useDispatch()
+  const feedings = useSelector(selectFeedings)
+  const selectedFeedingIndex = useSelector(selectFeedingIndex)
 
   useEffect(
     () => {
       props.updateTitle('Feeding')
-      feedingHandler().then((gqlFeeding) => {
-        if (gqlFeeding) {
-          setFeedings(gqlFeeding)
-        }
-      })
+      dispatch(getFeeding())
     },
     []
   )
 
   function handleFeedingChange (event) {
-    setSelectedWeekIndex(0)
-    setSelectedFeedingIndex(event.target.value)
+    dispatch(updateFeeding(event.target.value))
   }
 
   return (
@@ -111,11 +79,7 @@ export default function FeedingPage (props) {
           </Typography>
         </Box>
       ) : (
-        <Menu
-          feed={feedings[selectedFeedingIndex]}
-          selectedWeekIndex={selectedWeekIndex}
-          setSelectedWeekIndex={setSelectedWeekIndex}
-        />
+        <Menu />
       )}
     </Container>
   )
