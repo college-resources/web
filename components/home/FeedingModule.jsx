@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import { Typography } from '@material-ui/core'
-import formatMsTo24HourClock from 'scripts/formatMsTo24HourClock'
 import gql from 'scripts/graphql'
+import formatMsTo24h from 'scripts/formatMsTo24h'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -162,7 +162,7 @@ export default function FeedingModule () {
                   <b>
                     {
                       meals[currentWeekIndex].isLastOpen
-                        ? `Open until ${formatMsTo24HourClock(meals[currentWeekIndex].lastMeal.timeEnd)}`
+                        ? `Open until ${formatMsTo24h(meals[currentWeekIndex].lastMeal.timeEnd)}`
                         : 'Closed'
                     }
                   </b>
@@ -171,7 +171,7 @@ export default function FeedingModule () {
                     Next meal
                 {' '}
                 <b>
-                  {formatMsTo24HourClock(timeOfNextMeal)}
+                  {formatMsTo24h(timeOfNextMeal)}
                 </b>
               </p>
             </Grid>

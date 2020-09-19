@@ -11,7 +11,7 @@ import Tab from '@material-ui/core/Tab'
 import TabPanel from './TabPanel'
 import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
-import formatMsTo24HourClock from 'scripts/formatMsTo24HourClock'
+import formatMsTo24h from 'scripts/formatMsTo24h'
 import { makeStyles } from '@material-ui/core/styles'
 
 function a11yProps (index) {
@@ -149,14 +149,7 @@ export default function Menu () {
                 variant="h6"
               >
                 <b>
-                  Breakfast
-                  (
-                  {formatMsTo24HourClock(day.meals[0].timeStart)}
-                  {' '}
-                  -
-                  {' '}
-                  {formatMsTo24HourClock(day.meals[0].timeEnd)}
-                  )
+                  {`Breakfast (${formatMsTo24h(day.meals[0].timeStart)} - ${formatMsTo24h(day.meals[0].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[0].menu}
@@ -167,14 +160,7 @@ export default function Menu () {
                 variant="h6"
               >
                 <b>
-                  Lunch
-                  (
-                  {formatMsTo24HourClock(day.meals[1].timeStart)}
-                  {' '}
-                  -
-                  {' '}
-                  {formatMsTo24HourClock(day.meals[1].timeEnd)}
-                  )
+                  {`Lunch (${formatMsTo24h(day.meals[1].timeStart)} - ${formatMsTo24h(day.meals[1].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[1].menu}
@@ -185,14 +171,7 @@ export default function Menu () {
                 variant="h6"
               >
                 <b>
-                  Dinner
-                  (
-                  {formatMsTo24HourClock(day.meals[2].timeStart)}
-                  {' '}
-                  -
-                  {' '}
-                  {formatMsTo24HourClock(day.meals[2].timeEnd)}
-                  )
+                  {`Dinner (${formatMsTo24h(day.meals[2].timeStart)} - ${formatMsTo24h(day.meals[2].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[2].menu}
