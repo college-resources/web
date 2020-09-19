@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { getFeeding, selectFeedings } from '../../redux/feedingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
@@ -9,7 +10,6 @@ import { Typography } from '@material-ui/core'
 import formatMsTo24h from 'scripts/formatMsTo24h'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
-import { getFeeding, selectFeedings } from '../../redux/feedingSlice'
 
 const findLastAndNextMeal = (feeding) => {
   const currentDayInWeeks = feeding.weeks.map((week) => week.days[(new Date().getDay() + 6) % 7])
@@ -143,9 +143,7 @@ export default function FeedingModule () {
                     }
                   </b>
                 </span>
-                {' - '}
-                    Next meal
-                {' '}
+                {' - Next meal '}
                 <b>
                   {formatMsTo24h(timeOfNextMeal)}
                 </b>
