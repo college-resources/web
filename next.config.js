@@ -1,11 +1,13 @@
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
+runtimeCaching[0].handler = 'StaleWhileRevalidate'
 
 module.exports = withPWA({
   pwa: {
-    register: true,
+    register: false,
     dest: 'public',
-    runtimeCaching
+    runtimeCaching,
+    skipWaiting: false
   },
   crossOrigin: 'anonymous',
   pageExtensions: [

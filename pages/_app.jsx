@@ -11,6 +11,7 @@ import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'components/ThemeContext'
 import { version } from 'lib/version'
 import { withRouter } from 'next/router'
+import SWNewVersion from '../components/SWNewVersion'
 
 class MyApp extends App {
   constructor (props) {
@@ -69,6 +70,7 @@ class MyApp extends App {
           <ThemeProvider>
             <CssBaseline />
             <Provider store={store}>
+              <SWNewVersion />
               <NavBar title={this.state.title} />
               <Box mt={2}>
                 <Component
