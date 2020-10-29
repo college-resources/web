@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-props-per-line, class-methods-use-this */
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import React from 'react'
 import { ServerStyleSheets } from '@material-ui/styles'
 import { themeColor } from 'components/ThemeContext'
@@ -8,7 +8,7 @@ class MyDocument extends Document {
   render () {
     return (
       // TODO automatic lang selection
-      <html lang="en">
+      <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
           <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
@@ -37,7 +37,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     )
   }
 }
