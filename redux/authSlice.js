@@ -140,6 +140,7 @@ export function register (email, givenName, familyName, password) {
 }
 
 export function logout () {
+  // eslint-disable-next-line no-unused-vars
   return (dispatch, getState) => {
     dispatch(slice.actions.updateStatus(status.UNAUTHENTICATED))
     dispatch(slice.actions.updateUser(null))

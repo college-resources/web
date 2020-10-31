@@ -45,6 +45,7 @@ server.get(
 )
 
 // Error handling - Requires 4 parameters
+// eslint-disable-next-line no-unused-vars
 server.use((err, req, res, _) => {
   handleError(
     err,
@@ -60,13 +61,14 @@ module.exports = () => {
         3000,
         (err) => {
           if (err) throw err
+          // eslint-disable-next-line no-console
           console.log('> Ready on http://localhost:3000')
         }
       )
     })
     .catch((ex) => {
+      // eslint-disable-next-line no-console
       console.error(ex.stack)
-      // eslint-disable-next-line no-process-exit
       process.exit(1)
     })
 }

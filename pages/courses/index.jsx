@@ -63,8 +63,7 @@ export default function CoursesPage (props) {
           setLessons(gqlLessons)
         }
       })
-    },
-    []
+    }
   )
 
   useEffect(

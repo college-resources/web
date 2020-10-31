@@ -79,8 +79,7 @@ export default function LoginPage (props) {
   useEffect(
     () => {
       props.updateTitle('Login')
-    },
-    []
+    }
   )
 
   function handleEmailOnChange (event) {

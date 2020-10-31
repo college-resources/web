@@ -67,11 +67,8 @@ module.exports = async (req, res, next) => {
       token,
       header
     )
-  } catch (err) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(err.message)
-    }
-  }
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
 
   next()
 }

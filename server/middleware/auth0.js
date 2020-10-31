@@ -52,6 +52,7 @@ const syncProfileWithApi = async (info) => {
         return json.data
       }
     })
+    // eslint-disable-next-line no-console
     .catch((err) => console.log(err))
 
   if (!apiProfile || !apiProfile._id) {
@@ -79,6 +80,7 @@ const syncProfileWithApi = async (info) => {
         if (res.ok) {
           return res.json()
         }
+        // eslint-disable-next-line no-console
         res.text().then((text) => console.log(text))
       })
       .then((json) => {
@@ -86,6 +88,7 @@ const syncProfileWithApi = async (info) => {
           return json.data
         }
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err))
   }
 }

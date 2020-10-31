@@ -76,8 +76,7 @@ export default function FeedingModule () {
   useEffect(
     () => {
       dispatch(getFeeding())
-    },
-    []
+    }
   )
 
   return (

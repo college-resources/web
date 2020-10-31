@@ -4,7 +4,6 @@ const sess = {
   cookie: {},
   resave: false,
   saveUninitialized: true,
-  // eslint-disable-next-line global-require
   secret: require('crypto')
     .randomBytes(64)
     .toString('hex')

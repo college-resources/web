@@ -37,8 +37,7 @@ export default function FeedingPage (props) {
     () => {
       props.updateTitle('Feeding')
       dispatch(getFeeding())
-    },
-    []
+    }
   )
 
   function handleFeedingChange (event) {

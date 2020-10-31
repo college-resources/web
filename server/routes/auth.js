@@ -99,6 +99,7 @@ router.post(
 
     passport.authenticate(
       'password',
+      // eslint-disable-next-line no-unused-vars
       (err, user, info) => {
         if (err) {
           return next(err)
@@ -128,6 +129,7 @@ router.get(
   (req, res, next) => {
     passport.authenticate(
       'auth0',
+      // eslint-disable-next-line no-unused-vars
       (authenticateError, user, info) => {
         if (authenticateError) return next(authenticateError)
         if (!user) return res.redirect('/login')
