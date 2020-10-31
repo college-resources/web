@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function DepartmentInput (props) {
+export default function DepartmentInput(props) {
   const classes = useStyles()
   const { departments, onChange, value } = props
 
@@ -30,10 +30,7 @@ export default function DepartmentInput (props) {
       variant="outlined"
     >
       {departments.map((department) => (
-        <MenuItem
-          key={department._id}
-          value={department._id}
-        >
+        <MenuItem key={department._id} value={department._id}>
           {department.name}
         </MenuItem>
       ))}

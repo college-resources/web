@@ -3,13 +3,9 @@
     "browser": true,
     "jest": true,
     "es6": true,
-    "node":  true
+    "node": true
   },
-  "plugins": [
-    "@babel",
-    "import",
-    "react"
-  ],
+  "plugins": ["@babel", "import", "react"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",

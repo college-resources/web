@@ -25,14 +25,16 @@ const StyledTableCell = withStyles((theme) => ({
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(even)': {
-      backgroundColor: theme.palette.type === 'light'
-        ? lightBlue[50]
-        : theme.palette.primary.light
+      backgroundColor:
+        theme.palette.type === 'light'
+          ? lightBlue[50]
+          : theme.palette.primary.light
     },
     '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.type === 'light'
-        ? lightBlue[100]
-        : theme.palette.primary.level3
+      backgroundColor:
+        theme.palette.type === 'light'
+          ? lightBlue[100]
+          : theme.palette.primary.level3
     }
   }
 }))(TableRow)
@@ -50,26 +52,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Semester (props) {
+export default function Semester(props) {
   const classes = useStyles()
   const { semester } = props
   const { rows } = props
-  const [
-    expanded,
-    setExpanded
-  ] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
   const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded
-      ? panel
-      : false)
+    setExpanded(newExpanded ? panel : false)
   }
 
   return (
     <div className={classes.root}>
       <Accordion
         className={classes.summary}
-        expanded={expanded === (`panel${semester}`)}
+        expanded={expanded === `panel${semester}`}
         onChange={handleChange(`panel${semester}`)}
       >
         <AccordionSummary
@@ -82,7 +79,9 @@ export default function Semester (props) {
             {semester}
           </Typography>
         </AccordionSummary>
-        <AccordionDetails style={{ overflowX: 'auto', overflowY: 'hidden', padding: 0 }}>
+        <AccordionDetails
+          style={{ overflowX: 'auto', overflowY: 'hidden', padding: 0 }}
+        >
           <Table>
             <TableHead>
               <TableRow>
@@ -93,10 +92,7 @@ export default function Semester (props) {
                 >
                   Κωδ.
                 </StyledTableCell>
-                <StyledTableCell
-                  rowSpan="2"
-                  style={{ minWidth: '10rem' }}
-                >
+                <StyledTableCell rowSpan="2" style={{ minWidth: '10rem' }}>
                   Τίτλος
                 </StyledTableCell>
                 <StyledTableCell
@@ -109,7 +105,11 @@ export default function Semester (props) {
                 <StyledTableCell
                   align="center"
                   colSpan="2"
-                  style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)', minWidth: '16px', width: '32px' }}
+                  style={{
+                    borderBottom: '1px solid rgba(224, 224, 224, 1)',
+                    minWidth: '16px',
+                    width: '32px'
+                  }}
                 >
                   Ώρες
                 </StyledTableCell>
@@ -122,12 +122,8 @@ export default function Semester (props) {
                 </StyledTableCell>
               </TableRow>
               <TableRow>
-                <StyledTableCell align="center">
-                  Θ
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  Ε
-                </StyledTableCell>
+                <StyledTableCell align="center">Θ</StyledTableCell>
+                <StyledTableCell align="center">Ε</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -136,21 +132,15 @@ export default function Semester (props) {
                   <StyledTableCell align="center">
                     {row.lessonCode}
                   </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.type}
-                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.name}</StyledTableCell>
+                  <StyledTableCell align="center">{row.type}</StyledTableCell>
                   <StyledTableCell align="center">
                     {row.hoursTheory}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {row.hoursLab}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.credit}
-                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.credit}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

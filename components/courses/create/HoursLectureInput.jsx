@@ -4,7 +4,7 @@ import MinusIcon from '@material-ui/icons/Remove'
 import PlusIcon from '@material-ui/icons/Add'
 import TextField from '@material-ui/core/TextField'
 
-export default function HoursLectureInput (props) {
+export default function HoursLectureInput(props) {
   const { onChange, value } = props
 
   const handleChange = (num) => () => {
@@ -29,10 +29,7 @@ export default function HoursLectureInput (props) {
             variant="outlined"
           />
         </Box>
-        <Box
-          ml={1}
-          my="auto"
-        >
+        <Box ml={1} my="auto">
           <Fab
             aria-label="decrement lecture hours"
             color="secondary"
@@ -41,10 +38,7 @@ export default function HoursLectureInput (props) {
             <MinusIcon />
           </Fab>
         </Box>
-        <Box
-          ml={1}
-          my="auto"
-        >
+        <Box ml={1} my="auto">
           <Fab
             aria-label="increment lecture hours"
             color="primary"

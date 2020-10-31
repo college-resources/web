@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography'
 import formatMsTo24h from 'scripts/formatMsTo24h'
 import { makeStyles } from '@material-ui/core/styles'
 
-function a11yProps (index) {
+function a11yProps(index) {
   return {
     'aria-controls': `day-tabpanel-${index}`,
     id: `day-tab-${index}`
@@ -52,33 +52,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Menu () {
+export default function Menu() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const feed = useSelector(selectFeeding)
   const selectedWeekIndex = useSelector(selectWeekIndex)
-  const [
-    tabIndex,
-    setTabIndex
-  ] = useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
 
-  function handleWeekChange (event) {
-    dispatch(updateWeek(parseInt(
-      event.target.value,
-      10
-    )))
+  function handleWeekChange(event) {
+    dispatch(updateWeek(parseInt(event.target.value, 10)))
   }
 
-  function handleTabChange (event, newValue) {
+  function handleTabChange(event, newValue) {
     setTabIndex(newValue)
   }
 
   return (
     <>
-      <FormControl
-        className={classes.formControl}
-        component="fieldset"
-      >
+      <FormControl className={classes.formControl} component="fieldset">
         <RadioGroup
           aria-label="weeks"
           name="weeks"
@@ -107,71 +98,43 @@ export default function Menu () {
             value={tabIndex}
             variant="scrollable"
           >
-            <Tab
-              label="Monday"
-              {...a11yProps(0)}
-            />
-            <Tab
-              label="Tuesday"
-              {...a11yProps(1)}
-            />
-            <Tab
-              label="Wednesday"
-              {...a11yProps(2)}
-            />
-            <Tab
-              label="Thursday"
-              {...a11yProps(3)}
-            />
-            <Tab
-              label="Friday"
-              {...a11yProps(4)}
-            />
-            <Tab
-              label="Saturday"
-              {...a11yProps(5)}
-            />
-            <Tab
-              label="Sunday"
-              {...a11yProps(6)}
-            />
+            <Tab label="Monday" {...a11yProps(0)} />
+            <Tab label="Tuesday" {...a11yProps(1)} />
+            <Tab label="Wednesday" {...a11yProps(2)} />
+            <Tab label="Thursday" {...a11yProps(3)} />
+            <Tab label="Friday" {...a11yProps(4)} />
+            <Tab label="Saturday" {...a11yProps(5)} />
+            <Tab label="Sunday" {...a11yProps(6)} />
           </Tabs>
         </AppBar>
         {feed.weeks[selectedWeekIndex].days.map((day, index) => (
-          <TabPanel
-            index={index}
-            key={`day-${index + 1}`}
-            value={tabIndex}
-          >
+          <TabPanel index={index} key={`day-${index + 1}`} value={tabIndex}>
             <Box>
-              <Typography
-                gutterBottom
-                variant="h6"
-              >
+              <Typography gutterBottom variant="h6">
                 <b>
-                  {`Breakfast (${formatMsTo24h(day.meals[0].timeStart)} - ${formatMsTo24h(day.meals[0].timeEnd)})`}
+                  {`Breakfast (${formatMsTo24h(
+                    day.meals[0].timeStart
+                  )} - ${formatMsTo24h(day.meals[0].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[0].menu}
             </Box>
             <Box mt={3}>
-              <Typography
-                gutterBottom
-                variant="h6"
-              >
+              <Typography gutterBottom variant="h6">
                 <b>
-                  {`Lunch (${formatMsTo24h(day.meals[1].timeStart)} - ${formatMsTo24h(day.meals[1].timeEnd)})`}
+                  {`Lunch (${formatMsTo24h(
+                    day.meals[1].timeStart
+                  )} - ${formatMsTo24h(day.meals[1].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[1].menu}
             </Box>
             <Box mt={3}>
-              <Typography
-                gutterBottom
-                variant="h6"
-              >
+              <Typography gutterBottom variant="h6">
                 <b>
-                  {`Dinner (${formatMsTo24h(day.meals[2].timeStart)} - ${formatMsTo24h(day.meals[2].timeEnd)})`}
+                  {`Dinner (${formatMsTo24h(
+                    day.meals[2].timeStart
+                  )} - ${formatMsTo24h(day.meals[2].timeEnd)})`}
                 </b>
               </Typography>
               {day.meals[2].menu}

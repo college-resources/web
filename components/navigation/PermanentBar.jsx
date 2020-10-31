@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar
 }))
 
-export default function PermanentBar () {
+export default function PermanentBar() {
   const classes = useStyles()
 
   return (

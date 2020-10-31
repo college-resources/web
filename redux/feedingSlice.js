@@ -25,12 +25,13 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export function getFeeding () {
+export function getFeeding() {
   return (dispatch, getState) => {
     const stateBefore = getState()
     if (stateBefore.feeding.feedings.length) return
 
-    Promise.resolve(gql(`
+    Promise.resolve(
+      gql(`
       query {
         feeding {
           weeks {
@@ -47,41 +48,40 @@ export function getFeeding () {
           _id
         }
       }
-        `)
-      .then((data) => data.feeding))
-      .then((gqlFeeding) => {
-        if (gqlFeeding) {
-          dispatch(slice.actions.updateFeeding(gqlFeeding))
-        }
-      })
+        `).then((data) => data.feeding)
+    ).then((gqlFeeding) => {
+      if (gqlFeeding) {
+        dispatch(slice.actions.updateFeeding(gqlFeeding))
+      }
+    })
   }
 }
 
-export function updateFeeding (index) {
+export function updateFeeding(index) {
   return (dispatch) => {
     dispatch(slice.actions.updateSelectedWeekIndex(0))
     dispatch(slice.actions.updateSelectedFeedingIndex(index))
   }
 }
 
-export function updateWeek (value) {
+export function updateWeek(value) {
   return (dispatch) => {
     dispatch(slice.actions.updateSelectedWeekIndex(value))
   }
 }
 
-export function selectFeedings (state) {
+export function selectFeedings(state) {
   return state.feeding.feedings
 }
 
-export function selectFeeding (state) {
+export function selectFeeding(state) {
   return state.feeding.feedings[state.feeding.feedingIndex]
 }
 
-export function selectFeedingIndex (state) {
+export function selectFeedingIndex(state) {
   return state.feeding.feedingIndex
 }
 
-export function selectWeekIndex (state) {
+export function selectWeekIndex(state) {
   return state.feeding.weekIndex
 }

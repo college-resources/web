@@ -18,9 +18,6 @@ module.exports = new Auth0Strategy(
 
     await req.auth0.syncProfileWithApi(info)
 
-    return done(
-      null,
-      info
-    )
+    return done(null, info)
   }
 )

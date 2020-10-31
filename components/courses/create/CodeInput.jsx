@@ -1,6 +1,6 @@
 import TextField from '@material-ui/core/TextField'
 
-export default function CodeInput (props) {
+export default function CodeInput(props) {
   const { onChange, value } = props
 
   return (

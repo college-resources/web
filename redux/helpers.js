@@ -1,6 +1,6 @@
 import { status } from './authSlice'
 
-export function handleAuthResponse (slice, dispatch, res) {
+export function handleAuthResponse(slice, dispatch, res) {
   if (res.ok) {
     res.json().then((user) => {
       dispatch(slice.actions.updateUser(user))
@@ -10,7 +10,8 @@ export function handleAuthResponse (slice, dispatch, res) {
 
   if (!res.ok) {
     res.json().then((error) => {
-      const newStatus = error.statusCode === 401 ? status.UNAUTHENTICATED : status.FAILURE
+      const newStatus =
+        error.statusCode === 401 ? status.UNAUTHENTICATED : status.FAILURE
       dispatch(slice.actions.updateStatus(newStatus))
       dispatch(slice.actions.updateError(error))
     })
@@ -19,7 +20,7 @@ export function handleAuthResponse (slice, dispatch, res) {
   return res.ok
 }
 
-export function handleAuthError (slice, dispatch, error) {
+export function handleAuthError(slice, dispatch, error) {
   dispatch(slice.actions.updateStatus(status.FAILURE))
   dispatch(slice.actions.updateError({ message: error }))
 }

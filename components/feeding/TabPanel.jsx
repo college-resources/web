@@ -8,7 +8,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired
 }
 
-export default function TabPanel (props) {
+export default function TabPanel(props) {
   const { children, value, index, ...other } = props
 
   return (
@@ -20,9 +20,7 @@ export default function TabPanel (props) {
       role="tabpanel"
       {...other}
     >
-      <Box p={3}>
-        {children}
-      </Box>
+      <Box p={3}>{children}</Box>
     </Typography>
   )
 }

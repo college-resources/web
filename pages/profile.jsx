@@ -25,29 +25,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function ProfilePage (props) {
+export default function ProfilePage(props) {
   const user = useSelector(selectUser)
   const classes = useStyles()
 
-  useEffect(
-    () => {
-      props.updateTitle('Profile')
-    }
-  )
+  useEffect(() => {
+    props.updateTitle('Profile')
+  })
 
   return (
     <Container>
       <Box mt={2}>
-        <Grid
-          container
-          justify="center"
-          spacing={3}
-        >
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
+        <Grid container justify="center" spacing={3}>
+          <Grid item md={6} xs={12}>
             <Paper className={classes.paper}>
               <Avatar
                 alt="account picture"
@@ -76,16 +66,9 @@ export default function ProfilePage (props) {
               />
             </Paper>
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={12}
-          >
+          <Grid item md={6} xs={12}>
             <Paper className={classes.paper}>
-              <Box
-                fontSize="h6.fontSize"
-                fontWeight="fontWeightMedium"
-              >
+              <Box fontSize="h6.fontSize" fontWeight="fontWeightMedium">
                 Email Address
               </Box>
               <TextField
@@ -101,9 +84,7 @@ export default function ProfilePage (props) {
           </Grid>
         </Grid>
       </Box>
-      <Box mt={2}>
-        {JSON.stringify(user)}
-      </Box>
+      <Box mt={2}>{JSON.stringify(user)}</Box>
     </Container>
   )
 }

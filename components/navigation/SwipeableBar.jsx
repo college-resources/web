@@ -7,11 +7,15 @@ const useStyles = makeStyles({
   }
 })
 
-export default function SwipeableBar (props) {
+export default function SwipeableBar(props) {
   const classes = useStyles()
 
   const toggleDrawer = (open) => (event) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return
     }
 

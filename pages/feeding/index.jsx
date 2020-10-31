@@ -1,5 +1,10 @@
 import { useEffect } from 'react'
-import { getFeeding, selectFeedingIndex, selectFeedings, updateFeeding } from 'redux/feedingSlice'
+import {
+  getFeeding,
+  selectFeedingIndex,
+  selectFeedings,
+  updateFeeding
+} from 'redux/feedingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
@@ -27,30 +32,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function FeedingPage (props) {
+export default function FeedingPage(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
   const selectedFeedingIndex = useSelector(selectFeedingIndex)
 
-  useEffect(
-    () => {
-      props.updateTitle('Feeding')
-      dispatch(getFeeding())
-    }
-  )
+  useEffect(() => {
+    props.updateTitle('Feeding')
+    dispatch(getFeeding())
+  })
 
-  function handleFeedingChange (event) {
+  function handleFeedingChange(event) {
     dispatch(updateFeeding(event.target.value))
   }
 
   return (
     <Container>
-      <form
-        autoComplete="off"
-        className={classes.container}
-        noValidate
-      >
+      <form autoComplete="off" className={classes.container} noValidate>
         <TextField
           className={classes.textField}
           id="restaurant"
@@ -62,10 +61,7 @@ export default function FeedingPage (props) {
           variant="outlined"
         >
           {feedings.map((feed, index) => (
-            <MenuItem
-              key={feed._id}
-              value={index}
-            >
+            <MenuItem key={feed._id} value={index}>
               {feed.name}
             </MenuItem>
           ))}

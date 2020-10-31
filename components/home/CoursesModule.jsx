@@ -8,9 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   lesson: {
-    backgroundColor: theme.palette.type === 'light'
-      ? '#fff'
-      : '#40444b',
+    backgroundColor: theme.palette.type === 'light' ? '#fff' : '#40444b',
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.normal
   },
@@ -23,14 +21,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function CoursesModule () {
+export default function CoursesModule() {
   const classes = useStyles()
 
   return (
-    <Paper
-      className={classes.paper}
-      elevation={3}
-    >
+    <Paper className={classes.paper} elevation={3}>
       <Box
         alignItems="center"
         css={{ height: 20 }}
@@ -41,9 +36,7 @@ export default function CoursesModule () {
       >
         <BookIcon />
         <Box mx={1}>
-          <Typography variant="h6">
-            COURSES
-          </Typography>
+          <Typography variant="h6">COURSES</Typography>
         </Box>
         <BookIcon />
       </Box>
@@ -59,20 +52,13 @@ export default function CoursesModule () {
             >
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    1
-                  </Typography>
+                  <Typography>1</Typography>
                 </Box>
               </Grid>
-              <Divider
-                flexItem
-                orientation="vertical"
-              />
+              <Divider flexItem orientation="vertical" />
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    [PH] Lesson 1
-                  </Typography>
+                  <Typography>[PH] Lesson 1</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -88,20 +74,13 @@ export default function CoursesModule () {
             >
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    2
-                  </Typography>
+                  <Typography>2</Typography>
                 </Box>
               </Grid>
-              <Divider
-                flexItem
-                orientation="vertical"
-              />
+              <Divider flexItem orientation="vertical" />
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    [PH] Lesson 2
-                  </Typography>
+                  <Typography>[PH] Lesson 2</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -117,20 +96,13 @@ export default function CoursesModule () {
             >
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    2
-                  </Typography>
+                  <Typography>2</Typography>
                 </Box>
               </Grid>
-              <Divider
-                flexItem
-                orientation="vertical"
-              />
+              <Divider flexItem orientation="vertical" />
               <Grid item>
                 <Box p={2}>
-                  <Typography>
-                    [PH] Lesson 3
-                  </Typography>
+                  <Typography>[PH] Lesson 3</Typography>
                 </Box>
               </Grid>
             </Grid>

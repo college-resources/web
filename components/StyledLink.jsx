@@ -12,16 +12,12 @@ const Styled = withTheme(styled.a`
   }
 `)
 
-function StyledLink (props, ref) {
+function StyledLink(props, ref) {
   const { children, href } = props
 
   return (
     <Link href={href}>
-      <Styled
-        {...props}
-        href="#"
-        ref={ref}
-      >
+      <Styled {...props} href="#" ref={ref}>
         {children}
       </Styled>
     </Link>
