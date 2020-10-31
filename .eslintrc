@@ -5,17 +5,21 @@
     "es6": true
   },
   "plugins": [
+    "@babel",
     "import",
     "react"
   ],
   "extends": [
-    "eslint:all",
-    "plugin:react/all",
+    "eslint:recommended",
+    "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "standard"
+    "prettier",
+    "prettier/babel",
+    "prettier/react"
   ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -31,37 +35,12 @@
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "no-console": "warn",
     "no-eval": "error",
+    "no-warning-comments": "warn",
     "import/first": "error",
 
     /* Temporary start */
-    // Will need to discuss
-    "no-magic-numbers": "off",
-    // Will probably enable after i18n
-    "react/jsx-no-literals": "off",
-    // Should probably remove className and style from all components at some point
-    "react/forbid-component-props": "off",
     // Type checking
-    "react/prop-types": "off",
+    "react/prop-types": "off"
     /* Temporary end */
-
-    // Disable from all rules
-    "consistent-return": "warn",
-    "id-length": "off",
-    "lines-around-comment": "off",
-    "max-len": "off",
-    "max-lines-per-function": "off",
-    "max-params": "off",
-    "max-statements": "off",
-    "multiline-ternary": "off",
-    "no-plusplus": "off",
-    "no-process-env": "off",
-    "no-ternary": "off",
-    "no-underscore-dangle": "off",
-    "no-warning-comments": "warn",
-    "react/jsx-indent": "off",
-    "react/jsx-indent-props": "off",
-    "react/jsx-max-depth": "off",
-    "react/jsx-props-no-spreading": "off",
-    "sort-keys": "off"
   }
 }
