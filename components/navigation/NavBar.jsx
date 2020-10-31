@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { status as authStatus, selectStatus, selectUser } from 'redux/authSlice'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AccountCircle from '@material-ui/icons/AccountCircle'

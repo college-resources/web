@@ -1,6 +1,6 @@
 import { ThemeProvider as MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import React from 'react'
+import { createContext, useReducer, useEffect, useMemo, useContext, useCallback } from 'react'
 import { getCookie } from 'scripts/helpers'
 import { indigo } from '@material-ui/core/colors'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -11,7 +11,7 @@ const themeInitialOptions = {
   paletteColors: {}
 }
 
-export const DispatchContext = React.createContext(() => {
+export const DispatchContext = createContext(() => {
   throw new Error('Forgot to wrap component in `ThemeProvider`')
 })
 
@@ -25,7 +25,7 @@ export function ThemeProvider (props) {
   const [
     themeOptions,
     dispatch
-  ] = React.useReducer(
+  ] = useReducer(
     (state, action) => {
       switch (action.type) {
         case 'CHANGE':
@@ -47,7 +47,7 @@ export function ThemeProvider (props) {
     : 'light'
   const { paletteColors, paletteType = preferredType } = themeOptions
 
-  React.useEffect(
+  useEffect(
     () => {
       if (process.browser) {
         const nextPaletteColors = JSON.parse(getCookie('paletteColors') || 'null')
@@ -63,14 +63,14 @@ export function ThemeProvider (props) {
   )
 
   // Persist paletteType
-  React.useEffect(
+  useEffect(
     () => {
       document.cookie = `paletteType=${paletteType};path=/;max-age=31536000`
     },
     [paletteType]
   )
 
-  const theme = React.useMemo(
+  const theme = useMemo(
     () => {
       const nextTheme = createMuiTheme({
         nprogress: {
@@ -142,7 +142,7 @@ export function ThemeProvider (props) {
     ]
   )
 
-  React.useEffect(
+  useEffect(
     () => {
     // Expose the theme as a global variable so people can play with it.
       if (process.browser) {
@@ -169,8 +169,8 @@ ThemeProvider.propTypes = {
  * @returns {(nextOptions: Partial<typeof themeInitialOptions>) => void}
  */
 export function useChangeTheme () {
-  const dispatch = React.useContext(DispatchContext)
-  return React.useCallback(
+  const dispatch = useContext(DispatchContext)
+  return useCallback(
     (options) => dispatch({ payload: options, type: 'CHANGE' }),
     [dispatch]
   )

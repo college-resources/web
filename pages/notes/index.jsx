@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -84,7 +84,7 @@ export default function NotesPage (props) {
   const [
     dialog,
     setDialog
-  ] = React.useState({ open: false, title: '', texts: [], image: [] })
+  ] = useState({ open: false, title: '', texts: [], image: [] })
 
   function setOpen (open) {
     setDialog({ ...dialog, open })

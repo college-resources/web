@@ -38,6 +38,10 @@
     "no-warning-comments": "warn",
     "import/first": "error",
 
+    // New jsx support makes these no longer necessary
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+
     /* Temporary start */
     // Type checking
     "react/prop-types": "off"

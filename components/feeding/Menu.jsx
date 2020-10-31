@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { selectFeeding, selectWeekIndex, updateWeek } from 'redux/feedingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import CodeInput from 'components/courses/create/CodeInput'
 import Container from '@material-ui/core/Container'

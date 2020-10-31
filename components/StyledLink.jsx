@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { withTheme } from '@material-ui/core/styles'

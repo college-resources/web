@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { status as authStatus, login, selectStatus } from 'redux/authSlice'
 import { makeStyles, withTheme } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'

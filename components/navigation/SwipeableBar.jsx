@@ -1,4 +1,3 @@
-import React from 'react'
 import SideBarList from './SideBarList'
 import { makeStyles } from '@material-ui/core/styles'
 

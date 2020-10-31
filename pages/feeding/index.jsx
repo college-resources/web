@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { getFeeding, selectFeedingIndex, selectFeedings, updateFeeding } from 'redux/feedingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'

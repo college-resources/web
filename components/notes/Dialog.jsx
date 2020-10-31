@@ -5,7 +5,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import IconButton from '@material-ui/core/IconButton'
 import Markdown from 'markdown-to-jsx'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import React from 'react'
+import { useRef, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { withStyles } from '@material-ui/styles'
@@ -74,8 +74,8 @@ export default function ScrollDialog (props) {
     setOpen(false)
   }
 
-  const descriptionElementRef = React.useRef(null)
-  React.useEffect(
+  const descriptionElementRef = useRef(null)
+  useEffect(
     () => {
       if (open) {
         const { current: descriptionElement } = descriptionElementRef

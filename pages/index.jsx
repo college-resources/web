@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import CoursesModule from 'components/home/CoursesModule'
