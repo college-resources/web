@@ -32,7 +32,9 @@ export default function Homepage(props) {
 
   useEffect(() => {
     props.updateTitle('Home')
-  })
+  },
+    []
+  )
 
   return (
     <Container>

@@ -54,7 +54,9 @@ export default function RegisterPage(props) {
 
   useEffect(() => {
     props.updateTitle('Register')
-  })
+  },
+    []
+  )
 
   function handleEmailOnChange(event) {
     setEmail(event.target.value)
