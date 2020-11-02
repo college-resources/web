@@ -1,5 +1,4 @@
 import MenuItem from '@material-ui/core/MenuItem'
-import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -9,7 +8,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function DepartmentInput (props) {
+export default function DepartmentInput(props) {
   const classes = useStyles()
   const { departments, onChange, value } = props
 
@@ -31,10 +30,7 @@ export default function DepartmentInput (props) {
       variant="outlined"
     >
       {departments.map((department) => (
-        <MenuItem
-          key={department._id}
-          value={department._id}
-        >
+        <MenuItem key={department._id} value={department._id}>
           {department.name}
         </MenuItem>
       ))}

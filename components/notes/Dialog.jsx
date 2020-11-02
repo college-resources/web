@@ -5,7 +5,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import IconButton from '@material-ui/core/IconButton'
 import Markdown from 'markdown-to-jsx'
 import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import React from 'react'
+import { useRef, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { withStyles } from '@material-ui/styles'
@@ -48,11 +48,7 @@ const DialogTitle = withStyles(styles)((props) => {
       style={{ wordWrap: 'break-word', width: 'calc(100% - 64px)' }}
       {...other}
     >
-      <Typography
-        variant="h6"
-      >
-        {children}
-      </Typography>
+      <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton
           aria-label="close"
@@ -66,26 +62,23 @@ const DialogTitle = withStyles(styles)((props) => {
   )
 })
 
-export default function ScrollDialog (props) {
+export default function ScrollDialog(props) {
   const classes = useStyles()
   const { open, setOpen, texts, title, images } = props
 
-  function handleClose () {
+  function handleClose() {
     setOpen(false)
   }
 
-  const descriptionElementRef = React.useRef(null)
-  React.useEffect(
-    () => {
-      if (open) {
-        const { current: descriptionElement } = descriptionElementRef
-        if (descriptionElement !== null) {
-          descriptionElement.focus()
-        }
+  const descriptionElementRef = useRef(null)
+  useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef
+      if (descriptionElement !== null) {
+        descriptionElement.focus()
       }
-    },
-    [open]
-  )
+    }
+  }, [open])
 
   return (
     <Dialog
@@ -98,42 +91,31 @@ export default function ScrollDialog (props) {
       open={open}
       scroll="body"
     >
-      <DialogTitle
-        id="customized-dialog-title"
-        onClose={handleClose}
-      >
+      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
         {title}
       </DialogTitle>
-      <DialogContent
-        className={classes.content}
-        dividers
-      >
+      <DialogContent className={classes.content} dividers>
         <DialogContentText
           id="scroll-dialog-description"
           ref={descriptionElementRef}
           tabIndex={-1}
         >
-          {
-            texts.map((text, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <p key={`text-${index}`}>
-                <Markdown>
-                  {text}
-                </Markdown>
-              </p>
-            ))
-          }
+          {texts.map((text, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p key={`text-${index}`}>
+              <Markdown>{text}</Markdown>
+            </p>
+          ))}
         </DialogContentText>
-        {
-          images && images.map((image, index) => (
+        {images &&
+          images.map((image, index) => (
             <img
               className={classes.image}
               // eslint-disable-next-line react/no-array-index-key
               key={`image-${index}`}
               src={image.details.url || image.url}
             />
-          ))
-        }
+          ))}
       </DialogContent>
     </Dialog>
   )

@@ -33,7 +33,7 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export function setUser (user) {
+export function setUser(user) {
   return (dispatch) => {
     if (user) {
       dispatch(slice.actions.updateUser(user))
@@ -47,23 +47,15 @@ export function setUser (user) {
   }
 }
 
-export function session () {
+export function session() {
   return (dispatch) => {
     fetch('/session/profile')
-      .then((res) => handleAuthResponse(
-        slice,
-        dispatch,
-        res
-      ))
-      .catch((error) => handleAuthError(
-        slice,
-        dispatch,
-        error
-      ))
+      .then((res) => handleAuthResponse(slice, dispatch, res))
+      .catch((error) => handleAuthError(slice, dispatch, error))
   }
 }
 
-export function login (email, password) {
+export function login(email, password) {
   return (dispatch, getState) => {
     const stateBefore = getState()
     if (stateBefore.status === status.AUTHENTICATED) {
@@ -72,35 +64,24 @@ export function login (email, password) {
       return
     }
 
-    fetch(
-      '/auth/login',
-      {
-        body: JSON.stringify({
-          email,
-          password
-        }),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      }
-    )
-      .then((res) => handleAuthResponse(
-        slice,
-        dispatch,
-        res
-      ))
+    fetch('/auth/login', {
+      body: JSON.stringify({
+        email,
+        password
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+      .then((res) => handleAuthResponse(slice, dispatch, res))
       .then((ok) => ok && Router.push('/'))
-      .catch((error) => handleAuthError(
-        slice,
-        dispatch,
-        error
-      ))
+      .catch((error) => handleAuthError(slice, dispatch, error))
   }
 }
 
-export function register (email, givenName, familyName, password) {
+export function register(email, givenName, familyName, password) {
   return (dispatch, getState) => {
     const stateBefore = getState()
     if (stateBefore.status === status.AUTHENTICATED) {
@@ -109,37 +90,27 @@ export function register (email, givenName, familyName, password) {
       return
     }
 
-    fetch(
-      '/auth/register',
-      {
-        body: JSON.stringify({
-          email,
-          family_name: familyName,
-          given_name: givenName,
-          password
-        }),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      }
-    )
-      .then((res) => handleAuthResponse(
-        slice,
-        dispatch,
-        res
-      ))
+    fetch('/auth/register', {
+      body: JSON.stringify({
+        email,
+        family_name: familyName,
+        given_name: givenName,
+        password
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+      .then((res) => handleAuthResponse(slice, dispatch, res))
       .then((ok) => ok && Router.push('/'))
-      .catch((error) => handleAuthError(
-        slice,
-        dispatch,
-        error
-      ))
+      .catch((error) => handleAuthError(slice, dispatch, error))
   }
 }
 
-export function logout () {
+export function logout() {
+  // eslint-disable-next-line no-unused-vars
   return (dispatch, getState) => {
     dispatch(slice.actions.updateStatus(status.UNAUTHENTICATED))
     dispatch(slice.actions.updateUser(null))
@@ -147,14 +118,14 @@ export function logout () {
   }
 }
 
-export function selectUser (state) {
+export function selectUser(state) {
   return state.auth.user
 }
 
-export function selectError (state) {
+export function selectError(state) {
   return state.auth.error
 }
 
-export function selectStatus (state) {
+export function selectStatus(state) {
   return state.auth.status
 }

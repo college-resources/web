@@ -1,4 +1,4 @@
-function tryParseJSON (jsonString) {
+function tryParseJSON(jsonString) {
   try {
     const obj = JSON.parse(jsonString)
     if (obj && typeof obj === 'object') {

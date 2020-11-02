@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { status as authStatus, selectStatus, selectUser } from 'redux/authSlice'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import AccountCircle from '@material-ui/icons/AccountCircle'
@@ -48,30 +48,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const iOS = process.browser && (/iPad|iPhone|iPod/u).test(navigator.userAgent)
+const iOS = process.browser && /iPad|iPhone|iPod/u.test(navigator.userAgent)
 
-export default function NavBar (props) {
+export default function NavBar(props) {
   const classes = useStyles()
-  const [
-    drawerOpen,
-    setDrawerOpen
-  ] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const { title } = props
   const user = useSelector(selectUser)
   const currentAuthStatus = useSelector(selectStatus)
 
   const theme = useTheme()
   const changeTheme = useChangeTheme()
-  function handleTogglePaletteType () {
-    const paletteType = theme.palette.type === 'light'
-      ? 'dark'
-      : 'light'
+  function handleTogglePaletteType() {
+    const paletteType = theme.palette.type === 'light' ? 'dark' : 'light'
 
     changeTheme({ paletteType })
   }
 
   const toggleDrawer = (open) => (event) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return
     }
 
@@ -101,21 +100,15 @@ export default function NavBar (props) {
           >
             <SwipeableBar setDrawerOpen={setDrawerOpen} />
           </SwipeableDrawer>
-          <Typography
-            className={classes.title}
-            variant="h6"
-          >
+          <Typography className={classes.title} variant="h6">
             {title}
           </Typography>
-          <IconButton
-            color="inherit"
-            onClick={handleTogglePaletteType}
-          >
-            {
-              theme.palette.type === 'light'
-                ? <Brightness4Icon />
-                : <Brightness7Icon />
-            }
+          <IconButton color="inherit" onClick={handleTogglePaletteType}>
+            {theme.palette.type === 'light' ? (
+              <Brightness4Icon />
+            ) : (
+              <Brightness7Icon />
+            )}
           </IconButton>
           {currentAuthStatus === authStatus.AUTHENTICATED ? (
             <IconButton

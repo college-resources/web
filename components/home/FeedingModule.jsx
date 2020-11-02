@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { getFeeding, selectFeedings } from '../../redux/feedingSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
@@ -12,13 +12,17 @@ import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
 
 const findLastAndNextMeal = (feeding) => {
-  const currentDayInWeeks = feeding.weeks.map((week) => week.days[(new Date().getDay() + 6) % 7])
+  const currentDayInWeeks = feeding.weeks.map(
+    (week) => week.days[(new Date().getDay() + 6) % 7]
+  )
   return currentDayInWeeks.map((day) => {
     let isLastOpen = false
     let lastMeal = ''
     let nextMeal = ''
 
-    const currentTimeMs = (Date.now() - new Date().getTimezoneOffset() * 60 * 1000) % (24 * 3600 * 1000)
+    const currentTimeMs =
+      (Date.now() - new Date().getTimezoneOffset() * 60 * 1000) %
+      (24 * 3600 * 1000)
 
     day.meals.forEach((meal) => {
       if (meal.timeStart < currentTimeMs) {
@@ -34,7 +38,7 @@ const findLastAndNextMeal = (feeding) => {
     })
 
     if (!nextMeal) {
-      [nextMeal] = day.meals
+      ;[nextMeal] = day.meals
     }
 
     return { isLastOpen, lastMeal, nextMeal }
@@ -49,7 +53,9 @@ const findCurrentWeek = (feeding) => {
 
   const startsFrom = new Date(feeding.startsFrom)
   const differenceBetweenStartDateAndNowInMs = Date.now() - startsFrom.getTime()
-  const daysFromStart = Math.floor(differenceBetweenStartDateAndNowInMs / msInADay)
+  const daysFromStart = Math.floor(
+    differenceBetweenStartDateAndNowInMs / msInADay
+  )
   const daysFromReset = daysFromStart % (weeksLength * 7)
 
   return Math.floor(daysFromReset / 7)
@@ -68,23 +74,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function FeedingModule () {
+export default function FeedingModule() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
 
-  useEffect(
-    () => {
-      dispatch(getFeeding())
-    },
-    []
-  )
+  useEffect(() => {
+    dispatch(getFeeding())
+  }, [])
 
   return (
-    <Paper
-      className={classes.paper}
-      elevation={3}
-    >
+    <Paper className={classes.paper} elevation={3}>
       <Box
         alignItems="center"
         css={{ height: 20 }}
@@ -95,17 +95,12 @@ export default function FeedingModule () {
       >
         <RestaurantIcon />
         <Box mx={1}>
-          <Typography variant="h6">
-            FEEDING
-          </Typography>
+          <Typography variant="h6">FEEDING</Typography>
         </Box>
         <RestaurantIcon />
       </Box>
       <Divider />
-      <Box
-        pt={1}
-        px={2}
-      >
+      <Box pt={1} px={2}>
         {feedings.map((feed) => {
           const meals = findLastAndNextMeal(feed)
           const currentWeekIndex = findCurrentWeek(feed)
@@ -121,9 +116,7 @@ export default function FeedingModule () {
             >
               <Box mr={2}>
                 <p>
-                  <b>
-                    {feed.name}
-                  </b>
+                  <b>{feed.name}</b>
                   {` (Week ${currentWeekIndex + 1})`}
                 </p>
               </Box>
@@ -136,17 +129,15 @@ export default function FeedingModule () {
                   }
                 >
                   <b>
-                    {
-                      meals[currentWeekIndex].isLastOpen
-                        ? `Open until ${formatMsTo24h(meals[currentWeekIndex].lastMeal.timeEnd)}`
-                        : 'Closed'
-                    }
+                    {meals[currentWeekIndex].isLastOpen
+                      ? `Open until ${formatMsTo24h(
+                          meals[currentWeekIndex].lastMeal.timeEnd
+                        )}`
+                      : 'Closed'}
                   </b>
                 </span>
                 {' - Next meal '}
-                <b>
-                  {formatMsTo24h(timeOfNextMeal)}
-                </b>
+                <b>{formatMsTo24h(timeOfNextMeal)}</b>
               </p>
             </Grid>
           )

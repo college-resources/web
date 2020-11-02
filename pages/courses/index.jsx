@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { status as authStatus, selectStatus } from 'redux/authSlice'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const lessonHandler = () => Promise.resolve(gql(`
+const lessonHandler = () =>
+  Promise.resolve(
+    gql(`
   query {
     lessons {
       _id
@@ -38,47 +40,34 @@ const lessonHandler = () => Promise.resolve(gql(`
       }
     }
   }
-`).then((data) => data.lessons && data.lessons.sort(dynamicSortMultiple(
-  'semester',
-  'lessonCode'
-))))
+`).then(
+      (data) =>
+        data.lessons &&
+        data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode'))
+    )
+  )
 
-export default function CoursesPage (props) {
-  const [
-    lessons,
-    setLessons
-  ] = useState([])
-  const [
-    semesters,
-    setSemesters
-  ] = useState([])
+export default function CoursesPage(props) {
+  const [lessons, setLessons] = useState([])
+  const [semesters, setSemesters] = useState([])
   const classes = useStyles()
   const currentAuthStatus = useSelector(selectStatus)
 
-  useEffect(
-    () => {
-      props.updateTitle('Courses')
-      lessonHandler().then((gqlLessons) => {
-        if (gqlLessons) {
-          setLessons(gqlLessons)
-        }
-      })
-    },
-    []
-  )
+  useEffect(() => {
+    props.updateTitle('Courses')
+    lessonHandler().then((gqlLessons) => {
+      if (gqlLessons) {
+        setLessons(gqlLessons)
+      }
+    })
+  }, [])
 
-  useEffect(
-    () => {
-      if (lessons.length) semesterCreator()
-    },
-    [lessons]
-  )
+  useEffect(() => {
+    if (lessons.length) semesterCreator()
+  }, [lessons])
 
   const semesterCreator = () => {
-    setSemesters(groupBy(
-      lessons,
-      'semester'
-    ))
+    setSemesters(groupBy(lessons, 'semester'))
   }
 
   return (
@@ -95,10 +84,7 @@ export default function CoursesPage (props) {
         </Link>
       )}
       <Box mt={2}>
-        <Grid
-          container
-          spacing={3}
-        >
+        <Grid container spacing={3}>
           {semesters.map((sem, index) => (
             <Grid
               item
@@ -107,10 +93,7 @@ export default function CoursesPage (props) {
               md={6}
               xs={12}
             >
-              <Semester
-                rows={sem}
-                semester={index}
-              />
+              <Semester rows={sem} semester={index} />
             </Grid>
           ))}
         </Grid>

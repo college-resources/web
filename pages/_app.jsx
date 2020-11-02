@@ -6,21 +6,20 @@ import Box from '@material-ui/core/Box'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Head from 'next/head'
 import NavBar from 'components/navigation/NavBar'
-import React from 'react'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'components/ThemeContext'
 import { version } from 'lib/version'
 import { withRouter } from 'next/router'
 
 class MyApp extends App {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { title: '' }
     this._updateTitle = this._updateTitle.bind(this)
     this.props.setUser(this.props.ctxUser)
   }
 
-  static getInitialProps ({ ctx }) {
+  static getInitialProps({ ctx }) {
     const initialProps = {}
 
     if (ctx.req) {
@@ -30,11 +29,11 @@ class MyApp extends App {
     return initialProps
   }
 
-  _updateTitle (newValue) {
+  _updateTitle(newValue) {
     this.setState({ title: newValue })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles) {
@@ -49,7 +48,7 @@ class MyApp extends App {
     console.log(`v${version}`)
   }
 
-  render () {
+  render() {
     const { Component, pageProps } = this.props
 
     return (
@@ -59,11 +58,7 @@ class MyApp extends App {
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
             name="viewport"
           />
-          <title>
-            {this.state.title}
-            {' '}
-            | College Resources
-          </title>
+          <title>{this.state.title} | College Resources</title>
         </Head>
         <StylesProvider injectFirst>
           <ThemeProvider>
@@ -71,10 +66,7 @@ class MyApp extends App {
             <Provider store={store}>
               <NavBar title={this.state.title} />
               <Box mt={2}>
-                <Component
-                  updateTitle={this._updateTitle}
-                  {...pageProps}
-                />
+                <Component updateTitle={this._updateTitle} {...pageProps} />
               </Box>
             </Provider>
           </ThemeProvider>
@@ -93,7 +85,6 @@ const mapDispatchToProps = {
   setUser
 }
 
-export default wrapper.withRedux((withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MyApp))))
+export default wrapper.withRedux(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(MyApp))
+)

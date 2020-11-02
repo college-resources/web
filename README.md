@@ -4,7 +4,7 @@
 
 The go-to place for all your college needs. From course notes and previous exams to grades and feeding schedules.
 
-*See [college-resources/api](https://github.com/college-resources/api) for the API of this website.*
+_See [college-resources/api](https://github.com/college-resources/api) for the API of this website._
 
 ## Getting Started
 
@@ -13,17 +13,18 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites (Windows)
 
 1. [NodeJS 12.X](https://nodejs.org/dist/latest-v12.x)
-(Recommended version: [NodeJS 12.18.4 x64](https://nodejs.org/dist/latest-v12.x/node-v12.18.4-x64.msi))
+   (Recommended version: [NodeJS 12.18.4 x64](https://nodejs.org/dist/latest-v12.x/node-v12.18.4-x64.msi))
 
 2. [Git for Windows](https://git-scm.com/download/win)
 
 ### Prerequisites (Linux)
 
-*TBA*
+_TBA_
 
 ### Downloading
 
 Navigate to the folder where you want the project to be saved and run the following command:
+
 ```bash
 git clone https://github.com/college-resources/web.git
 ```
@@ -56,6 +57,7 @@ API_ADDRESS=<COLLEGE_RESOURCES_API_ADDRESS>
 #### Production
 
 1. In the root of the project run
+
 ```bash
 npm run build
 npm start

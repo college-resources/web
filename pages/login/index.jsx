@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { status as authStatus, login, selectStatus } from 'redux/authSlice'
 import { makeStyles, withTheme } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,83 +44,56 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark
     },
     backgroundColor: theme.palette.primary.light,
-    margin: theme.spacing(
-      3,
-      0,
-      2
-    )
+    margin: theme.spacing(3, 0, 2)
   }
 }))
 
 const GoogleButton = withTheme(styled(Button)`
-  background-color: ${(props) => (props.theme.palette.type === 'light'
-  ? red[600]
-  : red[700])};
+  background-color: ${(props) =>
+    props.theme.palette.type === 'light' ? red[600] : red[700]};
   &:hover {
-    background-color: ${(props) => (props.theme.palette.type === 'light'
-  ? red[800]
-  : red[900])};
+    background-color: ${(props) =>
+      props.theme.palette.type === 'light' ? red[800] : red[900]};
   }
 `)
 
-export default function LoginPage (props) {
+export default function LoginPage(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const currentAuthStatus = useSelector(selectStatus)
-  const [
-    email,
-    setEmail
-  ] = useState('')
-  const [
-    password,
-    setPassword
-  ] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  useEffect(
-    () => {
-      props.updateTitle('Login')
-    },
-    []
-  )
+  useEffect(() => {
+    props.updateTitle('Login')
+  }, [])
 
-  function handleEmailOnChange (event) {
+  function handleEmailOnChange(event) {
     setEmail(event.target.value)
   }
 
-  function handleLoginWithAuth0 () {
-    dispatch(login(
-      email,
-      password
-    ))
+  function handleLoginWithAuth0() {
+    dispatch(login(email, password))
   }
 
-  function handleLoginWithGoogle () {
+  function handleLoginWithGoogle() {
     window.location.replace('/auth/login/google-oauth2')
   }
 
-  function handlePasswordOnChange (event) {
+  function handlePasswordOnChange(event) {
     setPassword(event.target.value)
   }
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-        >
+        <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-        >
+        <form className={classes.form} noValidate>
           <TextField
             autoComplete="email"
             autoFocus
@@ -150,12 +123,7 @@ export default function LoginPage (props) {
             variant="outlined"
           />
           <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                value="remember"
-              />
-            }
+            control={<Checkbox color="primary" value="remember" />}
             label="Remember me"
           />
           <Button
@@ -169,13 +137,8 @@ export default function LoginPage (props) {
             Sign In
           </Button>
           <Grid container>
-            <Grid
-              item
-              xs
-            >
-              <StyledLink href="#">
-                Forgot password?
-              </StyledLink>
+            <Grid item xs>
+              <StyledLink href="#">Forgot password?</StyledLink>
             </Grid>
             <Grid item>
               <StyledLink href="/register">

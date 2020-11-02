@@ -5,26 +5,15 @@ const token = require('../middleware/token')
 
 const router = express.Router()
 
-router.all(
-  '/*',
-  token,
-  (req, res, next) => {
-    const proxy = requestProxy({
-      query: {
-        access_token: req.user && req.user.accessToken
-      },
-      url: new URL(
-        '*',
-        process.env.API_ADDRESS
-      ).href
-    })
+router.all('/*', token, (req, res, next) => {
+  const proxy = requestProxy({
+    query: {
+      access_token: req.user && req.user.accessToken
+    },
+    url: new URL('*', process.env.API_ADDRESS).href
+  })
 
-    return proxy(
-      req,
-      res,
-      next
-    )
-  }
-)
+  return proxy(req, res, next)
+})
 
 module.exports = router

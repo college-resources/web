@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
@@ -40,94 +40,54 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark
     },
     backgroundColor: theme.palette.primary.light,
-    margin: theme.spacing(
-      3,
-      0,
-      2
-    )
+    margin: theme.spacing(3, 0, 2)
   }
 }))
 
-export default function RegisterPage (props) {
+export default function RegisterPage(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [
-    email,
-    setEmail
-  ] = useState('')
-  const [
-    familyName,
-    setFamilyName
-  ] = useState('')
-  const [
-    givenName,
-    setGivenName
-  ] = useState('')
-  const [
-    password,
-    setPassword
-  ] = useState('')
+  const [email, setEmail] = useState('')
+  const [familyName, setFamilyName] = useState('')
+  const [givenName, setGivenName] = useState('')
+  const [password, setPassword] = useState('')
 
-  useEffect(
-    () => {
-      props.updateTitle('Register')
-    },
-    []
-  )
+  useEffect(() => {
+    props.updateTitle('Register')
+  }, [])
 
-  function handleEmailOnChange (event) {
+  function handleEmailOnChange(event) {
     setEmail(event.target.value)
   }
 
-  function handleFamilyNameOnChange (event) {
+  function handleFamilyNameOnChange(event) {
     setFamilyName(event.target.value)
   }
 
-  function handleGivenNameOnChange (event) {
+  function handleGivenNameOnChange(event) {
     setGivenName(event.target.value)
   }
 
-  function handlePasswordOnChange (event) {
+  function handlePasswordOnChange(event) {
     setPassword(event.target.value)
   }
 
-  function handleRegister () {
-    dispatch(register(
-      email,
-      givenName,
-      familyName,
-      password
-    ))
+  function handleRegister() {
+    dispatch(register(email, givenName, familyName, password))
   }
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-    >
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-        >
+        <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-        >
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              item
-              sm={6}
-              xs={12}
-            >
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item sm={6} xs={12}>
               <TextField
                 autoComplete="given-name"
                 autoFocus
@@ -141,11 +101,7 @@ export default function RegisterPage (props) {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              sm={6}
-              xs={12}
-            >
+            <Grid item sm={6} xs={12}>
               <TextField
                 autoComplete="family-name"
                 fullWidth
@@ -158,10 +114,7 @@ export default function RegisterPage (props) {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-            >
+            <Grid item xs={12}>
               <TextField
                 autoComplete="email"
                 fullWidth
@@ -174,10 +127,7 @@ export default function RegisterPage (props) {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-            >
+            <Grid item xs={12}>
               <TextField
                 autoComplete="new-password"
                 fullWidth
@@ -202,10 +152,7 @@ export default function RegisterPage (props) {
           >
             Sign Up
           </Button>
-          <Grid
-            container
-            justify="flex-end"
-          >
+          <Grid container justify="flex-end">
             <Grid item>
               <StyledLink href="/login">
                 Already have an account? Sign in

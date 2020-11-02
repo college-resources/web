@@ -1,22 +1,19 @@
 import Router from 'next/router'
 
-export default function gql (query, variables) {
+export default function gql(query, variables) {
   const body = { query }
   if (variables) {
     body.variables = variables
   }
 
   return new Promise((resolve, reject) => {
-    fetch(
-      '/api/graphql',
-      {
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      }
-    )
+    fetch('/api/graphql', {
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
       .then((res) => res.json())
       .then((json) => {
         if (json.errors) {

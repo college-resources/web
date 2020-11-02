@@ -17,31 +17,22 @@ const managementClient = new auth0.ManagementClient({
 })
 
 const syncProfileWithApi = async (info) => {
-  const gqlRoute = new URL(
-    'graphql',
-    process.env.API_ADDRESS
-  )
-  gqlRoute.searchParams.set(
-    'access_token',
-    info.accessToken
-  )
+  const gqlRoute = new URL('graphql', process.env.API_ADDRESS)
+  gqlRoute.searchParams.set('access_token', info.accessToken)
 
-  const apiProfile = await fetch(
-    gqlRoute.href,
-    {
-      body: JSON.stringify({
-        query: `{
+  const apiProfile = await fetch(gqlRoute.href, {
+    body: JSON.stringify({
+      query: `{
         user {
           _id
         }
       }`
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }
-  )
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST'
+  })
     .then((res) => {
       if (res.ok) {
         return res.json()
@@ -52,14 +43,13 @@ const syncProfileWithApi = async (info) => {
         return json.data
       }
     })
+    // eslint-disable-next-line no-console
     .catch((err) => console.log(err))
 
   if (!apiProfile || !apiProfile._id) {
-    await fetch(
-      gqlRoute.href,
-      {
-        body: JSON.stringify({
-          query: `mutation {
+    await fetch(gqlRoute.href, {
+      body: JSON.stringify({
+        query: `mutation {
           registerUser (user: {
             givenName: "${info.profile.given_name}"
             familyName: "${info.profile.family_name}"
@@ -68,17 +58,17 @@ const syncProfileWithApi = async (info) => {
             _id
           }
         }`
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      }
-    )
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
       .then((res) => {
         if (res.ok) {
           return res.json()
         }
+        // eslint-disable-next-line no-console
         res.text().then((text) => console.log(text))
       })
       .then((json) => {
@@ -86,6 +76,7 @@ const syncProfileWithApi = async (info) => {
           return json.data
         }
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err))
   }
 }

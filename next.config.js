@@ -8,8 +8,5 @@ module.exports = withPWA({
     runtimeCaching
   },
   crossOrigin: 'anonymous',
-  pageExtensions: [
-    'js',
-    'jsx'
-  ]
+  pageExtensions: ['js', 'jsx']
 })

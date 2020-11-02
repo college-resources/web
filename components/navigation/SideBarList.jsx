@@ -9,57 +9,40 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemLink from './ListItemLink'
 import ListItemText from '@material-ui/core/ListItemText'
 import NotesIcon from '@material-ui/icons/Notes'
-import React from 'react'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
 
-export default function SideBarList () {
+export default function SideBarList() {
   const dispatch = useDispatch()
   const currentAuthStatus = useSelector(selectStatus)
 
-  function handleLogout () {
+  function handleLogout() {
     dispatch(logout())
   }
 
   return (
     <>
       <List>
-        <ListItemLink
-          button
-          href="/"
-          key="Home"
-        >
+        <ListItemLink button href="/" key="Home">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItemLink>
-        <ListItemLink
-          button
-          href="/courses"
-          key="Courses"
-        >
+        <ListItemLink button href="/courses" key="Courses">
           <ListItemIcon>
             <BookIcon />
           </ListItemIcon>
           <ListItemText primary="Courses" />
         </ListItemLink>
-        <ListItemLink
-          button
-          href="/notes"
-          key="Notes"
-        >
+        <ListItemLink button href="/notes" key="Notes">
           <ListItemIcon>
             <NotesIcon />
           </ListItemIcon>
           <ListItemText primary="Notes" />
         </ListItemLink>
-        <ListItemLink
-          button
-          href="/feeding"
-          key="Feeding"
-        >
+        <ListItemLink button href="/feeding" key="Feeding">
           <ListItemIcon>
             <RestaurantIcon />
           </ListItemIcon>
@@ -71,11 +54,7 @@ export default function SideBarList () {
           <Divider />
           <List>
             {['Settings [TODO]'].map((text) => (
-              <ListItem
-                button
-                disabled
-                key={text}
-              >
+              <ListItem button disabled key={text}>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
@@ -86,11 +65,7 @@ export default function SideBarList () {
           <Divider />
           <List>
             {['Log out'].map((text) => (
-              <ListItem
-                button
-                key={text}
-                onClick={handleLogout}
-              >
+              <ListItem button key={text} onClick={handleLogout}>
                 <ListItemIcon>
                   <SignoutIcon />
                 </ListItemIcon>

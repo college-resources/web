@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { withTheme } from '@material-ui/core/styles'
@@ -12,16 +12,12 @@ const Styled = withTheme(styled.a`
   }
 `)
 
-function StyledLink (props, ref) {
+function StyledLink(props, ref) {
   const { children, href } = props
 
   return (
     <Link href={href}>
-      <Styled
-        {...props}
-        href="#"
-        ref={ref}
-      >
+      <Styled {...props} href="#" ref={ref}>
         {children}
       </Styled>
     </Link>

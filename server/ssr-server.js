@@ -16,57 +16,38 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-server.set(
-  'trust proxy',
-  'loopback'
-)
+server.set('trust proxy', 'loopback')
 
 server.use(express.static('public'))
 server.use(auth0)
 server.use(session)
 server.use(passport)
 
-server.use(
-  '/api',
-  apiRouter
-)
-server.use(
-  '/auth',
-  authRouter
-)
-server.use(
-  '/session',
-  sessionRouter
-)
+server.use('/api', apiRouter)
+server.use('/auth', authRouter)
+server.use('/session', sessionRouter)
 
-server.get(
-  '*',
-  handle
-)
+server.get('*', handle)
 
 // Error handling - Requires 4 parameters
+// eslint-disable-next-line no-unused-vars
 server.use((err, req, res, _) => {
-  handleError(
-    err,
-    res
-  )
+  handleError(err, res)
 })
 
 module.exports = () => {
   app
     .prepare()
     .then(() => {
-      server.listen(
-        3000,
-        (err) => {
-          if (err) throw err
-          console.log('> Ready on http://localhost:3000')
-        }
-      )
+      server.listen(3000, (err) => {
+        if (err) throw err
+        // eslint-disable-next-line no-console
+        console.log('> Ready on http://localhost:3000')
+      })
     })
     .catch((ex) => {
+      // eslint-disable-next-line no-console
       console.error(ex.stack)
-      // eslint-disable-next-line no-process-exit
       process.exit(1)
     })
 }

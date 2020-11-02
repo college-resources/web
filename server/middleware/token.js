@@ -10,19 +10,17 @@ const init = (req) => {
     rateLimit: true
   })
 
-  const getSecret = (kid) => new Promise((resolve, reject) => {
-    secretProvider.getSigningKey(
-      kid,
-      (err, key) => {
+  const getSecret = (kid) =>
+    new Promise((resolve, reject) => {
+      secretProvider.getSigningKey(kid, (err, key) => {
         if (err) {
           reject(err)
         } else {
           const publicKey = key.publicKey || key.rsaPublicKey
           resolve(publicKey)
         }
-      }
-    )
-  })
+      })
+    })
 
   // Verify token using kid, audience and issuer
   return async (token, tokenHeader) => {
@@ -35,17 +33,14 @@ const init = (req) => {
     }
 
     try {
-      await jwt.verify(
-        token,
-        secret,
-        options
-      )
+      await jwt.verify(token, secret, options)
     } catch (err) {
       if (err.name === 'TokenExpiredError') {
-        await req.auth0.authenticationClient.refreshToken({
-          client_secret: process.env.AUTH0_CLIENT_SECRET,
-          refresh_token: req.user.refreshToken
-        })
+        await req.auth0.authenticationClient
+          .refreshToken({
+            client_secret: process.env.AUTH0_CLIENT_SECRET,
+            refresh_token: req.user.refreshToken
+          })
           .then(({ access_token: accessToken }) => {
             req.user.accessToken = accessToken
           })
@@ -58,20 +53,11 @@ module.exports = async (req, res, next) => {
   try {
     // Decode JWT without verification to get kid from header
     const token = req.user && req.user.accessToken
-    const { header } = jwt.decode(
-      token,
-      { complete: true }
-    ) || {}
+    const { header } = jwt.decode(token, { complete: true }) || {}
     const verifier = init(req)
-    await verifier(
-      token,
-      header
-    )
-  } catch (err) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log(err.message)
-    }
-  }
+    await verifier(token, header)
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
 
   next()
 }

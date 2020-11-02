@@ -1,6 +1,5 @@
 import Box from '@material-ui/core/Box'
 import PropTypes from 'prop-types'
-import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 TabPanel.propTypes = {
@@ -9,7 +8,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired
 }
 
-export default function TabPanel (props) {
+export default function TabPanel(props) {
   const { children, value, index, ...other } = props
 
   return (
@@ -21,9 +20,7 @@ export default function TabPanel (props) {
       role="tabpanel"
       {...other}
     >
-      <Box p={3}>
-        {children}
-      </Box>
+      <Box p={3}>{children}</Box>
     </Typography>
   )
 }

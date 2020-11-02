@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const courseHandler = () => Promise.resolve(gql(`
+const courseHandler = () =>
+  Promise.resolve(
+    gql(`
   query {
     lessons {
       _id
@@ -40,12 +42,16 @@ const courseHandler = () => Promise.resolve(gql(`
       semester
     }
   }
-`).then((data) => data.lessons && data.lessons.sort(dynamicSortMultiple(
-  'semester',
-  'lessonCode'
-))))
+`).then(
+      (data) =>
+        data.lessons &&
+        data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode'))
+    )
+  )
 
-const notesHandler = (courseId) => Promise.resolve(gql(`
+const notesHandler = (courseId) =>
+  Promise.resolve(
+    gql(`
   query {
     lessonNotes(lesson: "${courseId}") {
       _id
@@ -62,54 +68,46 @@ const notesHandler = (courseId) => Promise.resolve(gql(`
       }
     }
   }
-`).then((data) => data.lessonNotes && data.lessonNotes.sort(dynamicSortMultiple(
-  '-date',
-  'title'
-))))
+`).then(
+      (data) =>
+        data.lessonNotes &&
+        data.lessonNotes.sort(dynamicSortMultiple('-date', 'title'))
+    )
+  )
 
-export default function NotesPage (props) {
+export default function NotesPage(props) {
   const classes = useStyles()
-  const [
-    lessons,
-    setLessons
-  ] = useState([])
-  const [
-    selectedLesson,
-    setSelectedLesson
-  ] = useState(null)
-  const [
-    notes,
-    setNotes
-  ] = useState([])
-  const [
-    dialog,
-    setDialog
-  ] = React.useState({ open: false, title: '', texts: [], image: [] })
+  const [lessons, setLessons] = useState([])
+  const [selectedLesson, setSelectedLesson] = useState(null)
+  const [notes, setNotes] = useState([])
+  const [dialog, setDialog] = useState({
+    open: false,
+    title: '',
+    texts: [],
+    image: []
+  })
 
-  function setOpen (open) {
+  function setOpen(open) {
     setDialog({ ...dialog, open })
   }
 
-  function handleClickOpen (title, texts, images) {
+  function handleClickOpen(title, texts, images) {
     // eslint-disable-next-line func-names
     return function () {
       setDialog({ open: true, title, texts, images })
     }
   }
 
-  useEffect(
-    () => {
-      props.updateTitle('Notes')
-      courseHandler().then((gqlLessons) => {
-        if (gqlLessons) {
-          setLessons(gqlLessons)
-        }
-      })
-    },
-    []
-  )
+  useEffect(() => {
+    props.updateTitle('Notes')
+    courseHandler().then((gqlLessons) => {
+      if (gqlLessons) {
+        setLessons(gqlLessons)
+      }
+    })
+  }, [])
 
-  function changeHandler (event, newValue) {
+  function changeHandler(event, newValue) {
     setSelectedLesson(newValue)
     if (newValue) {
       notesHandler(newValue._id).then((gqlNotes) => {
@@ -122,22 +120,16 @@ export default function NotesPage (props) {
     }
   }
 
-  function getOptionLabelHandler (lesson) {
+  function getOptionLabelHandler(lesson) {
     return lesson.name
   }
 
-  function groupByHandler (lesson) {
+  function groupByHandler(lesson) {
     return `Semester ${lesson.semester}`
   }
 
-  function renderInputHandler (params) {
-    return (
-      <TextField
-        {...params}
-        label="Course"
-        variant="outlined"
-      />
-    )
+  function renderInputHandler(params) {
+    return <TextField {...params} label="Course" variant="outlined" />
   }
 
   return (
@@ -153,18 +145,19 @@ export default function NotesPage (props) {
         renderInput={renderInputHandler}
         value={selectedLesson}
       />
-      {
-        notes && notes.map((note, index) => (
+      {notes &&
+        notes.map((note, index) => (
           <Card
             className={classes.root}
             // eslint-disable-next-line react/no-array-index-key
             key={`hypertext-${index}`}
           >
-            <CardActionArea onClick={handleClickOpen(
-              note.title,
-              note.hypertexts,
-              note.images
-            )}
+            <CardActionArea
+              onClick={handleClickOpen(
+                note.title,
+                note.hypertexts,
+                note.images
+              )}
             >
               <CardContent>
                 <Typography
@@ -174,21 +167,14 @@ export default function NotesPage (props) {
                 >
                   {note.date}
                 </Typography>
-                <Typography
-                  component="h2"
-                  variant="h5"
-                />
-                <Typography
-                  component="p"
-                  variant="body2"
-                >
+                <Typography component="h2" variant="h5" />
+                <Typography component="p" variant="body2">
                   {note.title}
                 </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
-        ))
-      }
+        ))}
       <Dialog
         images={dialog.images}
         open={dialog.open}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import CodeInput from 'components/courses/create/CodeInput'
 import Container from '@material-ui/core/Container'
@@ -14,14 +14,17 @@ import { dynamicSort } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
 
-const departmentHandler = () => Promise.resolve(gql(`
+const departmentHandler = () =>
+  Promise.resolve(
+    gql(`
   query {
     departments {
       _id
       name
     }
   }
-`).then((data) => data.departments.sort(dynamicSort('name'))))
+`).then((data) => data.departments.sort(dynamicSort('name')))
+  )
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function formDefaults () {
+function formDefaults() {
   return {
     name: '',
     department: '',
@@ -49,28 +52,19 @@ function formDefaults () {
   }
 }
 
-export default function CreatePage (props) {
+export default function CreatePage(props) {
   const classes = useStyles()
-  const [
-    departments,
-    setDepartments
-  ] = useState([])
-  const [
-    values,
-    setValues
-  ] = useState(formDefaults())
+  const [departments, setDepartments] = useState([])
+  const [values, setValues] = useState(formDefaults())
 
-  useEffect(
-    () => {
-      props.updateTitle('Create course')
-      departmentHandler().then((gqlDepartments) => {
-        if (gqlDepartments) {
-          setDepartments(gqlDepartments)
-        }
-      })
-    },
-    []
-  )
+  useEffect(() => {
+    props.updateTitle('Create course')
+    departmentHandler().then((gqlDepartments) => {
+      if (gqlDepartments) {
+        setDepartments(gqlDepartments)
+      }
+    })
+  }, [])
 
   const lessonHandler = () => {
     const query = `
@@ -101,41 +95,29 @@ export default function CreatePage (props) {
       }
     `
 
-    gql(
-      query,
-      values
-    )
+    gql(query, values)
   }
 
   const handleChange = (name) => (event) => {
     setValues({
       ...values,
-      [name]: event.target
-        ? event.target.value
-        : event
+      [name]: event.target ? event.target.value : event
     })
   }
 
-  function handleClear () {
+  function handleClear() {
     setValues(formDefaults())
   }
 
-  function handleSave () {
+  function handleSave() {
     lessonHandler()
     handleClear()
   }
 
   return (
     <Container>
-      <form
-        autoComplete="off"
-        className={classes.container}
-        noValidate
-      >
-        <NameInput
-          onChange={handleChange('name')}
-          value={values.name}
-        />
+      <form autoComplete="off" className={classes.container} noValidate>
+        <NameInput onChange={handleChange('name')} value={values.name} />
         <DepartmentInput
           departments={departments}
           onChange={handleChange('department')}
@@ -146,10 +128,7 @@ export default function CreatePage (props) {
           setValues={setValues}
           value={values.semester}
         />
-        <CodeInput
-          onChange={handleChange('code')}
-          value={values.code}
-        />
+        <CodeInput onChange={handleChange('code')} value={values.code} />
         <HoursLectureInput
           onChange={handleChange('lectureHours')}
           value={values.lectureHours}
@@ -158,22 +137,10 @@ export default function CreatePage (props) {
           onChange={handleChange('labHours')}
           value={values.labHours}
         />
-        <CreditInput
-          onChange={handleChange('credit')}
-          value={values.credit}
-        />
-        <TypeInput
-          onChange={handleChange('type')}
-          value={values.type}
-        />
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            xs={6}
-          >
+        <CreditInput onChange={handleChange('credit')} value={values.credit} />
+        <TypeInput onChange={handleChange('type')} value={values.type} />
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
             <Button
               className={classes.dense}
               color="primary"
@@ -185,10 +152,7 @@ export default function CreatePage (props) {
               Save
             </Button>
           </Grid>
-          <Grid
-            item
-            xs={6}
-          >
+          <Grid item xs={6}>
             <Button
               className={classes.dense}
               color="secondary"
