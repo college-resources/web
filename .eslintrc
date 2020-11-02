@@ -44,6 +44,9 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
 
+    // Doesn't work for our use case currently
+    "react-hooks/exhaustive-deps": "off",
+
     /* Temporary start */
     // Type checking
     "react/prop-types": "off"
