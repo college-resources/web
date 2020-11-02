@@ -31,9 +31,7 @@ export default function ProfilePage(props) {
 
   useEffect(() => {
     props.updateTitle('Profile')
-  },
-    []
-  )
+  }, [])
 
   return (
     <Container>

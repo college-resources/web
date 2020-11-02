@@ -41,9 +41,7 @@ export default function FeedingPage(props) {
   useEffect(() => {
     props.updateTitle('Feeding')
     dispatch(getFeeding())
-  },
-    []
-  )
+  }, [])
 
   function handleFeedingChange(event) {
     dispatch(updateFeeding(event.target.value))

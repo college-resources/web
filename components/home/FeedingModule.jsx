@@ -81,9 +81,7 @@ export default function FeedingModule() {
 
   useEffect(() => {
     dispatch(getFeeding())
-  },
-    []
-  )
+  }, [])
 
   return (
     <Paper className={classes.paper} elevation={3}>

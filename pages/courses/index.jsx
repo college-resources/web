@@ -60,9 +60,7 @@ export default function CoursesPage(props) {
         setLessons(gqlLessons)
       }
     })
-  },
-    []
-  )
+  }, [])
 
   useEffect(() => {
     if (lessons.length) semesterCreator()

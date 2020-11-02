@@ -64,9 +64,7 @@ export default function CreatePage(props) {
         setDepartments(gqlDepartments)
       }
     })
-  },
-    []
-  )
+  }, [])
 
   const lessonHandler = () => {
     const query = `

@@ -111,8 +111,10 @@ export default function Menu() {
             <Box>
               <Typography gutterBottom variant="h6">
                 <b>
-                  {/* prettier-ignore */}
-                  {`Breakfast (${formatMsTo24h(day.meals[0].timeStart)} - ${formatMsTo24h(day.meals[0].timeEnd)})`}
+                  {
+                    /* prettier-ignore */
+                    `Breakfast (${formatMsTo24h(day.meals[0].timeStart)} - ${formatMsTo24h(day.meals[0].timeEnd)})`
+                  }
                 </b>
               </Typography>
               {day.meals[0].menu}
@@ -120,8 +122,10 @@ export default function Menu() {
             <Box mt={3}>
               <Typography gutterBottom variant="h6">
                 <b>
-                  {/* prettier-ignore */}
-                  {`Lunch (${formatMsTo24h(day.meals[1].timeStart)} - ${formatMsTo24h(day.meals[1].timeEnd)})`}
+                  {
+                    /* prettier-ignore */
+                    `Lunch (${formatMsTo24h(day.meals[1].timeStart)} - ${formatMsTo24h(day.meals[1].timeEnd)})`
+                  }
                 </b>
               </Typography>
               {day.meals[1].menu}
@@ -129,8 +133,10 @@ export default function Menu() {
             <Box mt={3}>
               <Typography gutterBottom variant="h6">
                 <b>
-                  {/* prettier-ignore */}
-                  {`Dinner (${formatMsTo24h(day.meals[2].timeStart)} - ${formatMsTo24h(day.meals[2].timeEnd)})`}
+                  {
+                    /* prettier-ignore */
+                    `Dinner (${formatMsTo24h(day.meals[2].timeStart)} - ${formatMsTo24h(day.meals[2].timeEnd)})`
+                  }
                 </b>
               </Typography>
               {day.meals[2].menu}

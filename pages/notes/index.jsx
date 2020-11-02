@@ -105,9 +105,7 @@ export default function NotesPage(props) {
         setLessons(gqlLessons)
       }
     })
-  },
-    []
-  )
+  }, [])
 
   function changeHandler(event, newValue) {
     setSelectedLesson(newValue)
