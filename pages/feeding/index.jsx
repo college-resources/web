@@ -13,13 +13,22 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import { pink } from '@material-ui/core/colors'
+import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles((theme) => ({
+  checked: {
+    color: pink['A400']
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap'
   },
   textField: {
+    flexGrow: 1,
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
         borderColor: 'gray'
@@ -27,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '& label.Mui-focused': {
       color: theme.palette.type === 'dark' && theme.palette.common.white
-    },
-    width: '100%'
+    }
   }
 }))
 
@@ -66,6 +74,32 @@ export default function FeedingPage(props) {
             </MenuItem>
           ))}
         </TextField>
+        <Hidden smUp>
+          <FormControlLabel
+            style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
+            control={
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite className={classes.checked} />}
+                name="checkedH"
+              />
+            }
+            label=""
+          />
+        </Hidden>
+        <Hidden xsDown>
+          <FormControlLabel
+            style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
+            control={
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite className={classes.checked} />}
+                name="checkedH"
+              />
+            }
+            label="Favourite"
+          />
+        </Hidden>
       </form>
       {selectedFeedingIndex === '' ? (
         <Box mt={5}>
