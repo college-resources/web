@@ -1,12 +1,14 @@
-import authReducer from './authSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
+import authReducer from './authSlice'
 import feedingReducer from './feedingSlice'
+import preferencesReducer from './preferencesSlice'
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    feeding: feedingReducer
+    feeding: feedingReducer,
+    preferences: preferencesReducer
   }
 })
 
