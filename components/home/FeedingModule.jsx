@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { getFeeding, selectFeedings } from '../../redux/feedingSlice'
+import { getFeeding, selectFeedings } from 'redux/feedingSlice'
+import { getPreferences, selectPreferences } from 'redux/preferencesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Divider from '@material-ui/core/Divider'
@@ -10,6 +11,8 @@ import { Typography } from '@material-ui/core'
 import formatMsTo24h from 'scripts/formatMsTo24h'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import ButtonLink from 'components/ButtonLink'
 
 const findLastAndNextMeal = (feeding) => {
   const currentDayInWeeks = feeding.weeks.map(
@@ -78,9 +81,11 @@ export default function FeedingModule() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
+  const { feeding } = useSelector(selectPreferences)
 
   useEffect(() => {
     dispatch(getFeeding())
+    dispatch(getPreferences())
   }, [])
 
   return (
@@ -100,49 +105,64 @@ export default function FeedingModule() {
         <RestaurantIcon />
       </Box>
       <Divider />
-      <Box pt={1} px={2}>
-        {feedings.map((feed) => {
-          const meals = findLastAndNextMeal(feed)
-          const currentWeekIndex = findCurrentWeek(feed)
-          const timeOfNextMeal = meals[currentWeekIndex].nextMeal.timeStart
+      {feeding ? (
+        <Box pt={1} px={2}>
+          {feedings.map((feed) => {
+            const meals = findLastAndNextMeal(feed)
+            const currentWeekIndex = findCurrentWeek(feed)
+            const timeOfNextMeal = meals[currentWeekIndex].nextMeal.timeStart
 
-          return (
-            <Grid
-              alignItems="flex-start"
-              container
-              direction="row"
-              justify="space-between"
-              key={feed._id}
-            >
-              <Box mr={2}>
+            return (
+              <Grid
+                alignItems="flex-start"
+                container
+                direction="row"
+                justify="space-between"
+                key={feed._id}
+              >
+                <Box mr={2}>
+                  <p>
+                    <b>{feed.name}</b>
+                    {` (Week ${currentWeekIndex + 1})`}
+                  </p>
+                </Box>
                 <p>
-                  <b>{feed.name}</b>
-                  {` (Week ${currentWeekIndex + 1})`}
+                  <span
+                    className={
+                      meals[currentWeekIndex].isLastOpen
+                        ? classes.green
+                        : classes.red
+                    }
+                  >
+                    <b>
+                      {meals[currentWeekIndex].isLastOpen
+                        ? `Open until ${formatMsTo24h(
+                            meals[currentWeekIndex].lastMeal.timeEnd
+                          )}`
+                        : 'Closed'}
+                    </b>
+                  </span>
+                  {' - Next meal '}
+                  <b>{formatMsTo24h(timeOfNextMeal)}</b>
                 </p>
-              </Box>
-              <p>
-                <span
-                  className={
-                    meals[currentWeekIndex].isLastOpen
-                      ? classes.green
-                      : classes.red
-                  }
-                >
-                  <b>
-                    {meals[currentWeekIndex].isLastOpen
-                      ? `Open until ${formatMsTo24h(
-                          meals[currentWeekIndex].lastMeal.timeEnd
-                        )}`
-                      : 'Closed'}
-                  </b>
-                </span>
-                {' - Next meal '}
-                <b>{formatMsTo24h(timeOfNextMeal)}</b>
-              </p>
-            </Grid>
-          )
-        })}
-      </Box>
+              </Grid>
+            )
+          })}
+        </Box>
+      ) : (
+        <Box pt={2}>
+          <Grid alignItems="center" container direction="row" justify="center">
+            <Button
+              href="/feeding"
+              component={ButtonLink}
+              variant="outlined"
+              color="inherit"
+            >
+              CHOOSE A FAVOURITE FEEDING TO APPEAR HERE
+            </Button>
+          </Grid>
+        </Box>
+      )}
     </Paper>
   )
 }
