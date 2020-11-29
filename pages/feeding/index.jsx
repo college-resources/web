@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   getFeeding,
   selectFeedingIndex,
@@ -18,14 +18,18 @@ import Checkbox from '@material-ui/core/Checkbox'
 import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { pink } from '@material-ui/core/colors'
 import Hidden from '@material-ui/core/Hidden'
+import {
+  PREFERENCE_FEEDING,
+  selectPreferences,
+  updatePreference
+} from 'redux/preferencesSlice'
 
 const useStyles = makeStyles((theme) => ({
   checked: {
     color: pink['A400']
   },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: 'flex'
   },
   textField: {
     flexGrow: 1,
@@ -45,11 +49,37 @@ export default function FeedingPage(props) {
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
   const selectedFeedingIndex = useSelector(selectFeedingIndex)
+  let { feeding: favoriteFeeding } = useSelector(selectPreferences)
+  let [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
     props.updateTitle('Feeding')
     dispatch(getFeeding())
   }, [])
+
+  useEffect(() => {
+    setIsFavorite(
+      !!favoriteFeeding &&
+        favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
+    )
+  }, [favoriteFeeding, feedings, selectedFeedingIndex])
+
+  function handleFavoriteChange() {
+    if (selectedFeedingIndex >= 0) {
+      dispatch(
+        updatePreference({
+          preference: PREFERENCE_FEEDING,
+          value:
+            !!favoriteFeeding &&
+            favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
+              ? null
+              : feedings[selectedFeedingIndex]
+        })
+      )
+    } else {
+      alert('Choose a feeding first') // TODO: Beautify - Translate
+    }
+  }
 
   function handleFeedingChange(event) {
     dispatch(updateFeeding(event.target.value))
@@ -57,7 +87,7 @@ export default function FeedingPage(props) {
 
   return (
     <Container>
-      <form autoComplete="off" className={classes.container} noValidate>
+      <Box className={classes.container}>
         <TextField
           className={classes.textField}
           id="restaurant"
@@ -65,7 +95,7 @@ export default function FeedingPage(props) {
           margin="normal"
           onChange={handleFeedingChange}
           select
-          value={selectedFeedingIndex}
+          value={selectedFeedingIndex >= 0 ? selectedFeedingIndex : ''}
           variant="outlined"
         >
           {feedings.map((feed, index) => (
@@ -79,6 +109,8 @@ export default function FeedingPage(props) {
             style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
             control={
               <Checkbox
+                checked={isFavorite}
+                onChange={handleFavoriteChange}
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite className={classes.checked} />}
                 name="checkedH"
@@ -92,6 +124,8 @@ export default function FeedingPage(props) {
             style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
             control={
               <Checkbox
+                checked={isFavorite}
+                onChange={handleFavoriteChange}
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite className={classes.checked} />}
                 name="checkedH"
@@ -100,7 +134,7 @@ export default function FeedingPage(props) {
             label="Favourite"
           />
         </Hidden>
-      </form>
+      </Box>
       {selectedFeedingIndex === '' ? (
         <Box mt={5}>
           <Typography align="center">

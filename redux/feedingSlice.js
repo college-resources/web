@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import gql from '../scripts/graphql'
 
+function defaults() {
+  return { feedings: [], feedingIndex: -1, weekIndex: 0 }
+}
+
 const slice = createSlice({
   name: 'feeding',
-  initialState: {
-    feedings: [],
-    feedingIndex: '',
-    weekIndex: 0
-  },
+  initialState: defaults(),
   reducers: {
-    updateFeeding: (state, action) => {
-      state.feedings = action.payload
-    },
+    updateFeeding: (state, action) => ({
+      ...defaults(),
+      feedings: action.payload
+    }),
     updateSelectedFeedingIndex: (state, action) => ({
       ...state,
       feedingIndex: action.payload

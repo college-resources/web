@@ -1,15 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 import gql from '../scripts/graphql'
 
+export const PREFERENCE_FEEDING = 'feeding'
+
 const slice = createSlice({
   name: 'preferences',
-  initialState: {
-    preferences: {}
-  },
+  initialState: {},
   reducers: {
-    updatePreferences: (state, action) => {
-      state.preferences = action.payload
-    }
+    updatePreferences: (state, action) => ({
+      ...state,
+      preferences: action.payload
+    }),
+    updatePreference: (state, action) => ({
+      ...state,
+      [action.payload.preference]: action.payload.value
+    })
   }
 })
 
@@ -18,7 +23,7 @@ export default slice.reducer
 export function getPreferences() {
   return (dispatch, getState) => {
     const stateBefore = getState()
-    if (stateBefore.preferences.preferences) return
+    if (stateBefore.preferences) return
 
     Promise.resolve(
       gql(`
@@ -43,6 +48,12 @@ export function getPreferences() {
   }
 }
 
+export function updatePreference(parameters) {
+  return (dispatch) => {
+    dispatch(slice.actions.updatePreference(parameters))
+  }
+}
+
 export function selectPreferences(state) {
-  return state.preferences.preferences
+  return state.preferences
 }

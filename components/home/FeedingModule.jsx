@@ -81,7 +81,7 @@ export default function FeedingModule() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
-  const { feeding } = useSelector(selectPreferences)
+  const { feeding: favoriteFeeding } = useSelector(selectPreferences)
 
   useEffect(() => {
     dispatch(getFeeding())
@@ -105,7 +105,7 @@ export default function FeedingModule() {
         <RestaurantIcon />
       </Box>
       <Divider />
-      {feeding ? (
+      {favoriteFeeding ? (
         <Box pt={1} px={2}>
           {feedings.map((feed) => {
             const meals = findLastAndNextMeal(feed)
