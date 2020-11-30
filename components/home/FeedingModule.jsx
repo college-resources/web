@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { getFeeding, selectFeedings } from 'redux/feedingSlice'
 import { getPreferences, selectPreferences } from 'redux/preferencesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import Box from '@material-ui/core/Box'
@@ -77,14 +76,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+function FavoriteFeeding({ favoriteFeeding }) {
+  const classes = useStyles()
+  const meals = findLastAndNextMeal(favoriteFeeding)
+  const currentWeekIndex = findCurrentWeek(favoriteFeeding)
+  const timeOfNextMeal = meals[currentWeekIndex].nextMeal.timeStart
+
+  return (
+    <Grid
+      alignItems="flex-start"
+      container
+      direction="row"
+      justify="space-between"
+      key={favoriteFeeding._id}
+    >
+      <Box mr={2}>
+        <p>
+          <b>{favoriteFeeding.name}</b>
+          {` (Week ${currentWeekIndex + 1})`}
+        </p>
+      </Box>
+      <p>
+        <span
+          className={
+            meals[currentWeekIndex].isLastOpen ? classes.green : classes.red
+          }
+        >
+          <b>
+            {meals[currentWeekIndex].isLastOpen
+              ? `Open until ${formatMsTo24h(
+                  meals[currentWeekIndex].lastMeal.timeEnd
+                )}`
+              : 'Closed'}
+          </b>
+        </span>
+        {' - Next meal '}
+        <b>{formatMsTo24h(timeOfNextMeal)}</b>
+      </p>
+    </Grid>
+  )
+}
+
 export default function FeedingModule() {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const feedings = useSelector(selectFeedings)
   const { feeding: favoriteFeeding } = useSelector(selectPreferences)
 
   useEffect(() => {
-    dispatch(getFeeding())
     dispatch(getPreferences())
   }, [])
 
@@ -107,47 +145,7 @@ export default function FeedingModule() {
       <Divider />
       {favoriteFeeding ? (
         <Box pt={1} px={2}>
-          {feedings.map((feed) => {
-            const meals = findLastAndNextMeal(feed)
-            const currentWeekIndex = findCurrentWeek(feed)
-            const timeOfNextMeal = meals[currentWeekIndex].nextMeal.timeStart
-
-            return (
-              <Grid
-                alignItems="flex-start"
-                container
-                direction="row"
-                justify="space-between"
-                key={feed._id}
-              >
-                <Box mr={2}>
-                  <p>
-                    <b>{feed.name}</b>
-                    {` (Week ${currentWeekIndex + 1})`}
-                  </p>
-                </Box>
-                <p>
-                  <span
-                    className={
-                      meals[currentWeekIndex].isLastOpen
-                        ? classes.green
-                        : classes.red
-                    }
-                  >
-                    <b>
-                      {meals[currentWeekIndex].isLastOpen
-                        ? `Open until ${formatMsTo24h(
-                            meals[currentWeekIndex].lastMeal.timeEnd
-                          )}`
-                        : 'Closed'}
-                    </b>
-                  </span>
-                  {' - Next meal '}
-                  <b>{formatMsTo24h(timeOfNextMeal)}</b>
-                </p>
-              </Grid>
-            )
-          })}
+          <FavoriteFeeding favoriteFeeding={favoriteFeeding} />
         </Box>
       ) : (
         <Box pt={2}>
