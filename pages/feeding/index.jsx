@@ -19,6 +19,7 @@ import { Favorite, FavoriteBorder } from '@material-ui/icons'
 import { pink } from '@material-ui/core/colors'
 import Hidden from '@material-ui/core/Hidden'
 import {
+  getPreferences,
   PREFERENCE_FEEDING,
   selectPreferences,
   updatePreference
@@ -49,19 +50,24 @@ export default function FeedingPage(props) {
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
   const selectedFeedingIndex = useSelector(selectFeedingIndex)
-  let { feeding: favoriteFeeding } = useSelector(selectPreferences)
-  let [isFavorite, setIsFavorite] = useState(false)
+  const preferences = useSelector(selectPreferences)
+  const [favoriteFeeding, setFavoriteFeeding] = useState(null)
+  const [displayAsFavorite, setDisplayAsFavorite] = useState(false)
 
   useEffect(() => {
     props.updateTitle('Feeding')
     dispatch(getFeeding())
+    dispatch(getPreferences())
   }, [])
 
   useEffect(() => {
-    setIsFavorite(
-      !!favoriteFeeding &&
-        favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
-    )
+    setFavoriteFeeding(preferences ? preferences.feeding : null)
+  }, [preferences])
+
+  // If the user has a favorite feeding and it's the same as the currently
+  // selected one, display it to the user as favorite
+  useEffect(() => {
+    setDisplayAsFavorite(isFavorite())
   }, [favoriteFeeding, feedings, selectedFeedingIndex])
 
   function handleFavoriteChange() {
@@ -69,16 +75,19 @@ export default function FeedingPage(props) {
       dispatch(
         updatePreference({
           preference: PREFERENCE_FEEDING,
-          value:
-            !!favoriteFeeding &&
-            favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
-              ? null
-              : feedings[selectedFeedingIndex]
+          value: isFavorite() ? null : feedings[selectedFeedingIndex]
         })
       )
     } else {
       alert('Choose a feeding first') // TODO: Beautify - Translate
     }
+  }
+
+  function isFavorite() {
+    return (
+      !!favoriteFeeding &&
+      favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
+    )
   }
 
   function handleFeedingChange(event) {
@@ -109,7 +118,7 @@ export default function FeedingPage(props) {
             style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
             control={
               <Checkbox
-                checked={isFavorite}
+                checked={displayAsFavorite}
                 onChange={handleFavoriteChange}
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite className={classes.checked} />}
@@ -124,7 +133,7 @@ export default function FeedingPage(props) {
             style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
             control={
               <Checkbox
-                checked={isFavorite}
+                checked={displayAsFavorite}
                 onChange={handleFavoriteChange}
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite className={classes.checked} />}
