@@ -64,6 +64,14 @@ export default function FeedingPage(props) {
     setFavoriteFeeding(preferences ? preferences.feeding : null)
   }, [preferences])
 
+  // Automatically go to favorite feeding on page load
+  useEffect(() => {
+    if (favoriteFeeding)
+      feedings?.map((feed, index) => {
+        if (favoriteFeeding._id === feed._id) dispatch(updateFeeding(index))
+      })
+  }, [favoriteFeeding, feedings])
+
   // If the user has a favorite feeding and it's the same as the currently
   // selected one, display it to the user as favorite
   useEffect(() => {
