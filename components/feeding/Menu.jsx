@@ -77,7 +77,7 @@ export default function Menu() {
           row
           value={selectedWeekIndex}
         >
-          {feed.weeks.map((week, index) => (
+          {feed?.weeks.map((week, index) => (
             <FormControlLabel
               control={<Radio color="primary" />}
               key={`week-${index}`}
@@ -106,7 +106,7 @@ export default function Menu() {
             <Tab label="Sunday" {...a11yProps(6)} />
           </Tabs>
         </AppBar>
-        {feed.weeks[selectedWeekIndex].days.map((day, index) => (
+        {feed?.weeks[selectedWeekIndex].days.map((day, index) => (
           <TabPanel index={index} key={`day-${index + 1}`} value={tabIndex}>
             <Box>
               <Typography gutterBottom variant="h6">

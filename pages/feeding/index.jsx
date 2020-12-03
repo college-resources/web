@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   getFeeding,
   selectFeedingIndex,
@@ -13,13 +13,27 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import { pink } from '@material-ui/core/colors'
+import Hidden from '@material-ui/core/Hidden'
+import {
+  getPreferences,
+  PREFERENCE_FEEDING,
+  selectPreferences,
+  updatePreference
+} from 'redux/preferencesSlice'
 
 const useStyles = makeStyles((theme) => ({
+  checked: {
+    color: pink['A400']
+  },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: 'flex'
   },
   textField: {
+    flexGrow: 1,
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
         borderColor: 'gray'
@@ -27,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '& label.Mui-focused': {
       color: theme.palette.type === 'dark' && theme.palette.common.white
-    },
-    width: '100%'
+    }
   }
 }))
 
@@ -37,11 +50,53 @@ export default function FeedingPage(props) {
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
   const selectedFeedingIndex = useSelector(selectFeedingIndex)
+  const preferences = useSelector(selectPreferences)
+  const [favoriteFeeding, setFavoriteFeeding] = useState(null)
+  const [displayAsFavorite, setDisplayAsFavorite] = useState(false)
 
   useEffect(() => {
     props.updateTitle('Feeding')
     dispatch(getFeeding())
+    dispatch(getPreferences())
   }, [])
+
+  useEffect(() => {
+    setFavoriteFeeding(preferences ? preferences.feeding : null)
+  }, [preferences])
+
+  // Automatically go to favorite feeding on page load
+  useEffect(() => {
+    if (favoriteFeeding)
+      feedings?.map((feed, index) => {
+        if (favoriteFeeding._id === feed._id) dispatch(updateFeeding(index))
+      })
+  }, [favoriteFeeding, feedings])
+
+  // If the user has a favorite feeding and it's the same as the currently
+  // selected one, display it to the user as favorite
+  useEffect(() => {
+    setDisplayAsFavorite(isFavorite())
+  }, [favoriteFeeding, feedings, selectedFeedingIndex])
+
+  function handleFavoriteChange() {
+    if (selectedFeedingIndex >= 0) {
+      dispatch(
+        updatePreference({
+          preference: PREFERENCE_FEEDING,
+          value: isFavorite() ? null : feedings[selectedFeedingIndex]
+        })
+      )
+    } else {
+      alert('Choose a feeding first') // TODO: Beautify - Translate
+    }
+  }
+
+  function isFavorite() {
+    return (
+      !!favoriteFeeding &&
+      favoriteFeeding._id === feedings[selectedFeedingIndex]?._id
+    )
+  }
 
   function handleFeedingChange(event) {
     dispatch(updateFeeding(event.target.value))
@@ -49,7 +104,7 @@ export default function FeedingPage(props) {
 
   return (
     <Container>
-      <form autoComplete="off" className={classes.container} noValidate>
+      <Box className={classes.container}>
         <TextField
           className={classes.textField}
           id="restaurant"
@@ -57,7 +112,7 @@ export default function FeedingPage(props) {
           margin="normal"
           onChange={handleFeedingChange}
           select
-          value={selectedFeedingIndex}
+          value={selectedFeedingIndex >= 0 ? selectedFeedingIndex : ''}
           variant="outlined"
         >
           {feedings.map((feed, index) => (
@@ -66,7 +121,37 @@ export default function FeedingPage(props) {
             </MenuItem>
           ))}
         </TextField>
-      </form>
+        <Hidden smUp>
+          <FormControlLabel
+            style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
+            control={
+              <Checkbox
+                checked={displayAsFavorite}
+                onChange={handleFavoriteChange}
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite className={classes.checked} />}
+                name="checkedH"
+              />
+            }
+            label=""
+          />
+        </Hidden>
+        <Hidden xsDown>
+          <FormControlLabel
+            style={{ marginLeft: '4px', marginRight: 0, marginTop: '8px' }}
+            control={
+              <Checkbox
+                checked={displayAsFavorite}
+                onChange={handleFavoriteChange}
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite className={classes.checked} />}
+                name="checkedH"
+              />
+            }
+            label="Favourite"
+          />
+        </Hidden>
+      </Box>
       {selectedFeedingIndex === '' ? (
         <Box mt={5}>
           <Typography align="center">

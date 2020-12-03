@@ -1,6 +1,7 @@
 import { handleAuthError, handleAuthResponse } from './helpers'
 import Router from 'next/router'
 import { createSlice } from '@reduxjs/toolkit'
+import { clearPreferences } from './preferencesSlice'
 
 export const status = {
   AUTHENTICATED: 'AUTHENTICATED',
@@ -114,6 +115,7 @@ export function logout() {
   return (dispatch, getState) => {
     dispatch(slice.actions.updateStatus(status.UNAUTHENTICATED))
     dispatch(slice.actions.updateUser(null))
+    dispatch(clearPreferences())
     Router.push('/auth/logout')
   }
 }
