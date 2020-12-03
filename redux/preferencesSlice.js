@@ -10,8 +10,7 @@ const slice = createSlice({
   initialState: {},
   reducers: {
     updatePreferences: (state, action) => ({
-      ...state,
-      preferences: action.payload
+      ...action.payload
     }),
     updatePreference: (state, action) => ({
       ...state,
@@ -68,6 +67,53 @@ export function getPreferences() {
 export function updatePreference(parameters) {
   return (dispatch) => {
     dispatch(slice.actions.updatePreference(parameters))
+
+    const value = {}
+    let query
+
+    if (!parameters.value || parameters.value.length === 0) {
+      query = `
+        mutation {
+          deletePreference(
+            preference: ${parameters.preference.toUpperCase()}
+          ) {
+            _id
+          }
+        }
+      `
+    } else {
+      if (parameters.value) {
+        switch (parameters.preference) {
+          case PREFERENCE_FEEDING:
+            value.feeding = parameters.value?._id
+            break
+        }
+      }
+
+      query = `
+        mutation (
+          $feeding: ID,
+          $department: ID,
+          $semester: Int,
+          $courses: [ID!],
+          $theme: String,
+        ) {
+          updatePreferences(
+            preferences: {
+              feeding: $feeding,
+              department: $department,
+              semester: $semester,
+              courses: $courses,
+              theme: $theme,
+            }
+          ) {
+            _id
+          }
+        }
+      `
+    }
+
+    gql(query, value)
   }
 }
 
