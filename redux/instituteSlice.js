@@ -51,7 +51,7 @@ export function getInstitutes() {
             }
           }
         }
-      `).then((data) => data.institutes.sort(dynamicSort('acronym')))
+      `).then((data) => data.institutes?.sort(dynamicSort('acronym')))
     ).then((gqlData) => {
       if (gqlData) {
         // Reset index to avoid array out of bounds

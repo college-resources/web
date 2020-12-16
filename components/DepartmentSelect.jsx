@@ -11,6 +11,7 @@ import {
   selectDepartments,
   updateDepartmentIndex
 } from 'redux/departmentSlice'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -57,7 +58,7 @@ export default function DepartmentSelect() {
             value={selectedDepartmentIndex >= 0 ? selectedDepartmentIndex : ''}
             variant="outlined"
           >
-            {departments ? (
+            {isEmpty(departments) ? (
               <MenuItem value={-1}>No departments found</MenuItem>
             ) : (
               departments.map((department, index) => (
