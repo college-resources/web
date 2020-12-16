@@ -55,7 +55,7 @@ export default function InstituteSelect() {
         {institutes.map((institute, index) => (
           <MenuItem key={institute._id} value={index}>
             <Hidden xsDown>
-              <b>{institute.acronym}</b>&nbsp;{institute.name}
+              <b>{institute.acronym}</b> - {institute.name}
             </Hidden>
             <Hidden smUp>
               <b>{institute.acronym}</b>
