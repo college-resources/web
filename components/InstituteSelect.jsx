@@ -60,7 +60,7 @@ export default function InstituteSelect() {
             <Hidden smUp>
               <b>{institute.acronym}</b>
               &nbsp;
-              <span style={{ fontSize: '0.625rem' }}>{institute.name}</span>
+              <span style={{ fontSize: '0.8rem' }}>{institute.name}</span>
             </Hidden>
           </MenuItem>
         ))}
