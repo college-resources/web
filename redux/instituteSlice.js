@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import gql from '../scripts/graphql'
+import { dynamicSort } from '../scripts/sorting'
 
 function defaults() {
   return { institutes: [], instituteIndex: -1 }
@@ -50,9 +51,11 @@ export function getInstitutes() {
             }
           }
         }
-      `).then((data) => data.institutes)
+      `).then((data) => data.institutes.sort(dynamicSort('acronym')))
     ).then((gqlData) => {
       if (gqlData) {
+        // Reset index to avoid array out of bounds
+        dispatch(slice.actions.updateInstituteIndex(-1))
         dispatch(slice.actions.updateInstitutes(gqlData))
       }
     })
