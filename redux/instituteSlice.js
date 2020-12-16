@@ -6,7 +6,7 @@ function defaults() {
 }
 
 const slice = createSlice({
-  name: 'institutes',
+  name: 'institute',
   initialState: defaults(),
   reducers: {
     updateInstitutes: (state, action) => ({
@@ -25,7 +25,7 @@ export default slice.reducer
 export function getInstitutes() {
   return (dispatch, getState) => {
     const stateBefore = getState()
-    if (stateBefore.institutes.institutes.length) return
+    if (stateBefore.institute.institutes.length) return
 
     Promise.resolve(
       gql(`
@@ -66,13 +66,13 @@ export function updateInstituteIndex(index) {
 }
 
 export function selectInstitutes(state) {
-  return state.institutes.institutes
+  return state.institute.institutes
 }
 
 export function selectInstitute(state) {
-  return state.institutes.institutes[state.institutes.instituteIndex]
+  return state.institute.institutes[state.institutes.instituteIndex]
 }
 
 export function selectInstituteIndex(state) {
-  return state.institutes.instituteIndex
+  return state.institute.instituteIndex
 }

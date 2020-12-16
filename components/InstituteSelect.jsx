@@ -7,7 +7,7 @@ import {
   selectInstituteIndex,
   selectInstitutes,
   updateInstituteIndex
-} from 'redux/institutesSlice'
+} from 'redux/instituteSlice'
 import { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 
