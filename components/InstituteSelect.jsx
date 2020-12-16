@@ -10,6 +10,7 @@ import {
 } from 'redux/instituteSlice'
 import { useEffect } from 'react'
 import Box from '@material-ui/core/Box'
+import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -53,7 +54,12 @@ export default function InstituteSelect() {
       >
         {institutes.map((institute, index) => (
           <MenuItem key={institute._id} value={index}>
-            {institute.name}
+            <Hidden xsDown>
+              <b>{institute.acronym}</b>&nbsp;{institute.name}
+            </Hidden>
+            <Hidden smUp>
+              <b>{institute.acronym}</b>
+            </Hidden>
           </MenuItem>
         ))}
       </TextField>
