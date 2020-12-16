@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import { status as authStatus, selectStatus } from 'redux/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCourses, selectCourses } from 'redux/courseSlice'
+import { selectDepartmentIndex } from 'redux/departmentSlice'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Link from 'next/link'
 import Semester from 'components/courses/Semester'
-import { dynamicSortMultiple } from 'scripts/sorting'
-import gql from 'scripts/graphql'
 import groupBy from 'scripts/groupBy'
 import { makeStyles } from '@material-ui/core/styles'
-import { useSelector } from 'react-redux'
 import InstituteSelect from 'components/InstituteSelect'
-import DepartmentSelect from '../../components/DepartmentSelect'
+import DepartmentSelect from 'components/DepartmentSelect'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -24,53 +25,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const lessonHandler = () =>
-  Promise.resolve(
-    gql(`
-  query {
-    lessons {
-      _id
-      lessonCode
-      name
-      semester
-      type
-      hoursTheory
-      hoursLab
-      credit
-      department {
-        name
-      }
-    }
-  }
-`).then(
-      (data) =>
-        data.lessons &&
-        data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode'))
-    )
-  )
-
 export default function CoursesPage(props) {
-  const [lessons, setLessons] = useState([])
-  const [semesters, setSemesters] = useState([])
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const selectedDepartmentIndex = useSelector(selectDepartmentIndex)
+  const courses = useSelector(selectCourses)
+  const [semesters, setSemesters] = useState([])
   const currentAuthStatus = useSelector(selectStatus)
 
   useEffect(() => {
     props.updateTitle('Courses')
-    lessonHandler().then((gqlLessons) => {
-      if (gqlLessons) {
-        setLessons(gqlLessons)
-      }
-    })
   }, [])
 
   useEffect(() => {
-    if (lessons.length) semesterCreator()
-  }, [lessons])
+    if (selectedDepartmentIndex >= 0) {
+      dispatch(getCourses(selectedDepartmentIndex))
+    }
+  }, [selectedDepartmentIndex])
 
-  const semesterCreator = () => {
-    setSemesters(groupBy(lessons, 'semester'))
-  }
+  useEffect(() => {
+    if (!isEmpty(courses)) {
+      setSemesters(groupBy(courses, 'semester'))
+    }
+  }, [courses])
 
   return (
     <Container>
