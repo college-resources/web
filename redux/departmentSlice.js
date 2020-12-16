@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import gql from '../scripts/graphql'
 import { dynamicSort } from '../scripts/sorting'
+import { useSelector } from 'react-redux'
+import { selectInstitute } from './instituteSlice'
 
 function defaults() {
   return { departments: [], departmentIndex: -1 }
@@ -23,23 +25,32 @@ const slice = createSlice({
 
 export default slice.reducer
 
-export function getDepartments(instituteId) {
+export function getDepartments() {
   return (dispatch, getState) => {
-    // const stateBefore = getState()
+    // TODO: Caching
+    const stateBefore = getState()
     // if (stateBefore.department.departments.length) return
+
+    const selectedInstituteIndex = stateBefore.institute.instituteIndex
+
+    if (selectedInstituteIndex < 0) return
+
+    const selectedInstituteId =
+      stateBefore.institute.institutes[selectedInstituteIndex]._id
 
     Promise.resolve(
       gql(`
         {
           departments(
-            instituteId: ${instituteId}
+            instituteId: "${selectedInstituteId}"
           ) {
             _id
             name
           }
         }
-      `).then((data) => data.departments.sort(dynamicSort('name')))
+      `).then((data) => data.departments?.sort(dynamicSort('name')))
     ).then((gqlData) => {
+      console.log(gqlData)
       if (gqlData) {
         // Reset index to avoid array out of bounds
         dispatch(slice.actions.updateDepartmentIndex(-1))
