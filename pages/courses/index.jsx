@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import InstituteSelect from 'components/InstituteSelect'
 import DepartmentSelect from 'components/DepartmentSelect'
 import { isEmpty } from 'lodash'
+import Typography from '@material-ui/core/Typography'
+import { selectInstituteIndex } from '../../redux/instituteSlice'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CoursesPage(props) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const selectedInstituteIndex = useSelector(selectInstituteIndex)
   const selectedDepartmentIndex = useSelector(selectDepartmentIndex)
   const courses = useSelector(selectCourses)
   const [semesters, setSemesters] = useState([])
@@ -62,23 +65,38 @@ export default function CoursesPage(props) {
           </Button>
         </Link>
       )}
-      <InstituteSelect />
-      <DepartmentSelect />
-      <Box mt={2}>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
+          <InstituteSelect />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          {selectedInstituteIndex >= 0 ? (
+            <DepartmentSelect />
+          ) : (
+            <Box mt={4}>
+              <Typography align="center">
+                Select an Institute from the dropdown to see the departments.
+              </Typography>
+            </Box>
+          )}
+        </Grid>
+      </Grid>
+      {selectedInstituteIndex >= 0 && selectedDepartmentIndex < 0 && (
+        <Box mt={4}>
+          <Typography align="center">
+            Select a department from the dropdown to see the courses.
+          </Typography>
+        </Box>
+      )}
+      {selectedDepartmentIndex >= 0 && (
         <Grid container spacing={3}>
           {semesters.map((sem, index) => (
-            <Grid
-              item
-              // eslint-disable-next-line react/no-array-index-key
-              key={`semester-${index}`}
-              md={6}
-              xs={12}
-            >
+            <Grid item key={`semester-${index}`} md={6} xs={12}>
               <Semester rows={sem} semester={index} />
             </Grid>
           ))}
         </Grid>
-      </Box>
+      )}
     </Container>
   )
 }
