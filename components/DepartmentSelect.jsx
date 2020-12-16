@@ -15,6 +15,9 @@ import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 0
+    },
     flexGrow: 1,
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
@@ -47,7 +50,7 @@ export default function DepartmentSelect() {
   return (
     <>
       {selectedInstituteIndex >= 0 ? (
-        <Box display="flex">
+        <Box display="flex" mb={0}>
           <TextField
             className={classes.textField}
             id="department"

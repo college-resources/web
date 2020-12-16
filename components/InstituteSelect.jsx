@@ -14,6 +14,9 @@ import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles((theme) => ({
   textField: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: 0
+    },
     flexGrow: 1,
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
@@ -55,7 +58,7 @@ export default function InstituteSelect() {
         {institutes.map((institute, index) => (
           <MenuItem key={institute._id} value={index}>
             <Hidden xsDown>
-              <b>{institute.acronym}</b> - {institute.name}
+              <b>{institute.acronym}</b>&nbsp;-&nbsp;{institute.name}
             </Hidden>
             <Hidden smUp>
               <b>{institute.acronym}</b>
