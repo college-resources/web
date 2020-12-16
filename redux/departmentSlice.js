@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import gql from '../scripts/graphql'
 import { dynamicSort } from '../scripts/sorting'
-import { useSelector } from 'react-redux'
-import { selectInstitute } from './instituteSlice'
 
 function defaults() {
   return { departments: [], departmentIndex: -1 }
