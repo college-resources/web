@@ -12,6 +12,7 @@ import groupBy from 'scripts/groupBy'
 import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import InstituteSelect from 'components/InstituteSelect'
+import DepartmentSelect from '../../components/DepartmentSelect'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -85,6 +86,7 @@ export default function CoursesPage(props) {
         </Link>
       )}
       <InstituteSelect />
+      <DepartmentSelect />
       <Box mt={2}>
         <Grid container spacing={3}>
           {semesters.map((sem, index) => (
