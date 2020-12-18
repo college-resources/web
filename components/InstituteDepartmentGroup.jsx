@@ -4,8 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import { useSelector } from 'react-redux'
 import { selectInstituteIndex } from 'redux/instituteSlice'
 import { selectDepartmentIndex } from 'redux/departmentSlice'
-import InstituteSelect from 'InstituteSelect'
-import DepartmentSelect from 'DepartmentSelect'
+import InstituteSelect from './InstituteSelect'
+import DepartmentSelect from './DepartmentSelect'
 
 export default function InstituteDepartmentGroup() {
   const selectedInstituteIndex = useSelector(selectInstituteIndex)
