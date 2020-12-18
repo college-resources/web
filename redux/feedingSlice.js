@@ -31,25 +31,34 @@ export function getFeeding() {
     const stateBefore = getState()
     if (stateBefore.feeding.feedings.length) return
 
+    const selectedInstituteIndex = stateBefore.institute.instituteIndex
+
+    if (selectedInstituteIndex < 0) return
+
+    const selectedInstituteId =
+      stateBefore.institute.institutes[selectedInstituteIndex]._id
+
     Promise.resolve(
       gql(`
-      query {
-        feeding {
-          weeks {
-            days {
-              meals {
-                timeStart
-                timeEnd
-                menu
+        {
+          feedings (
+            instituteId: "${selectedInstituteId}"
+          ) {
+            weeks {
+              days {
+                meals {
+                  timeStart
+                  timeEnd
+                  menu
+                }
               }
             }
+            startsFrom
+            name
+            _id
           }
-          startsFrom
-          name
-          _id
         }
-      }
-        `).then((data) => data.feeding)
+      `).then((data) => data.feedings)
     ).then((gqlFeeding) => {
       if (gqlFeeding) {
         dispatch(slice.actions.updateFeeding(gqlFeeding))
