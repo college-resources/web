@@ -23,6 +23,8 @@ import {
 import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { pink } from '@material-ui/core/colors'
+import { selectInstituteIndex } from 'redux/instituteSlice'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   checked: {
@@ -49,6 +51,7 @@ export default function Feeding() {
   const dispatch = useDispatch()
   const feedings = useSelector(selectFeedings)
   const selectedFeedingIndex = useSelector(selectFeedingIndex)
+  const selectedInstituteIndex = useSelector(selectInstituteIndex)
   const preferences = useSelector(selectPreferences)
   const [favoriteFeeding, setFavoriteFeeding] = useState(null)
   const [displayAsFavorite, setDisplayAsFavorite] = useState(false)
@@ -57,6 +60,10 @@ export default function Feeding() {
     dispatch(getFeeding())
     dispatch(getPreferences())
   }, [])
+
+  useEffect(() => {
+    dispatch(getFeeding())
+  }, [selectedInstituteIndex])
 
   useEffect(() => {
     setFavoriteFeeding(preferences ? preferences.feeding : null)
@@ -113,11 +120,15 @@ export default function Feeding() {
           value={selectedFeedingIndex >= 0 ? selectedFeedingIndex : ''}
           variant="outlined"
         >
-          {feedings.map((feed, index) => (
-            <MenuItem key={feed._id} value={index}>
-              {feed.name}
-            </MenuItem>
-          ))}
+          {isEmpty(feedings) ? (
+            <MenuItem value={-1}>No restaurants found</MenuItem>
+          ) : (
+            feedings.map((feed, index) => (
+              <MenuItem key={feed._id} value={index}>
+                {feed.name}
+              </MenuItem>
+            ))
+          )}
         </TextField>
         <Hidden smUp>
           <FormControlLabel
