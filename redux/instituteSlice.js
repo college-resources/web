@@ -35,20 +35,6 @@ export function getInstitutes() {
             _id
             name
             acronym
-            feedings {
-              weeks {
-                days {
-                  meals {
-                    timeStart
-                    timeEnd
-                    menu
-                  }
-                }
-              }
-              startsFrom
-              name
-              _id
-            }
           }
         }
       `).then((data) => data.institutes?.sort(dynamicSort('acronym')))
