@@ -29,7 +29,8 @@ export default slice.reducer
 export function getFeeding() {
   return (dispatch, getState) => {
     const stateBefore = getState()
-    if (stateBefore.feeding.feedings.length) return
+    // TODO: Caching
+    // if (stateBefore.feeding.feedings.length) return
 
     const selectedInstituteIndex = stateBefore.institute.instituteIndex
 
