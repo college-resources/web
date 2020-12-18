@@ -150,7 +150,7 @@ export default function Feeding() {
           />
         </Hidden>
       </Box>
-      {selectedFeedingIndex === '' ? (
+      {selectedFeedingIndex < 0 ? (
         <Box mt={5}>
           <Typography align="center">
             Select a restaurant from the dropdown to see its menu.
