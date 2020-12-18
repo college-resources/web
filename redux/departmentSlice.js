@@ -49,8 +49,6 @@ export function getDepartments() {
       `).then((data) => data.departments?.sort(dynamicSort('name')))
     ).then((gqlData) => {
       if (gqlData) {
-        // Reset index to avoid array out of bounds
-        dispatch(slice.actions.updateDepartmentIndex(-1))
         dispatch(slice.actions.updateDepartments(gqlData))
       }
     })

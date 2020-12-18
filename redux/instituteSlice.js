@@ -54,8 +54,6 @@ export function getInstitutes() {
       `).then((data) => data.institutes?.sort(dynamicSort('acronym')))
     ).then((gqlData) => {
       if (gqlData) {
-        // Reset index to avoid array out of bounds
-        dispatch(slice.actions.updateInstituteIndex(-1))
         dispatch(slice.actions.updateInstitutes(gqlData))
       }
     })
