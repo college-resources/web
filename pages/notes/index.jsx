@@ -10,6 +10,10 @@ import Typography from '@material-ui/core/Typography'
 import { dynamicSortMultiple } from 'scripts/sorting'
 import gql from 'scripts/graphql'
 import { makeStyles } from '@material-ui/core/styles'
+import InstituteDepartmentGroup from 'components/InstituteDepartmentGroup'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectDepartmentIndex } from 'redux/departmentSlice'
+import { getCourses, selectCourses } from 'redux/courseSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14
   },
   autocomplete: {
+    marginTop: '0.75rem',
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
         borderColor: 'gray'
@@ -31,44 +36,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const courseHandler = () =>
-  Promise.resolve(
-    gql(`
-  query {
-    lessons {
-      _id
-      lessonCode
-      name
-      semester
-    }
-  }
-`).then(
-      (data) =>
-        data.lessons &&
-        data.lessons.sort(dynamicSortMultiple('semester', 'lessonCode'))
-    )
-  )
-
 const notesHandler = (courseId) =>
   Promise.resolve(
     gql(`
-  query {
-    lessonNotes(lesson: "${courseId}") {
-      _id
-      date
-      hypertexts
-      title
-      images {
-        url
-        details {
-          url
-          width
-          height
+      {
+        lessonNotes(lesson: "${courseId}") {
+          _id
+          date
+          hypertexts
+          title
+          images {
+            url
+            details {
+              url
+              width
+              height
+            }
+          }
         }
       }
-    }
-  }
-`).then(
+    `).then(
       (data) =>
         data.lessonNotes &&
         data.lessonNotes.sort(dynamicSortMultiple('-date', 'title'))
@@ -77,7 +64,9 @@ const notesHandler = (courseId) =>
 
 export default function NotesPage(props) {
   const classes = useStyles()
-  const [lessons, setLessons] = useState([])
+  const dispatch = useDispatch()
+  const selectedDepartmentIndex = useSelector(selectDepartmentIndex)
+  const courses = useSelector(selectCourses)
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [notes, setNotes] = useState([])
   const [dialog, setDialog] = useState({
@@ -86,6 +75,12 @@ export default function NotesPage(props) {
     texts: [],
     image: []
   })
+
+  useEffect(() => {
+    if (selectedDepartmentIndex >= 0) {
+      dispatch(getCourses(selectedDepartmentIndex))
+    }
+  }, [selectedDepartmentIndex])
 
   function setOpen(open) {
     setDialog({ ...dialog, open })
@@ -100,11 +95,6 @@ export default function NotesPage(props) {
 
   useEffect(() => {
     props.updateTitle('Notes')
-    courseHandler().then((gqlLessons) => {
-      if (gqlLessons) {
-        setLessons(gqlLessons)
-      }
-    })
   }, [])
 
   function changeHandler(event, newValue) {
@@ -134,47 +124,46 @@ export default function NotesPage(props) {
 
   return (
     <Container>
-      <Autocomplete
-        className={classes.autocomplete}
-        fullWidth
-        getOptionLabel={getOptionLabelHandler}
-        groupBy={groupByHandler}
-        id="notes"
-        onChange={changeHandler}
-        options={lessons}
-        renderInput={renderInputHandler}
-        value={selectedLesson}
-      />
-      {notes &&
-        notes.map((note, index) => (
-          <Card
-            className={classes.root}
-            // eslint-disable-next-line react/no-array-index-key
-            key={`hypertext-${index}`}
-          >
-            <CardActionArea
-              onClick={handleClickOpen(
-                note.title,
-                note.hypertexts,
-                note.images
-              )}
-            >
-              <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  {note.date}
-                </Typography>
-                <Typography component="h2" variant="h5" />
-                <Typography component="p" variant="body2">
-                  {note.title}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
+      <InstituteDepartmentGroup />
+      {selectedDepartmentIndex >= 0 && (
+        <>
+          <Autocomplete
+            className={classes.autocomplete}
+            fullWidth
+            getOptionLabel={getOptionLabelHandler}
+            groupBy={groupByHandler}
+            id="notes"
+            onChange={changeHandler}
+            options={courses}
+            renderInput={renderInputHandler}
+            value={selectedLesson}
+          />
+          {notes?.map((note, index) => (
+            <Card className={classes.root} key={`hypertext-${index}`}>
+              <CardActionArea
+                onClick={handleClickOpen(
+                  note.title,
+                  note.hypertexts,
+                  note.images
+                )}
+              >
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {note.date}
+                  </Typography>
+                  <Typography component="p" variant="body2">
+                    {note.title}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+        </>
+      )}
       <Dialog
         images={dialog.images}
         open={dialog.open}
