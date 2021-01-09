@@ -16,6 +16,7 @@ const slice = createSlice({
       ...state,
       [action.payload.preference]: action.payload.value
     }),
+    /* eslint-disable-next-line no-unused-vars */
     clearPreferences: (state, action) => ({})
   }
 })
