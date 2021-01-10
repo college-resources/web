@@ -29,6 +29,8 @@
   },
   "homepage": "https://github.com/college-resources/web#readme",
   "dependencies": {
+    "@google-cloud/connect-firestore": "^2.0.1",
+    "@google-cloud/firestore": "^4.8.1",
     "auth0": "^2.31.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
