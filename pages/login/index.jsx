@@ -72,7 +72,8 @@ export default function LoginPage(props) {
     setEmail(event.target.value)
   }
 
-  function handleLoginWithAuth0() {
+  function handleLoginWithAuth0(e) {
+    e.preventDefault()
     dispatch(login(email, password))
   }
 
@@ -93,7 +94,7 @@ export default function LoginPage(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLoginWithAuth0}>
           <TextField
             autoComplete="email"
             autoFocus
@@ -105,6 +106,7 @@ export default function LoginPage(props) {
             name="email"
             onChange={handleEmailOnChange}
             required
+            type="email"
             value={email}
             variant="outlined"
           />
@@ -130,8 +132,7 @@ export default function LoginPage(props) {
             className={classes.submit}
             color="primary"
             fullWidth
-            onClick={handleLoginWithAuth0}
-            type="button"
+            type="submit"
             variant="contained"
           >
             Sign In
