@@ -4,9 +4,7 @@ import { makeStyles, withTheme } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
 import Container from '@material-ui/core/Container'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import StyledLink from 'components/StyledLink'
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark
     },
     backgroundColor: theme.palette.primary.light,
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(2, 0, 2)
   }
 }))
 
@@ -123,10 +121,6 @@ export default function LoginPage(props) {
             type="password"
             value={password}
             variant="outlined"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" value="remember" />}
-            label="Remember me"
           />
           <Button
             className={classes.submit}
