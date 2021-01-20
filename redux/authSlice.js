@@ -59,11 +59,13 @@ export function session() {
 export function login(email, password) {
   return (dispatch, getState) => {
     const stateBefore = getState()
-    if (stateBefore.status === status.AUTHENTICATED) {
+    if (stateBefore.auth.status === status.AUTHENTICATED) {
       /* eslint-disable-next-line no-console */
       console.log(status.AUTHENTICATED)
       return
     }
+
+    dispatch(slice.actions.updateStatus(null))
 
     fetch('/auth/login', {
       body: JSON.stringify({
@@ -85,7 +87,7 @@ export function login(email, password) {
 export function register(email, givenName, familyName, password) {
   return (dispatch, getState) => {
     const stateBefore = getState()
-    if (stateBefore.status === status.AUTHENTICATED) {
+    if (stateBefore.auth.status === status.AUTHENTICATED) {
       /* eslint-disable-next-line no-console */
       console.log(status.AUTHENTICATED)
       return

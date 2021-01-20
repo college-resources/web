@@ -4,9 +4,7 @@ import { makeStyles, withTheme } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import Checkbox from '@material-ui/core/Checkbox'
 import Container from '@material-ui/core/Container'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import StyledLink from 'components/StyledLink'
@@ -14,6 +12,8 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
 import styled from 'styled-components'
+import Box from '@material-ui/core/Box'
+import { CircularProgress } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -34,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
     // Fixes IE 11 issue
     width: '100%'
   },
+  errors: {
+    color: theme.palette.type === 'light' ? red[600] : red[700]
+  },
+  loading: {
+    color: 'white',
+    maxWidth: '1rem',
+    maxHeight: '1rem',
+    marginLeft: '0.5rem'
+  },
   paper: {
     alignItems: 'center',
     display: 'flex',
@@ -44,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.dark
     },
     backgroundColor: theme.palette.primary.light,
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(2, 0, 2)
   }
 }))
 
@@ -63,6 +72,7 @@ export default function LoginPage(props) {
   const currentAuthStatus = useSelector(selectStatus)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     props.updateTitle('Login')
@@ -72,7 +82,9 @@ export default function LoginPage(props) {
     setEmail(event.target.value)
   }
 
-  function handleLoginWithAuth0() {
+  function handleLoginWithAuth0(e) {
+    e.preventDefault()
+    setLoading(true)
     dispatch(login(email, password))
   }
 
@@ -93,7 +105,7 @@ export default function LoginPage(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLoginWithAuth0}>
           <TextField
             autoComplete="email"
             autoFocus
@@ -105,6 +117,7 @@ export default function LoginPage(props) {
             name="email"
             onChange={handleEmailOnChange}
             required
+            type="email"
             value={email}
             variant="outlined"
           />
@@ -122,25 +135,28 @@ export default function LoginPage(props) {
             value={password}
             variant="outlined"
           />
-          <FormControlLabel
-            control={<Checkbox color="primary" value="remember" />}
-            label="Remember me"
-          />
+          <Box
+            className={classes.errors}
+            display={
+              currentAuthStatus === authStatus.FAILURE ? 'block' : 'none'
+            }
+          >
+            <strong>Wrong email or password.</strong>
+          </Box>
           <Button
             className={classes.submit}
             color="primary"
             fullWidth
-            onClick={handleLoginWithAuth0}
-            type="button"
+            type="submit"
             variant="contained"
           >
             Sign In
+            {loading && currentAuthStatus !== authStatus.FAILURE && (
+              <CircularProgress className={classes.loading} />
+            )}
           </Button>
           <Grid container>
-            <Grid item xs>
-              <StyledLink href="#">Forgot password?</StyledLink>
-            </Grid>
-            <Grid item>
+            <Grid item sm>
               <StyledLink href="/register">
                 Don&apos;t have an account? Sign Up
               </StyledLink>
