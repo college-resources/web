@@ -132,10 +132,7 @@ export default function LoginPage(props) {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <StyledLink href="#">Forgot password?</StyledLink>
-            </Grid>
-            <Grid item>
+            <Grid item sm>
               <StyledLink href="/register">
                 Don&apos;t have an account? Sign Up
               </StyledLink>
