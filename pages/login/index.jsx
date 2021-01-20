@@ -12,6 +12,8 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
 import styled from 'styled-components'
+import Box from '@material-ui/core/Box'
+import { CircularProgress } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -31,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     // Fixes IE 11 issue
     width: '100%'
+  },
+  errors: {
+    color: theme.palette.type === 'light' ? red[600] : red[700]
+  },
+  loading: {
+    color: 'white',
+    maxWidth: '1rem',
+    maxHeight: '1rem',
+    marginLeft: '0.5rem'
   },
   paper: {
     alignItems: 'center',
@@ -61,6 +72,7 @@ export default function LoginPage(props) {
   const currentAuthStatus = useSelector(selectStatus)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     props.updateTitle('Login')
@@ -72,6 +84,7 @@ export default function LoginPage(props) {
 
   function handleLoginWithAuth0(e) {
     e.preventDefault()
+    setLoading(true)
     dispatch(login(email, password))
   }
 
@@ -122,6 +135,14 @@ export default function LoginPage(props) {
             value={password}
             variant="outlined"
           />
+          <Box
+            className={classes.errors}
+            display={
+              currentAuthStatus === authStatus.FAILURE ? 'block' : 'none'
+            }
+          >
+            <strong>Wrong email or password.</strong>
+          </Box>
           <Button
             className={classes.submit}
             color="primary"
@@ -130,6 +151,9 @@ export default function LoginPage(props) {
             variant="contained"
           >
             Sign In
+            {loading && currentAuthStatus !== authStatus.FAILURE && (
+              <CircularProgress className={classes.loading} />
+            )}
           </Button>
           <Grid container>
             <Grid item sm>
