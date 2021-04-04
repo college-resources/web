@@ -8,6 +8,7 @@
     "dev": "node bin/www --dev",
     "build": "next build",
     "start": "node bin/www",
+    "deps": "npm-check -u",
     "debug": "node --inspect bin/www --dev",
     "eslint:fix": "npx eslint . --fix",
     "prettier": "npx prettier --write .",
@@ -63,7 +64,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.2",
+    "react-redux": "^7.2.3",
     "redux": "^4.0.5",
     "styled-components": "^5.1.0"
   }
