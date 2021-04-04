@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites (Windows)
 
 1. [NodeJS 14.X](https://nodejs.org/dist/latest-v14.x)
-   (Recommended version: [NodeJS 14.15.0 x64](https://nodejs.org/dist/v14.15.0/node-v14.15.0-x64.msi))
+   (Recommended version: [NodeJS 14.16.0 x64](https://nodejs.org/dist/v14.16.0/node-v14.16.0-x64.msi))
 
 2. [Git for Windows](https://git-scm.com/download/win)
 
