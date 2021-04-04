@@ -17,7 +17,7 @@ export default slice.reducer
 
 export function setVersion(version) {
   return (dispatch) => {
-      dispatch(slice.actions.updateVersion(version))
+    dispatch(slice.actions.updateVersion(version))
   }
 }
 

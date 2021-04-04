@@ -4,7 +4,7 @@
   "description": "College Resources website",
   "scripts": {
     "lint": "npx eslint .",
-    "fix": "run-s prettier eslint:fix",
+    "fix": "npm run prettier && npm run eslint:fix",
     "dev": "node bin/www --dev",
     "build": "next build",
     "start": "node bin/www",
@@ -37,7 +37,6 @@
     "lodash": "^4.17.21",
     "next": "^10.0.3",
     "next-pwa": "^3.1.5",
-    "npm-run-all": "^4.1.5",
     "passport": "^0.4.1",
     "passport-auth0": "^1.4.0",
     "passport-local": "^1.0.0"
