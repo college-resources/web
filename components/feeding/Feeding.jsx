@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { pink } from '@material-ui/core/colors'
 import { selectInstituteIndex } from 'redux/instituteSlice'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 const useStyles = makeStyles((theme) => ({
   checked: {
