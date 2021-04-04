@@ -12,10 +12,13 @@ import NotesIcon from '@material-ui/icons/Notes'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import SettingsIcon from '@material-ui/icons/Settings'
 import SignoutIcon from '@material-ui/icons/ExitToApp'
+import { selectVersion } from '../../redux/envSlice'
+import { Typography } from '@material-ui/core'
 
 export default function SideBarList() {
   const dispatch = useDispatch()
   const currentAuthStatus = useSelector(selectStatus)
+  const version = useSelector(selectVersion)
 
   function handleLogout() {
     dispatch(logout())
@@ -75,6 +78,12 @@ export default function SideBarList() {
           </List>
         </>
       )}
+      <Divider />
+      <List style={{ marginTop: 'auto' }}>
+        <ListItem>
+          <Typography>{`Version: ${version}`}</Typography>
+        </ListItem>
+      </List>
     </>
   )
 }

@@ -5,18 +5,13 @@
   "scripts": {
     "lint": "npx eslint .",
     "fix": "run-s prettier eslint:fix",
-    "dev": "run-s version start:dev",
-    "build": "run-s version build:next",
-    "start": "run-s version start:prod",
-    "build:next": "next build",
-    "debug": "run-s version start:inspect",
+    "dev": "node bin/www --dev",
+    "build": "next build",
+    "start": "node bin/www",
+    "debug": "node --inspect bin/www --dev",
     "eslint:fix": "npx eslint . --fix",
     "prettier": "npx prettier --write .",
-    "start:dev": "node bin/www --dev",
-    "start:inspect": "node --inspect bin/www --dev",
-    "start:prod": "node bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "version": "genversion --es6 lib/version.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -62,7 +57,6 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "genversion": "^2.2.1",
     "markdown-to-jsx": "^7.0.1",
     "next-redux-wrapper": "^6.0.2",
     "npm-check": "^5.9.2",
