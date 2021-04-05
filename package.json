@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "express-request-proxy": "^2.2.2",
     "express-session": "^1.17.1",
-    "express-validator": "^6.6.1",
+    "express-validator": "^6.10.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.0",
     "lodash": "^4.17.21",
