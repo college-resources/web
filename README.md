@@ -13,13 +13,15 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites (Windows)
 
 1. [NodeJS 14.X](https://nodejs.org/dist/latest-v14.x)
-   (Recommended version: [NodeJS 14.15.0 x64](https://nodejs.org/dist/v14.15.0/node-v14.15.0-x64.msi))
+   (Recommended version: [NodeJS 14.16.0 x64](https://nodejs.org/dist/v14.16.0/node-v14.16.0-x64.msi))
 
 2. [Git for Windows](https://git-scm.com/download/win)
 
 ### Prerequisites (Linux)
 
-_TBA_
+1. [NVM (Node Version Manager)](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+2. [Git for Linux](https://git-scm.com/download/linux)
 
 ### Downloading
 
@@ -31,9 +33,13 @@ git clone https://github.com/college-resources/web.git
 
 ### Preparing
 
-1. Navigate to the root of the project and run `npm install`.
+1. Navigate to the root of the project.
 
-2. Create a `.env` file in the root of the project and add the following details:
+2. **(Linux)** Run `nvm use`.
+
+3. Run `npm install`.
+
+4. Create a `.env` file in the root of the project and add the following details:
 
 ```dotenv
 AUTH0_DOMAIN=<YOUR_AUTH0_DOMAIN>
