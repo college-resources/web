@@ -2,15 +2,13 @@ import Drawer from '@material-ui/core/Drawer'
 import SideBarList from './SideBarList'
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerWidth = 240
-
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     backgroundColor: theme.palette.background.tertiary,
     [theme.breakpoints.down('lg')]: {
       display: 'none'
     },
-    width: drawerWidth
+    width: 240
   },
   // Necessary for content to be below app bar
   toolbar: theme.mixins.toolbar

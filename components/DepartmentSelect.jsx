@@ -11,7 +11,7 @@ import {
   selectDepartments,
   updateDepartmentIndex
 } from 'redux/departmentSlice'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 const useStyles = makeStyles((theme) => ({
   textField: {

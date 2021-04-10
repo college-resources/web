@@ -1,25 +1,27 @@
 import { forwardRef } from 'react'
 import Link from 'next/link'
-import styled from 'styled-components'
-import { withTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-const Styled = withTheme(styled.a`
-  color: ${(props) => props.theme.palette.type === 'dark' && '#00b0f4'};
-  text-decoration: none;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
+const useStyles = makeStyles((theme) => ({
+  link: {
+    color: theme.palette.type === 'dark' && '#00b0f4',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
-`)
+}))
 
 function StyledLink(props, ref) {
   const { children, href } = props
+  const classes = useStyles()
 
   return (
-    <Link href={href}>
-      <Styled {...props} href="#" ref={ref}>
+    <Link href={href} passHref>
+      <a className={classes.link} href={href} ref={ref}>
         {children}
-      </Styled>
+      </a>
     </Link>
   )
 }

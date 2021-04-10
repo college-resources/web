@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import Link from 'next/link'
 import groupBy from 'scripts/groupBy'
 import { makeStyles } from '@material-ui/core/styles'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import InstituteDepartmentGroup from 'components/InstituteDepartmentGroup'
 import Semester from 'components/courses/Semester'
 

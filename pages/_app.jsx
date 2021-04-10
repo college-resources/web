@@ -1,5 +1,6 @@
 import { Provider, connect } from 'react-redux'
 import { session, setUser } from 'redux/authSlice'
+import { setVersion } from 'redux/envSlice'
 import store, { wrapper } from 'redux/store'
 import App from 'next/app'
 import Box from '@material-ui/core/Box'
@@ -8,7 +9,6 @@ import Head from 'next/head'
 import NavBar from 'components/navigation/NavBar'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'components/ThemeContext'
-import { version } from 'lib/version'
 import { withRouter } from 'next/router'
 
 class MyApp extends App {
@@ -17,10 +17,11 @@ class MyApp extends App {
     this.state = { title: '' }
     this._updateTitle = this._updateTitle.bind(this)
     this.props.setUser(this.props.ctxUser)
+    this.props.setVersion(this.props.version)
   }
 
   static getInitialProps({ ctx }) {
-    const initialProps = {}
+    const initialProps = { version: process.env.npm_package_version }
 
     if (ctx.req) {
       initialProps.ctxUser = ctx.req.user && ctx.req.user.profile
@@ -44,8 +45,6 @@ class MyApp extends App {
     if (!this.props.user) {
       this.props.session()
     }
-
-    console.log(`v${version}`)
   }
 
   render() {
@@ -82,7 +81,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   session,
-  setUser
+  setUser,
+  setVersion
 }
 
 export default wrapper.withRedux(

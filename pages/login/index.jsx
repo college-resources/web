@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { status as authStatus, login, selectStatus } from 'redux/authSlice'
-import { makeStyles, withTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -11,7 +11,6 @@ import StyledLink from 'components/StyledLink'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
-import styled from 'styled-components'
 import Box from '@material-ui/core/Box'
 import { CircularProgress } from '@material-ui/core'
 
@@ -37,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
   errors: {
     color: theme.palette.type === 'light' ? red[600] : red[700]
   },
+  google: {
+    margin: theme.spacing(2, 0, 2),
+    backgroundColor: theme.palette.type === 'light' ? red[600] : red[700],
+    '&:hover': {
+      backgroundColor: theme.palette.type === 'light' ? red[800] : red[900]
+    }
+  },
   loading: {
     color: 'white',
     maxWidth: '1rem',
@@ -49,22 +55,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   submit: {
+    margin: theme.spacing(2, 0, 2),
+    backgroundColor: theme.palette.primary.light,
     '&:hover': {
       backgroundColor: theme.palette.primary.dark
-    },
-    backgroundColor: theme.palette.primary.light,
-    margin: theme.spacing(2, 0, 2)
+    }
   }
 }))
-
-const GoogleButton = withTheme(styled(Button)`
-  background-color: ${(props) =>
-    props.theme.palette.type === 'light' ? red[600] : red[700]};
-  &:hover {
-    background-color: ${(props) =>
-      props.theme.palette.type === 'light' ? red[800] : red[900]};
-  }
-`)
 
 export default function LoginPage(props) {
   const classes = useStyles()
@@ -162,8 +159,8 @@ export default function LoginPage(props) {
               </StyledLink>
             </Grid>
           </Grid>
-          <GoogleButton
-            className={classes.submit}
+          <Button
+            className={classes.google}
             color="primary"
             fullWidth
             onClick={handleLoginWithGoogle}
@@ -171,7 +168,7 @@ export default function LoginPage(props) {
             variant="contained"
           >
             Sign In with Google
-          </GoogleButton>
+          </Button>
         </form>
       </div>
     </Container>
